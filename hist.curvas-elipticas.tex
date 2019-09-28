@@ -1,0 +1,123 @@
+\documentclass[
+  a4paper,
+  12pt,
+  spanish,
+]{scrartcl}
+
+% Párrafos
+
+\linespread{1.1}
+\setlength{\parindent}{18pt}
+
+%-------------------------------------------------------------------------------
+%	PAQUETES
+%-------------------------------------------------------------------------------
+
+% Idioma
+
+\usepackage[es-noindentfirst]{babel}
+
+% Matemáticas
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+\usepackage{commath}
+
+% Fuentes personalizadas para utilizar con XeLaTeX o LuaLaTeX
+
+\usepackage[no-math]{fontspec}
+\setmainfont{TeX Gyre Pagella}
+\setsansfont{Fira Sans}
+\setmonofont{Fira Mono}
+
+\usepackage[math-style=TeX]{unicode-math}
+\setmathfont{TeX Gyre Pagella Math}
+
+% Configuración de microtype
+
+\defaultfontfeatures{Ligatures=TeX,Numbers=Lining}
+\usepackage[activate={true,nocompatibility},final,tracking=true,factor=1100,stretch=10,shrink=10]{microtype}
+\SetTracking{encoding={*}, shape=sc}{0}
+
+% Enlaces y colores
+
+\usepackage{hyperref}
+\usepackage{xcolor}
+\hypersetup{
+  colorlinks=true,
+}
+
+% Otros elementos de página
+
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=*}
+\setlist[enumerate]{leftmargin=*}
+
+\usepackage[labelfont=sc]{caption}
+
+% Tikz
+
+\usepackage{tikz}
+\usetikzlibrary{babel}
+\usepackage{float}
+
+% Código
+
+\usepackage{listings}
+\lstset{
+	basicstyle=\footnotesize\ttfamily,%
+	breaklines=true,%
+	captionpos=b,                    % sets the caption-position to bottom
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  frame=lines,
+  numbers=left,
+  stepnumber=1,
+  aboveskip=12pt,
+  showstringspaces=false,
+}
+\renewcommand{\lstlistingname}{Listado}
+
+% Lorem ipsum
+
+\usepackage{blindtext}
+
+
+%-------------------------------------------------------------------------------
+%	TÍTULO
+%-------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+\normalfont \normalsize 
+\textsc{Universidad de Granada}\\ [25pt]
+\horrule{0.5pt} \\[0.4cm]
+{\sffamily\bfseries\Large Curvas elípticas en la Criptografía} \\[6pt]
+\textsf{\textsc{Historia de las Matemáticas} \\Grado en Matemáticas}\\
+\horrule{2pt} \\[0.5cm]
+}
+
+\author{Sofía Almeida Bruno \and Antonio Coín Castro \and José María Martín Luque}
+
+\date{\normalsize\today}
+
+%-------------------------------------------------------------------------------
+%	CONTENIDO
+%-------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+{\hypersetup{hidelinks}
+\tableofcontents
+}
+
+\newpage
+
+\blindmathtrue
+\Blinddocument
+
+\end{document}
