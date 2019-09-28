@@ -45,6 +45,7 @@
 \usepackage{xcolor}
 \hypersetup{
   colorlinks=true,
+  citecolor=,
 }
 
 % Otros elementos de página
@@ -76,6 +77,11 @@
   showstringspaces=false,
 }
 \renewcommand{\lstlistingname}{Listado}
+
+% Bibliografía
+
+\usepackage[sorting=none]{biblatex}
+\addbibresource{bibliografia.bib}
 
 % Lorem ipsum
 
@@ -118,6 +124,13 @@
 \newpage
 
 \blindmathtrue
-\Blinddocument
+\Blinddocument\cite{prueba}
+
+%-------------------------------------------------------------------------------
+%	BIBLIOGRAFÍA
+%-------------------------------------------------------------------------------
+
+\newpage
+\printbibliography
 
 \end{document}
