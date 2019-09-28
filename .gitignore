@@ -1,3 +1,6 @@
+*.bbl
+*.blg
+*.swp
 *.texpadtmp
 *.log
 *.aux
