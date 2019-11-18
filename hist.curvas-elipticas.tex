@@ -189,7 +189,12 @@ El objetivo principal de la criptografía es el de la transmisión de informaci�
 
 \section{Evolución de las curvas elípticas en la criptografía}
 
-Referenciar a \parencite{singh_code_2003}, \parencite{thawte_history_2013}.
+Referenciar a \parencite{singh_code_2003}, \parencite{thawte_history_2013}, \parencite{diffie_new_1976}.
+
+Un criptosistema es una familia uniparamétrica \(\{S_K\}_{K \in \{K\}}\) de aplicaciones invertibles \[S_K: \{P\} \to \{C\},\] del conjunto de mensajes en claro, \(\{P\}\), al conjunto de mensajes cifrados, \(\{C\}\). 
+El parámetro \(K\) se denomina \textit{clave} y el rango de posibles valores que puede tomar \(\{K\}\), \textit{espacio de claves}.
+
+El objetivo a la hora de diseñar un criptosistema \(\{S_K\}\) ha de ser procurar que las operaciones de cifrado y descifrado resulten sencillas pero asegurarse que el análisis criptográfico por parte de terceras personas con el fin de interceptar y descifrar los mensajes cifrados sea lo suficientemente difícil.
 
 \subsection{Criptografía moderna anterior a los años 80}
 
@@ -197,9 +202,13 @@ En los años 70 del siglo pasado se produjeron dos acontecimientos públicos que
 
 En primer lugar, en 1973 la Oficina Nacional de Normas (NBS por sus siglas en inglés, \textit{National Bureau of Standards}), dependiente del Departamento de Comercio del Gobierno Federal de los Estados Unidos, organizó un concurso público para el diseño de un algoritmo de cifrado que pudiese ser adoptado como estándar por parte de dicho Gobierno. 
 El 17 de marzo de 1975 se publicó el primer borrador del \textit{Data Encryption Standard} (DES), sistema de cifrado propuesto por un grupo de investigación de IBM.
-Tras recibir varias modificaciones con la ayuda de la Agencia de Seguridad Nacional (NSA por sus siglas en inglés, \textit{National Security Agency}) la versión final del algoritmo fue aprobada y publicada por la NBS en 1976 y se convirtió en el primer estándar aprobado por una agencia del Gobierno Federal de los Estados Unidos.
+Tras recibir varias modificaciones con la ayuda de la Agencia de Seguridad Nacional (NSA por sus siglas en inglés, \textit{National Security Agency}) la versión final del algoritmo fue aprobada y publicada por la NBS en noviembre de 1976 y se convirtió en el primer estándar aprobado por una agencia del Gobierno Federal de los Estados Unidos. 
+El hecho de que la NSA colaborase en el diseño del algoritmo --modificando la propuesta original de IBM-- suscitó las sospechas de numerosos investigadores, quienes creían que la NSA había introducido una \textit{puerta trasera} en el algoritmo. 
+Finalmente, en los años 90 se llegó a la conclusión de que los cambios aportados por la NSA resultaron ser mejoras. %TODO: citation needed
+Otra de las críticas que suscitó fue el tamaño elegido para los bloques.
+En 2002 fue reemplazado por el algoritmo AES (\textit{Advanced Encryption Standard}), aprobado como estándar por el Instituto Nacional de Estándares y Tecnología (NIST por sus siglas en inglés, \textit{National Institute of Standards and Technology}).
 
-El segundo avance significativo fue la publicación en 1976 del artículo \textit{New Directions in Cryptography} \parencite{diffie_new_1976} en el que los autores introducen por primera vez la idea del cifrado de clave pública. Hasta el momento, todo algoritmo de cifrado necesitaba una clave secreta, compartida únicamente entre el emisor y el receptor. La dificultad para llevar a cabo la comunicación cifrada radicaba entonces en la transmisión de dicha clave de forma segura. Diffie y Hellman propusieron un criptosistema asimétrico que utiliza una pareja de claves: una pública y otra privada, eliminando así el obstáculo que suponía la transmisión de la clave.
+El segundo avance significativo, y el que verdaderamente es relevante para nuestro estudio, fue la publicación en 1976 del artículo \textit{New Directions in Cryptography} \parencite{diffie_new_1976} en el que los autores introducen por primera vez la idea del cifrado de clave pública. Hasta el momento, todo algoritmo de cifrado necesitaba una clave secreta, compartida únicamente entre el emisor y el receptor. La dificultad para llevar a cabo la comunicación cifrada radicaba entonces en la transmisión de dicha clave de forma segura. Diffie y Hellman propusieron un criptosistema asimétrico que utiliza una pareja de claves: una pública y otra privada, eliminando así el obstáculo que suponía la transmisión de la clave.
 
 %Jose.
 
