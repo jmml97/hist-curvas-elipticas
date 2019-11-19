@@ -198,6 +198,12 @@ El objetivo a la hora de diseñar un criptosistema \(\{S_K\}\) ha de ser procura
 
 \subsection{Criptografía moderna anterior a los años 80}
 
+%Jose.
+
+% - Algoritmo de diffie-hellman, el problema del logaritmo discreto.
+% - Tamaño de las claves, número de parámetros, éxito.
+% - Problemas existentes.
+
 En los años 70 del siglo pasado se produjeron dos acontecimientos públicos que supusieron grandes avances en el desarrollo de la criptografía moderna.
 
 En primer lugar, en 1973 la Oficina Nacional de Normas (NBS por sus siglas en inglés, \textit{National Bureau of Standards}), dependiente del Departamento de Comercio del Gobierno Federal de los Estados Unidos, organizó un concurso público para el diseño de un algoritmo de cifrado que pudiese ser adoptado como estándar por parte de dicho Gobierno. 
@@ -210,13 +216,23 @@ En 2002 fue reemplazado por el algoritmo AES (\textit{Advanced Encryption Standa
 
 El segundo avance significativo, y el que verdaderamente es relevante para nuestro estudio, fue la publicación en 1976 del artículo \textit{New Directions in Cryptography} \parencite{diffie_new_1976} en el que los autores introducen por primera vez la idea del cifrado de clave pública. Hasta el momento, todo algoritmo de cifrado necesitaba una clave secreta, compartida únicamente entre el emisor y el receptor. La dificultad para llevar a cabo la comunicación cifrada radicaba entonces en la transmisión de dicha clave de forma segura. Diffie y Hellman propusieron un criptosistema asimétrico que utiliza una pareja de claves: una pública y otra privada, eliminando así el obstáculo que suponía la transmisión de la clave.
 
-%Jose.
+La técnica se basa en la aparente dificultad de calcular logaritmos en un cuerpo finito de \(q\) elementos, denotado \(\mathbb F_q\), siendo \(q\) un número primo. 
+Sea \[Y = \alpha^X \mod q, \qquad \text{para } 1 \leq X \leq q - 1,\] donde \(\alpha\) es fijo y es una \textit{raíz primitiva módulo} \(q\), es decir, todo número coprimo con \(q\) es congruente a una potencia de \(\alpha\) módulo \(q\). 
+Al elemento \(X\) se le llama \textit{logaritmo de} \(Y\) \textit{de base} \(\alpha\) y \textit{módulo} \(q\): \[X = \log_{\alpha} Y \mod q, \qquad \text{para } 1 \leq X \leq q - 1.\]
+El cálculo de \(Y\) a partir de \(X\) es sencillo, necesitándose para ello como mucho \(2 \cdot \log_2 q\) multiplicaciones utilizando el algoritmo de \textit{exponenciación binaria}. Por ejemplo, para \(X = 18\), \[Y = \alpha^{18} = \cramped{(((\alpha^2)^2)^2)^2} \cdot \cramped{\alpha^2}.\]
+Sin embargo, la operación inversa de calcular \(X\) a partir de \(Y\) es mucho más compleja, y en ello radica la seguridad de este sistema. 
 
-%Algoritmo de diffie-hellman, el problema del logaritmo discreto.
-
-%Tamaño de las claves, número de parámetros, éxito.
-
-%Problemas existentes.
+A la hora de establecer la comunicación cifrada cada usuario genera un número aleatorio \(X_i\) de forma independiente dentro del rango de enteros \(\{1, 2, \dots, q - 1\}\). 
+Dicho número se guarda en secreto, pero se hace público el número \[Y_i = \alpha^{X_i} \mod q\] junto al nombre y dirección que permiten identificar al usuario. 
+Cuando los usuarios \(i\) y \(j\) quieren comunicarse de forma segura utilizan la clave \(K_{ij} = \cramped{\alpha^{X_iX_j}} \mod q\). 
+El usuario \(i\) obtiene la clave \(K_{ij}\) a partir del número público \(Y_j\) realizando las operaciones \begin{align*}
+  K_{ij} &= Y_j^{X_i} \mod q \\
+    &= (\alpha^{X_j})^{X_i} \mod q \\
+    &= \alpha^{X_jX_i} \mod q \\
+    &= \alpha^{X_iX_j} \mod q.
+\end{align*}
+El usuario \(j\) obtiene la clave de forma análoga, calculando en su caso \[K_{ij} = Y_i^{X_j} \mod q.\]
+Para que una tercera persona pudiese interceptar la comunicación tendría que calcular \(K_{ij}\) a partir de \(Y_i\) e \(Y_j\), para lo que tendría que calcular, por ejemplo, \[K_{ij} = Y_i^{(log_{\alpha} Y_j)} \mod q,\] problema que, como ya hemos comentado antes, tiene una complejidad considerable.
 
 \subsection{Primera aparición de las curvas elípticas en criptografía}
 
