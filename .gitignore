@@ -13,3 +13,4 @@
 *.bcf
 *.run.xml
 .DS_Store
+__latexindent_temp.tex
