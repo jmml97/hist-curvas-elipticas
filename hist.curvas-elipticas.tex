@@ -242,14 +242,14 @@ El usuario \(i\) obtiene la clave \(K_{ij}\) a partir del número público \(Y_j
 \end{align*}
 El usuario \(j\) obtiene la clave de forma análoga, calculando en su caso \[K_{ij} = Y_i^{X_j} \mod q.\]
 
-\subsubsection{Problema de Diffie Hellman}
+\subsubsection{Problema de Diffie-Hellman}
 
 Para que una tercera persona pudiese interceptar la comunicación tendría que obtener la clave \(K_{ij}\) a partir de \(Y_i\) e \(Y_j\), para lo que tendría que calcular, por ejemplo, \[K_{ij} = Y_i^{\left(log_{\alpha} Y_j\right)} \mod q.\] 
-Este problema se denomina \textit{problema de Diffie Hellman}. 
+Este problema se denomina \textit{problema de Diffie-Hellman}. 
 En su artículo los autores conjeturan que la resolución de dicho problema es equivalente a resolver el \textit{problema del logaritmo discreto} para alguno de los valores \(Y_i\) o \(Y_j\). Este problema puede enunciarse como: \begin{displayquote}
   Sea \(G\) un grupo y \(\langle g \rangle\) el subgrupo cíclico generado por \(g\). Dado \(g \in G\) y \(a \in \langle g \rangle\), encuentra \(x\) tal que \(g^x = a\).
 \end{displayquote}
-En 1990 Bert den Boer afirmó que para ciertos primos, el problema de Diffie Hellman es tan difícil de resolver como el del logaritmo discreto \parencite{goos_diffie-hellman_1990}, tal y como aventuraron Diffie y Hellman 14 años antes.
+En 1990 Bert den Boer afirmó que para ciertos primos, el problema de Diffie-Hellman es tan difícil de resolver como el del logaritmo discreto \parencite{goos_diffie-hellman_1990}, tal y como aventuraron Diffie y Hellman 14 años antes.
 Hasta ahora no se ha encontrado ningún algoritmo que resuelva este problema en tiempo polinómico. %TODO citation needed, aclarar qué es tiempo polinómico de forma rápida, sencilla y para toda la familia 
 
 
