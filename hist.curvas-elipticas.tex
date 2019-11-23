@@ -214,7 +214,7 @@ Tras recibir varias modificaciones con la ayuda de la Agencia de Seguridad Nacio
 El hecho de que la NSA colaborase en el diseño del algoritmo --modificando la propuesta original de IBM-- suscitó las sospechas de numerosos investigadores, quienes creían que la NSA había introducido una \textit{puerta trasera} en el algoritmo. 
 Finalmente, en los años 90 se llegó a la conclusión de que los cambios aportados por la NSA resultaron ser mejoras. %TODO: citation needed
 Otra de las críticas que suscitó fue el tamaño elegido para los bloques.
-En 2002 fue reemplazado por el algoritmo AES (\textit{Advanced Encryption Standard}), aprobado como estándar por el Instituto Nacional de Estándares y Tecnología (NIST por sus siglas en inglés, \textit{National Institute of Standards and Technology}).
+En 2002 fue reemplazado por el algoritmo AES (\textit{Advanced Encryption Standard}), aprobado como estándar por el sucesor de la NBS, el Instituto Nacional de Estándares y Tecnología (NIST por sus siglas en inglés, \textit{National Institute of Standards and Technology}).
 
 \subsubsection{Protocolo de Diffie y Hellman}
 
@@ -223,11 +223,11 @@ Hasta el momento, todo algoritmo de cifrado necesitaba una clave secreta, compar
 La dificultad para llevar a cabo la comunicación cifrada radicaba entonces en la transmisión de dicha clave de forma segura. 
 Diffie y Hellman propusieron un criptosistema asimétrico que utiliza una pareja de claves: una pública y otra privada, eliminando así el obstáculo que suponía la transmisión de la clave.
 
-La técnica se basa en la aparente dificultad de calcular logaritmos en un cuerpo finito de \(q\) elementos, denotado \(\mathbb F_q\), siendo \(q\) un número primo. 
+La técnica se basa en la dificultad de calcular logaritmos en un cuerpo finito de \(q\) elementos, denotado \(\mathbb F_q\), siendo \(q\) un número primo. 
 Sea \[Y = \alpha^X \mod q, \qquad \text{para } 1 \leq X \leq q - 1,\] donde \(\alpha\) es fijo y es una \textit{raíz primitiva módulo} \(q\), es decir, todo número coprimo con \(q\) es congruente a una potencia de \(\alpha\) módulo \(q\). 
 Al elemento \(X\) se le llama \textit{logaritmo de} \(Y\) \textit{de base} \(\alpha\) y \textit{módulo} \(q\): \[X = \log_{\alpha} Y \mod q, \qquad \text{para } 1 \leq X \leq q - 1.\]
 El cálculo de \(Y\) a partir de \(X\) es sencillo, necesitándose para ello como mucho \(2 \cdot \log_2 q\) multiplicaciones utilizando el algoritmo de \textit{exponenciación binaria}. Por ejemplo, para \(X = 18\), \[Y = \alpha^{18} = \cramped{(((\alpha^2)^2)^2)^2} \cdot \cramped{\alpha^2}.\]
-Sin embargo, la operación inversa de calcular \(X\) a partir de \(Y\) es mucho más compleja, y en ello radica la seguridad de este sistema.
+Sin embargo, la operación inversa de calcular \(X\) a partir de \(Y\) es mucho más compleja, y en ello radica la seguridad de este sistema, como comentaremos más adelante.
 
 A la hora de establecer la comunicación cifrada cada usuario genera un número aleatorio \(X_i\) de forma independiente dentro del rango de enteros \(\{1, 2, \dots, q - 1\}\). 
 Dicho número se guarda en secreto, pero se hace público el número \[Y_i = \alpha^{X_i} \mod q\] junto al nombre y dirección que permiten identificar al usuario. 
@@ -248,7 +248,13 @@ En su artículo los autores conjeturan que la resolución de dicho problema es e
   Sea \(G\) un grupo y \(\langle g \rangle\) el subgrupo cíclico generado por \(g\). Dado \(g \in G\) y \(a \in \langle g \rangle\), encuentra \(x\) tal que \(g^x = a\).
 \end{displayquote}
 En 1990 Bert den Boer afirmó que para ciertos primos, el problema de Diffie-Hellman es tan difícil de resolver como el del logaritmo discreto \parencite{goos_diffie-hellman_1990}, tal y como aventuraron Diffie y Hellman 14 años antes.
-Hasta ahora no se ha encontrado ningún algoritmo que resuelva este problema en tiempo polinómico. %TODO citation needed, aclarar qué es tiempo polinómico de forma rápida, sencilla y para toda la familia 
+
+Un algoritmo se dice de \textit{tiempo polinómico} cuando el tiempo que tarda en ejecutarse está acotado superiormente por un expresión polinómica del tamaño de los datos de entrada de dicho algoritmo \parencite[6]{garey_computers_1979}. Se considera que son estos algoritmos los que pueden calificarse como suficientemente \textit{rápidos} o \textit{eficientes} \parencite[33]{goldreich_computational_2008}.
+Por otro lado, los problemas que son tan difíciles de resolver que no existen algoritmos de tiempo polinómico que los resuelvan se conocen como \textit{intratables} \parencite[8]{garey_computers_1979}. 
+Dichos problemas son por tanto aquellos que en teoría pueden ser resueltos --dada una cantidad lo suficientemente grande, pero finita, de recursos-- pero que en la práctica el tamaño de este requisito hace que dicha solución no resulte útil.
+
+Hasta ahora no se ha encontrado ningún algoritmo que resuelva el problema del logaritmo discreto en tiempo polinómico, y es de hecho considerado intratable \parencite{rueppel_how_1993}.
+El problema de Diffie-Hellman es en consecuencia intratable para ciertos grupos, y en ello radica finalmente la seguridad del protocolo homónimo.
 
 
 \subsection{Primera aparición de las curvas elípticas en criptografía}
