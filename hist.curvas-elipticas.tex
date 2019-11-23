@@ -255,14 +255,25 @@ Hasta ahora no se ha encontrado ningún algoritmo que resuelva este problema en 
 % Enlazar con el apartado anterior
 
 %1984. Algoritmo de Lenstra
-La primera aparición de las curvas elípticas en criptografía es en el algoritmo de factorización de Lenstra, propuesto en 1984. En este momento se comenzó a buscar usos criptográficos para muchas herramientas matemáticas que nunca habían sido utilizadas con este propósito.
+En 1984 Hendrik Lenstra propone un nuevo algoritmo de factorización. Su característica más destacada es el uso de las curvas elípticas, es el primer algoritmo criptográfico que las utiliza. A partir de este momento, se comenzó a buscar usos criptográficos para muchas herramientas matemáticas que nunca habían sido utilizadas con este propósito.
 
 %¿Explicar?
 
-%1987. Problema del logaritmo discreto con curvas elípticas. N. Koblitz y V. Miller (de forma independiente)
-Al año siguiente, N. Koblitz y V. Miller proponen, de forma independiente, un uso diferente para las curvas elípticas en criptografía. Su idea fue usar un criptosistema como el de Diffie y Hellman utilizando, en vez del grupo multiplicativo sobre un cuerpo finito, el grupo de puntos de una curva elíptica sobre un cuerpo finito. 
+%1985. Problema del logaritmo discreto con curvas elípticas. N. Koblitz y V. Miller (de forma independiente)
+Al año siguiente, N. Koblitz y V. Miller proponen, de forma independiente, un uso diferente de las curvas elípticas en criptografía. Su idea fue usar un criptosistema como el de Diffie y Hellman utilizando, en vez del grupo multiplicativo sobre un cuerpo finito, el grupo de puntos de una curva elíptica sobre un cuerpo finito. El enunciado del problema es el siguiente:
+\begin{displayquote}
+  Sea $E$ verificando la ecuación de Weierstrass $y^2+a_1xy+a_3y=x^3+a_2x^2+a_4x+a_6$ con $a_i \in \mathbb{F}_q$. Consideramos $G$ un subgrupo de los puntos de $E$. Dados $P,Q \in G$ encuentra $x \mod{n}$ tal que $Q=xP$. 
+\end{displayquote}
+%¿poner ecuación reducida?
+Este problema lo denominamos ``problema del logaritmo discreto para curvas elípticas'', aunque no aparezcan logaritmos en él, por su similitud con el problema del logaritmo discreto, se mantiene el nombre.
 
-%.... (paper)
+La razón más importante para considerar la criptografía de la curva elíptica fue que no parecía que se pudiera adaptar el ``index calculus'' para usarlo en el grupo de una curva elíptica. El motivo es que en el ``index calculus'' hay que fijar un conjunto de elementos pequeños (factor base) de forma que podamos escribir el resto de elementos de forma eficiente a partir de ellos. Miller [] demostró que si se utiliza la noción más natural de ``pequeño'' se descubre que no hay suficientes puntos para formar una base para el ``index calculus''.
+
+Al comienzo de la criptografía de la curva elíptica una elección popular de curvas eran las definidas en un cuerpo $F_p$, $p$ primo, y que verificaban la ecuación $y^2 = x^3 - x$. El caso ``supersingular'' es aquel en el que se cumple $p \equiv 3 \mod 4$.  Es rápido encontrar un $p$ tal que el grupo tenga un subgrupo grande de orden un primo.
+
+Las curvas supersingulares de característica 2 y 3 tenían otra ventaja: elevar al cuadrado en curvas de característica 2 y al cubo en curvas de característica 3 tardaba un tiempo despreciable.
+
+Pese a que esta elección de parámetros fuera conveniente por los aspectos comentados, los autores que los usaron más adelante se arrepintieron, pues, en 1991, se descubrió que el problema del logaritmo discreto sobre curvas supersingulares es mcho más fácil de resolver que en la mayoría de las curvas. Aunque las curvas supersingulares son muy pocas dentro de todas las curvas elípticas definidas sobre un cuerpo finito, su uso común dio una impresión exagerada sobre su importancia. Así, se pueden usar curvas fáciles de calcular (?)  sin recurrir a las supersingulares.
 
 %Tamaño de las claves, número de parámetros, éxito.
 
