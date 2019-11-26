@@ -271,15 +271,20 @@ Al año siguiente, N. Koblitz y V. Miller proponen, de forma independiente, un u
   Sea $E$ verificando la ecuación de Weierstrass $y^2+a_1xy+a_3y=x^3+a_2x^2+a_4x+a_6$ con $a_i \in \mathbb{F}_q$. Consideramos $G$ un subgrupo de los puntos de $E$. Dados $P,Q \in G$ encuentra $x \mod{n}$ tal que $Q=xP$. 
 \end{displayquote}
 %¿poner ecuación reducida?
-Este problema lo denominamos ``problema del logaritmo discreto para curvas elípticas'', aunque no aparezcan logaritmos en él, por su similitud con el problema del logaritmo discreto, se mantiene el nombre.
+Este problema lo denominamos ``problema del logaritmo discreto para curvas elípticas'', aunque no aparezcan logaritmos en él, por su similitud con el problema del logaritmo discreto.
 
 La razón más importante para considerar la criptografía de la curva elíptica fue que no parecía que se pudiera adaptar el ``index calculus'' para usarlo en el grupo de una curva elíptica. El motivo es que en el ``index calculus'' hay que fijar un conjunto de elementos pequeños (factor base) de forma que podamos escribir el resto de elementos de forma eficiente a partir de ellos. Miller [] demostró que si se utiliza la noción más natural de ``pequeño'' se descubre que no hay suficientes puntos para formar una base para el ``index calculus''.
 
-Al comienzo de la criptografía de la curva elíptica una elección popular de curvas eran las definidas en un cuerpo $F_p$, $p$ primo, y que verificaban la ecuación $y^2 = x^3 - x$. El caso ``supersingular'' es aquel en el que se cumple $p \equiv 3 \mod 4$.  Es rápido encontrar un $p$ tal que el grupo tenga un subgrupo grande de orden un primo.
+Al comienzo de la criptografía de la curva elíptica unas curvas muy populares eran las definidas en un cuerpo $\mathbb{F}_p$, $p$ primo, que verificaban la ecuación $y^2 = x^3 - x$. El caso ``supersingular'' es aquel en el que se cumple $p \equiv 3 \mod 4$.  Es rápido encontrar un $p$ tal que el grupo tenga un subgrupo grande de orden un primo.
 
 Las curvas supersingulares de característica 2 y 3 tenían otra ventaja: elevar al cuadrado en curvas de característica 2 y al cubo en curvas de característica 3 tardaba un tiempo despreciable.
 
-Pese a que esta elección de parámetros fuera conveniente por los aspectos comentados, los autores que los usaron más adelante se arrepintieron, pues, en 1991, se descubrió que el problema del logaritmo discreto sobre curvas supersingulares es mcho más fácil de resolver que en la mayoría de las curvas. Aunque las curvas supersingulares son muy pocas dentro de todas las curvas elípticas definidas sobre un cuerpo finito, su uso común dio una impresión exagerada sobre su importancia. Así, se pueden usar curvas fáciles de calcular (?)  sin recurrir a las supersingulares.
+Pese a que esta elección de parámetros fuera conveniente por los aspectos comentados, los autores que los usaron más adelante se arrepintieron, pues, en 1991, se descubrió que el problema del logaritmo discreto sobre curvas supersingulares es mcho más fácil de resolver que en la mayoría de las curvas. Aunque las curvas supersingulares son muy pocas dentro de todas las curvas elípticas definidas sobre un cuerpo finito, que fueran de uso común dio una impresión exagerada sobre su importancia. Así, se pueden usar curvas fáciles de calcular (?)  sin recurrir a las supersingulares.
+
+\subsubsection{Reacciones iniciales}
+Durante los años siguientes a la criptografía de la curva elíptica la actitud general de los criptógrafos fue aceptación y curiosidad, nadie la consideró una amenaza comercial. Aunque la mayor parte de los investigadores nunca habían estudiado curvas elípticas y no entendían la teoría asociada reaccionaron positivamente a la idea de un nuevo tipo de criptografía basada en la curva elíptica. A finales de los años 80 un grupo amplio de matemáticos empezó a trabajar en el tema y el refinamiento de las matemáticas que se introdujo se tomó como un indicador de que la criptografía de llave pública pronto estaría lista.
+
+Es en este periodo cuando tres profesores de la universidad de Waterloo crearon una compañía que desarrolló e impulsó la criptografía de la curva elíptica. 
 
 %Tamaño de las claves, número de parámetros, éxito.
 
