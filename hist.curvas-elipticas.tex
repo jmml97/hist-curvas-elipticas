@@ -261,7 +261,7 @@ El problema de Diffie-Hellman es en consecuencia intratable para ciertos grupos,
 % Enlazar con el apartado anterior
 
 %1984. Algoritmo de Lenstra
-En 1984 Hendrik Lenstra propone un nuevo algoritmo de factorización. Su característica más destacada es el uso de las curvas elípticas, es el primer algoritmo criptográfico que las utiliza. A partir de este momento, se comenzó a buscar usos criptográficos para muchas herramientas matemáticas que nunca habían sido utilizadas con este propósito.
+En 1984 Hendrik Lenstra propone un nuevo algoritmo de factorización. Su característica más destacada es el uso de las curvas elípticas, ya que es el primer algoritmo criptográfico que las utiliza. A partir de este momento, se comenzó a buscar usos criptográficos para muchas herramientas matemáticas que nunca habían sido utilizadas con este propósito.
 
 %¿Explicar?
 
@@ -269,7 +269,7 @@ En 1984 Hendrik Lenstra propone un nuevo algoritmo de factorización. Su caracte
 Al año siguiente, N. Koblitz y V. Miller proponen, de forma independiente, un uso diferente de las curvas elípticas en criptografía. Su idea fue usar un criptosistema como el de Diffie y Hellman utilizando, en vez del grupo multiplicativo sobre un cuerpo finito, el grupo de puntos de una curva elíptica sobre un cuerpo finito. El enunciado del problema es el siguiente:
 \begin{displayquote}
   Sea $E$ verificando la ecuación de Weierstrass $y^2+a_1xy+a_3y=x^3+a_2x^2+a_4x+a_6$ con $a_i \in \mathbb{F}_q$. Consideramos $G$ un subgrupo de los puntos de $E$. Dados $P,Q \in G$ encuentra $x \mod{n}$ tal que $Q=xP$. 
-\end{displayquote}
+\end{displayquote} 
 %¿poner ecuación reducida?
 Este problema lo denominamos ``problema del logaritmo discreto para curvas elípticas'', aunque no aparezcan logaritmos en él, por su similitud con el problema del logaritmo discreto.
 
@@ -279,12 +279,49 @@ Al comienzo de la criptografía de la curva elíptica unas curvas muy populares 
 
 Las curvas supersingulares de característica 2 y 3 tenían otra ventaja: elevar al cuadrado en curvas de característica 2 y al cubo en curvas de característica 3 tardaba un tiempo despreciable.
 
-Pese a que esta elección de parámetros fuera conveniente por los aspectos comentados, los autores que los usaron más adelante se arrepintieron, pues, en 1991, se descubrió que el problema del logaritmo discreto sobre curvas supersingulares es mcho más fácil de resolver que en la mayoría de las curvas. Aunque las curvas supersingulares son muy pocas dentro de todas las curvas elípticas definidas sobre un cuerpo finito, que fueran de uso común dio una impresión exagerada sobre su importancia. Así, se pueden usar curvas fáciles de calcular (?)  sin recurrir a las supersingulares.
+Pese a que esta elección de parámetros fuera conveniente por los aspectos comentados, los autores que los usaron más adelante se arrepintieron, pues, en 1991, se descubrió que el problema del logaritmo discreto sobre curvas supersingulares es mcho más fácil de resolver que en la mayoría de las curvas. Aunque las curvas supersingulares son muy pocas dentro de todas las curvas elípticas definidas sobre un cuerpo finito, su uso común dio una impresión exagerada sobre su importancia. Así, se pueden usar curvas fáciles de calcular (?)  sin recurrir a las supersingulares.
 
 \subsubsection{Reacciones iniciales}
-Durante los años siguientes a la criptografía de la curva elíptica la actitud general de los criptógrafos fue aceptación y curiosidad, nadie la consideró una amenaza comercial. Aunque la mayor parte de los investigadores nunca habían estudiado curvas elípticas y no entendían la teoría asociada reaccionaron positivamente a la idea de un nuevo tipo de criptografía basada en la curva elíptica. A finales de los años 80 un grupo amplio de matemáticos empezó a trabajar en el tema y el refinamiento de las matemáticas que se introdujo se tomó como un indicador de que la criptografía de llave pública pronto estaría lista.
+Durante los años siguientes a la aparición de la criptografía de la curva elíptica la actitud general de los criptógrafos fue aceptación y curiosidad, nadie la consideró una amenaza comercial. Aunque la mayor parte de los investigadores nunca habían estudiado curvas elípticas y no entendían la teoría asociada reaccionaron positivamente a la idea de un nuevo tipo de criptografía basada en ellas. A finales de los años 80, un grupo amplio de matemáticos empezó a trabajar en el tema y los avances que introdujeron se tomaron como un indicador de que la criptografía de clave pública pronto estaría lista.
 
 Es en este periodo cuando tres profesores de la universidad de Waterloo crearon una compañía que desarrolló e impulsó la criptografía de la curva elíptica. 
+
+
+\subsubsection{Algoritmo de firma}
+
+La mayor parte de los algoritmos que utilizaban las curvas elípticas consistían en adaptar los ya existentes para este grupo, no aprovechaban la estructura específica de las curvas elípticas.
+
+% TODO: contar aparición de DSA...NSA
+Destacamos la adapación del algoritmo DSA, ya que fue un proceso complicado. En ECDSA (\textit{Elliptic Curve Digital Signature Algorithm}) suponemos que Alice quiere firmar un mensaje con su clave privada ($k_A$) y Bob quiere validar la firma usando la clave pública de Alice ($K_A$). La única que debería poder emitir firmas válidas es Alice, y estas deberían poder ser verificadas por cualquiera que conozca su clave pública.
+
+Alice y Bob usarán los mismos parámetros. Necesitan estar trabajando sobre la misma curva elíptica definida sobre un cuerpo $\mathbb{F}_q$ que contiene un subgrupo $G$ de orden primo ($n$) con generador $P$.
+
+ECDSA no trabaja sobre el mensaje, sino sobre una función \textit{hash} del mismo, que deberá ser truncada si su longitud supera $n$ (el orden del subgrupo).
+
+Alice comienza \textit{generando sus claves}. Para ello, elige aleatoriamente un entero $x$ en el intervalo $[0,n-1]$ y calcula $Q=xP$. La clave pública de Alice será $K_A=Q$ y la privada $k_A=x$.
+
+Para \textit{firmar el mensaje} conociendo su valor \textit{hash} H, Alice:
+
+\begin{enumerate}
+\item Elige aleatoriamente un entero $z$ en el intervalo $[1,n-1]$.
+\item Calcula el punto $zP =(x_1,x_2)$.
+\item Calcula el número $r \equiv x_1 \mod n$.
+\item Si $r=0$, elige otro número $z$ y vuelve a empezar.
+\item Calcula $s=z^{-1}(H+rk_A)\mod n$. \label{en:s}
+\item Si $s=0$, elige otro valor $z$ y lo vuelve a intentar.
+\end{enumerate}
+
+La pareja $(r, s)$ es la firma del mensaje. Para obtenerla se generó un valor aleatorio $z$ que será escondido gracias a la multiplicación de puntos, a continuación, en el paso \ref{en:s}, $r$ es ligado al mensaje \textit{hash}. Para calcular el inverso de $z$ módulo $n$ es necesario que $n$ sea un número primo. Si el subgrupo no tiene orden primo, no podremos usar este algoritmo.
+
+Para verificar la firma sobre un mensaje Bob necesita: la clave pública de Alice ($K_A$), el valor \textit{hash} del mensaje ($H$) y su firma ($(r,s)$). Una vez conozca estos tres valores puede comenzar la verificación, para ello:
+
+\begin{enumerate}
+\item Calcula $u_1 \equiv s^{-1}H \mod n$ y $u_2 \equiv s^{-1}r \mod n$.
+\item Calcula $u_1P + u_2 K_A = (x_0, y_0)$.
+\item La firma será válida si, y solo si, $r \equiv x_0 \mod n$.
+\end{enumerate}
+
+Si Alice generó su firma correctamente, entonces $u_1P+u_2K_A=(u_1+k_Au_2)P=zP$ porque $z \equiv s^{-1}(H+k_Ar) \mod n$ y $r \equiv x_0 \mod n$.
 
 %Tamaño de las claves, número de parámetros, éxito.
 
