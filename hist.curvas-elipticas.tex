@@ -13,11 +13,16 @@
 
 % Idioma
 
-\usepackage[es-noindentfirst]{babel}
+\usepackage[es-noindentfirst, es-tabla]{babel}
 
 % Citas de texto en línea/bloque
 
 \usepackage[autostyle]{csquotes}
+
+% Tablas
+
+\usepackage{booktabs}
+\usepackage{multirow}
 
 % Matemáticas
 
@@ -48,6 +53,8 @@
 \definecolor{webgreen}{rgb}{0,0.5,0}
 \hypersetup{
   colorlinks=true,
+  linkcolor=RoyalBlue,
+  urlcolor=Maroon,
   citecolor=webgreen,
 }
 
@@ -239,6 +246,52 @@ El usuario \(i\) obtiene la clave \(K_{ij}\) a partir del número público \(Y_j
     &= \alpha^{X_iX_j} \mod q.
 \end{align*}
 El usuario \(j\) obtiene la clave de forma análoga, calculando en su caso \[K_{ij} = Y_i^{X_j} \mod q.\]
+
+Observamos que el protocolo de Diffie-Hellman tiene tres parámetros: \begin{itemize}
+  \item El orden del grupo, \(q\).
+  \item El generador \(\alpha\) fijo.
+  \item La clave \(X\) a la que elevamos \(\alpha\).
+\end{itemize}
+
+Existen varias recomendaciones sobre el tamaño de los parámetros \(q\) y \(X\). Por ejemplo la Agencia Nacional de la Seguridad de Sistemas de Información francesa (ANSSI por sus siglas en francés) hace la recomendación descrita en la tabla \ref{tab:tam-anssi} \parencite{anssi_mecanismes_2014}, mientras que el NIST recomienda los tamaños descritos en la tabla \ref{tab:tam-nist} \parencite{barker_recommendation_2016}.
+
+Como se puede observar, para ofrecer niveles de seguridad significativos son necesarios tamaños de los parámetros bastante grandes. Al estudiar la criptografía de curvas elípticas veremos que los tamaños de los parámetros utilizados son mucho menores. 
+
+\begin{table}[h]
+  \centering
+  \sffamily
+  \begin{tabular}{lcc}
+    \toprule
+    & \multicolumn{2}{c}{Tamaño en bits} \\
+    Periodo & clave & grupo \\
+    \midrule
+    2014 - 2030 & 200 & 2048\\
+    > 2030 & 200 & 3072\\
+    \bottomrule
+  \end{tabular}
+  \caption{Recomendaciones de la ANSSI para el tamaño de los parámetros de Diffie-Hellman.}
+  \label{tab:tam-anssi}
+\end{table}
+
+\begin{table}[h]
+  \centering
+  \sffamily
+  \begin{tabular}{lccc}
+    \toprule
+     & \multicolumn{3}{c}{Tamaño en bits} \\
+    Periodo & nivel de seguridad & clave & grupo \\
+    \midrule
+    Pasado & 80 & 160 & 1024\\
+    \multirow[t]{4}{*}{2016-2030} & 112 & 224 & 2048\\
+     & 128 & 256 & 3072\\
+     & 192 & 384 & 7680\\
+     & 256 & 512 & 15360\\
+    \bottomrule
+  \end{tabular}
+  \caption{Recomendaciones del NIST para el tamaño de los parámetros de Diffie-Hellman. Un nivel de seguridad de \(S\) bits indica que se necesitan aproximadamente \(2^S\) operaciones para romper el cifrado.}
+  \label{tab:tam-nist}
+\end{table}
+
 
 \subsubsection{Problema de Diffie-Hellman}
 
