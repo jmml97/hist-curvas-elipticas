@@ -334,6 +334,18 @@ Las curvas supersingulares de característica 2 y 3 tenían otra ventaja: elevar
 
 Pese a que esta elección de parámetros fuera conveniente por los aspectos comentados, los autores que los usaron más adelante se arrepintieron, pues, en 1991, se descubrió que el problema del logaritmo discreto sobre curvas supersingulares es mcho más fácil de resolver que en la mayoría de las curvas. Aunque las curvas supersingulares son muy pocas dentro de todas las curvas elípticas definidas sobre un cuerpo finito, su uso común dio una impresión exagerada sobre su importancia. Así, se pueden usar curvas fáciles de calcular (?)  sin recurrir a las supersingulares.
 
+\subsubsection{Primeros algoritmos para el problema del logaritmo discreto sobre la curva elíptica} %% TÍTULO MUY LARGO :/
+
+Los primeros algoritmos para resolver el problema del logaritmo discreto sobre curvas elípticas eran los genéricos, no aprovechaban la estructura específica del grupo de la curva elíptica. El primero de estos algoritmos, diseñado por Pohlig y Hellman [] para resolver el problema del logaritmo discreto en cuerpos finitos, usa el teorema chino del resto para reducir el problema al problema del logaritmo discreto en subgrupos de orden primo.
+
+En un grupo $G$ de orden primo $n$ los dos mejores algoritmos genéricos son el \textit{baby-step/giant-step} de Shanks (basado en que podemos expresar un entero $x$ como $x = am + b$) y el algoritmo \textit{rho} de Pollard. Ambos requieren tiempo $O(\sqrt{n})$ por lo que se conocen como ataques de raíz cuadrada para el problema del logaritmo discreto. Aunque el método de Shanks tiene la ventaja de ser determinista (en cada paso no se elige entre varias opciones, solo hay una posible), necesita mucha memoria, del orden de $\sqrt{n}$, y en la práctica se prefiere una versión aleatorizada del método \textit{rho} de Pollard. La idea general de este método es recorrer pseudo-aleatoriamente el grupo $G$ usando ciertas combinaciones del punto base $P$ y del punto $Q$ con el logaritmo discreto desconocido. Cuando al recorrer el grupo pasemos dos veces por el mismo sitio, podremos resolver el logaritmo discreto.
+
+Se encontraron más algoritmos para resolver este problema, algunos más rápidos que los de complejidad raíz cuadrada. Sin embargo, en las curvas elípticas elegidas en la mayor parte de las aplicaciones criptográficas los algoritmos más rápidos seguían siendo los genéricos.
+
+\subsubsection{Ataque por emparejamiento de Weil}
+
+
+
 \subsubsection{Reacciones iniciales}
 Durante los años siguientes a la aparición de la criptografía de la curva elíptica la actitud general de los criptógrafos fue aceptación y curiosidad, nadie la consideró una amenaza comercial. Aunque la mayor parte de los investigadores nunca habían estudiado curvas elípticas y no entendían la teoría asociada reaccionaron positivamente a la idea de un nuevo tipo de criptografía basada en ellas. A finales de los años 80, un grupo amplio de matemáticos empezó a trabajar en el tema y los avances que introdujeron se tomaron como un indicador de que la criptografía de clave pública pronto estaría lista.
 
@@ -347,13 +359,13 @@ La mayor parte de los algoritmos que utilizaban las curvas elípticas consistía
 % TODO: contar aparición de DSA...NSA
 Destacamos la adapación del algoritmo DSA, ya que fue un proceso complicado. En ECDSA (\textit{Elliptic Curve Digital Signature Algorithm}) suponemos que Alice quiere firmar un mensaje con su clave privada ($k_A$) y Bob quiere validar la firma usando la clave pública de Alice ($K_A$). La única que debería poder emitir firmas válidas es Alice, y estas deberían poder ser verificadas por cualquiera que conozca su clave pública.
 
-Alice y Bob usarán los mismos parámetros. Necesitan estar trabajando sobre la misma curva elíptica definida sobre un cuerpo $\mathbb{F}_q$ que contiene un subgrupo $G$ de orden primo ($n$) con generador $P$.
+Alice y Bob usarán los mismos parámetros. Necesitan estar trabajando sobre la misma curva elíptica definida sobre un cuerpo $\mathbb{F}_q$ que contiene un subgrupo $G$ de orden primo $n$ con generador $P$.
 
 ECDSA no trabaja sobre el mensaje, sino sobre una función \textit{hash} del mismo, que deberá ser truncada si su longitud supera $n$ (el orden del subgrupo).
 
 Alice comienza \textit{generando sus claves}. Para ello, elige aleatoriamente un entero $x$ en el intervalo $[0,n-1]$ y calcula $Q=xP$. La clave pública de Alice será $K_A=Q$ y la privada $k_A=x$.
 
-Para \textit{firmar el mensaje} conociendo su valor \textit{hash} H, Alice:
+Para \textit{firmar el mensaje} conociendo su valor \textit{hash} $H$, Alice:
 
 \begin{enumerate}
 \item Elige aleatoriamente un entero $z$ en el intervalo $[1,n-1]$.
@@ -366,7 +378,7 @@ Para \textit{firmar el mensaje} conociendo su valor \textit{hash} H, Alice:
 
 La pareja $(r, s)$ es la firma del mensaje. Para obtenerla se generó un valor aleatorio $z$ que será escondido gracias a la multiplicación de puntos, a continuación, en el paso \ref{en:s}, $r$ es ligado al mensaje \textit{hash}. Para calcular el inverso de $z$ módulo $n$ es necesario que $n$ sea un número primo. Si el subgrupo no tiene orden primo, no podremos usar este algoritmo.
 
-Para verificar la firma sobre un mensaje Bob necesita: la clave pública de Alice ($K_A$), el valor \textit{hash} del mensaje ($H$) y su firma ($(r,s)$). Una vez conozca estos tres valores puede comenzar la verificación, para ello:
+Para \textit{verificar la firma} sobre un mensaje Bob necesita: la clave pública de Alice ($K_A$), el valor \textit{hash} del mensaje ($H$) y su firma ($(r,s)$). Una vez conozca estos tres valores puede comenzar la verificación, para ello:
 
 \begin{enumerate}
 \item Calcula $u_1 \equiv s^{-1}H \mod n$ y $u_2 \equiv s^{-1}r \mod n$.
@@ -375,6 +387,8 @@ Para verificar la firma sobre un mensaje Bob necesita: la clave pública de Alic
 \end{enumerate}
 
 Si Alice generó su firma correctamente, entonces $u_1P+u_2K_A=(u_1+k_Au_2)P=zP$ porque $z \equiv s^{-1}(H+k_Ar) \mod n$ y $r \equiv x_0 \mod n$.
+
+
 
 %Tamaño de las claves, número de parámetros, éxito.
 
