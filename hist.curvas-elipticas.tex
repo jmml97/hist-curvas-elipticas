@@ -13,16 +13,11 @@
 
 % Idioma
 
-\usepackage[es-noindentfirst, es-tabla]{babel}
+\usepackage[es-noindentfirst]{babel}
 
 % Citas de texto en línea/bloque
 
 \usepackage[autostyle]{csquotes}
-
-% Tablas
-
-\usepackage{booktabs}
-\usepackage{multirow}
 
 % Matemáticas
 
@@ -53,8 +48,6 @@
 \definecolor{webgreen}{rgb}{0,0.5,0}
 \hypersetup{
   colorlinks=true,
-  linkcolor=RoyalBlue,
-  urlcolor=Maroon,
   citecolor=webgreen,
 }
 
@@ -129,6 +122,7 @@ afterskip=2ex]{section,subsection,subsubsection}
 \addtokomafont{subsubsection}{\normalfont}
 \RedeclareSectionCommand[beforeskip=-4ex]{subsubsection}
 \addtokomafont{paragraph}{\normalfont\itshape}
+
 %-------------------------------------------------------------------------------
 %	TÍTULO
 %-------------------------------------------------------------------------------
@@ -182,28 +176,56 @@ El objetivo principal de la criptografía es el de la transmisión de informaci�
 
 \section{Curvas elípticas}
 
-\subsection{Curvas elípticas sobre los números reales}
+Antes de analizar la historia y el papel de las curvas elípticas en el contexto de la criptografía, damos una definición de ellas como objetos matemáticos abstractos.
 
-%Citas: \parencite{abedon-hyman-2003}
+    Sea $K$ un cuerpo y $\overline{K}$ su clausura algebraica. Una \textit{curva elíptica} sobre $\overline{K}$ es una curva proyectiva no singular $E \subset \mathbb{P}^2(\overline{K})$ definida por una ecuación (afín) de la forma \[ y^2 + a_1xy + a_3y = x^3 +a_2x^2 + a_4x + a_6, \] donde todos los $a_i \in \overline{K}$.
+    Cuando la característica de $\overline{K}$ es distinta de $2$ y de $3$, podemos simplificar la ecuación como \[ y^2 = x^3 + Ax + B, \] con $A,B \in \overline{K}$. Una ecuación de esta forma se conoce como \textit{ecuación de Weierstrass}, y en este caso la condición de no singularidad implica que $4A^3 + 27B^2 \neq 0$. Si de hecho los coeficientes $A$ y $B$ están en $K$, decimos que la curva está definida sobre $K$, y nos referimos a ella como \[ E = E(K) = \{ (x, y) \in K \times K : y^2 = x^3 + Ax + B\} \cup \{\mathcal{O}\}, \] donde denotamos por $\mathcal{O}$ al punto en el infinito con coordenadas homogéneas $[0:1:0]$. Notamos que estas curvas son simétricas con respecto al eje de abscisas.
+    
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.75\textwidth]{img/curve}
+  \caption{Ejemplos de curvas elípticas sobre $\mathbb{R}$ \parencite{wikimedia_elliptic_2014}.}
+  \label{fig:curva}
+\end{figure}
 
-%Antonio.
-
-%Definición, fórmula (simplificación?).
-
-%Estructura de grupo. Sumar puntos. Dibujitos.
+Podemos ver en la siguiente figura cómo afectan los parámetros $A$ y $B$ a la representación de las curvas elípticas.
 
 \begin{figure}[h]
   \centering
-  \includegraphics{img/operaciones-curvas}
+  \includegraphics[width=.75\textwidth]{img/parametros-curvas}
+  \caption{Ejemplos de curvas elípticas con distisntos parámetros \parencite{eichlseder_elliptic_2016}.}
+  \label{fig:parametros}
+\end{figure}
+
+
+\subsection{Operación de grupo en curvas elípticas}
+
+Un detalle intersante sobre las curvas elípticas es que se puede definir sobre ellas una operación $+$ de forma que $(E, +)$ sea un grupo abeliano, con elemento identidad el punto $\mathcal{O}$. Para definir esta operación, supondremos por un momento que $K = \mathbb{R}$, y entenderemos que el punto del infinito se encuentra ``al principio'' y ``al final'' del eje de ordenadas. Podemos pensar entonces que dos rectas paralelas se cortan en el punto $\mathcal{O}$, y también que una recta vertical interseca a $E$ en el infinito.
+
+    El procedimiento general es el que sigue. Dados dos puntos $P = (x_1, y_1)$ y $Q = (x_2, y_2)$ con $P,Q \in E$, consideramos la recta que los une y llamamos $R$ a la otra intersección de dicha recta con la curva $E$. Entonces, definimos $P + Q$ como el punto reflejado de $R$ con respecto al eje $X$, al que llamaremos $-R$. Notamos que este procedimiento funciona siempre que la recta considerada corte efectivamente a la curva en otro punto. Discutimos ahora los posibles casos particulares del método.
+    
+\begin{enumerate}
+    \item En primer lugar, si $P=\mathcal{O}$ tendremos que la recta que une $P$ y $Q$ es vertical, luego interseca a la curva en el punto reflejado de $Q$, es decir, $\mathcal{O} + Q = - (-Q) = Q$. Hemos probado de camino que el punto $\mathcal{O}$ actúa como elemento identidad para la operación $+$.
+    \item En lo que sigue consideraremos $P, Q \neq \mathcal{O}$. Abordamos primero el caso en el que $x_1 \neq x_2$. Entonces, la recta que une $P$ y $Q$ tiene pendiente \[ m = \frac{y_2 - y_1}{x_2 - x_1}, \] y veremos que corta a la recta en otro punto $R$ que permite aplicar el procedimiento general para calcular $P+Q$.	
+    \item Si $Q = P$ con segunda coordenada no nula, no podemos considerar la recta que los une, pero la aproximamos por la recta tangente a $E$ en el punto $P$. Es decir, tomando $y = y(x)$ en la expresión de la curva, podemos derivar implícitamente y obtener la pendiente de la recta tangente: \[ 2yy' = 3x^2 + A \implies m = y_1'(x) = \frac{3x_1^2 + A}{2y_1}. \]  Veremos también que la recta tangente corta a la curva en otro punto y podremos aplicar el procedimiento general, computando el valor de $P + P$.
+    \item Por último, consideramos el caso $Q = -P$, pues al ser las curvas simétricas respecto al eje $X$ no hay otra posibilidad. Así, la recta que une $P$ y $-P$ es vertical, corta a la curva en $\mathcal{O}$, y por tanto $P + (-P) = -\mathcal{O} = \mathcal{O}$, obteniendo que el elemento inverso de un punto $P$ es su reflejado $-P$. En el caso en que la segunda coordenada sea nula, consideramos de nuevo la recta tangente a $E$ en $P$, y tendremos que sigue siendo vertical y se verifica $P + P = \mathcal{O}$.
+\end{enumerate}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.65\textwidth]{img/operaciones-curvas}
   \caption{Operaciones en curvas elípticas \parencite{eichlseder_elliptic_2016}.}
   \label{fig:operaciones-curvas}
 \end{figure}
 
+%% Cálculo de puntos de corte
+
 \subsection{Curvas elípticas sobre cuerpos finitos}
 
-%Antonio.
 
 %Fórmula concreta, analogía con el caso de R.
+
+% Ejemplo de curva sobre R y curva sobre Z_algo
 
 \section{Evolución de las curvas elípticas en la criptografía}
 
@@ -254,52 +276,6 @@ El usuario \(i\) obtiene la clave \(K_{ij}\) a partir del número público \(Y_j
 \end{align*}
 El usuario \(j\) obtiene la clave de forma análoga, calculando en su caso \[K_{ij} = Y_i^{X_j} \mod q.\]
 
-Observamos que el protocolo de Diffie-Hellman tiene tres parámetros: \begin{itemize}
-  \item El orden del grupo, \(q\).
-  \item El generador \(\alpha\) fijo.
-  \item La clave \(X\) a la que elevamos \(\alpha\).
-\end{itemize}
-
-Existen varias recomendaciones sobre el tamaño de los parámetros \(q\) y \(X\). Por ejemplo la Agencia Nacional de la Seguridad de Sistemas de Información francesa (ANSSI por sus siglas en francés) hace la recomendación descrita en la tabla \ref{tab:tam-anssi} \parencite{anssi_mecanismes_2014}, mientras que el NIST recomienda los tamaños descritos en la tabla \ref{tab:tam-nist} \parencite{barker_recommendation_2016}.
-
-Como se puede observar, para ofrecer niveles de seguridad significativos son necesarios tamaños de los parámetros bastante grandes. Al estudiar la criptografía de curvas elípticas veremos que los tamaños de los parámetros utilizados son mucho menores. 
-
-\begin{table}[h]
-  \centering
-  \sffamily
-  \begin{tabular}{lcc}
-    \toprule
-    & \multicolumn{2}{c}{Tamaño en bits} \\
-    Periodo & clave & grupo \\
-    \midrule
-    2014 - 2030 & 200 & 2048\\
-    > 2030 & 200 & 3072\\
-    \bottomrule
-  \end{tabular}
-  \caption{Recomendaciones de la ANSSI para el tamaño de los parámetros de Diffie-Hellman.}
-  \label{tab:tam-anssi}
-\end{table}
-
-\begin{table}[h]
-  \centering
-  \sffamily
-  \begin{tabular}{lccc}
-    \toprule
-     & \multicolumn{3}{c}{Tamaño en bits} \\
-    Periodo & nivel de seguridad & clave & grupo \\
-    \midrule
-    Pasado & 80 & 160 & 1024\\
-    \multirow[t]{4}{*}{2016-2030} & 112 & 224 & 2048\\
-     & 128 & 256 & 3072\\
-     & 192 & 384 & 7680\\
-     & 256 & 512 & 15360\\
-    \bottomrule
-  \end{tabular}
-  \caption{Recomendaciones del NIST para el tamaño de los parámetros de Diffie-Hellman. Un nivel de seguridad de \(S\) bits indica que se necesitan aproximadamente \(2^S\) operaciones para romper el cifrado.}
-  \label{tab:tam-nist}
-\end{table}
-
-
 \subsubsection{Problema de Diffie-Hellman}
 
 Para que una tercera persona pudiese interceptar la comunicación tendría que obtener la clave \(K_{ij}\) a partir de \(Y_i\) e \(Y_j\), para lo que tendría que calcular, por ejemplo, \[K_{ij} = Y_i^{\left(log_{\alpha} Y_j\right)} \mod q.\] 
@@ -328,7 +304,7 @@ En 1984 Hendrik Lenstra propone un nuevo algoritmo de factorización. Su caracte
 %1985. Problema del logaritmo discreto con curvas elípticas. N. Koblitz y V. Miller (de forma independiente)
 Al año siguiente, N. Koblitz y V. Miller proponen, de forma independiente, un uso diferente de las curvas elípticas en criptografía. Su idea fue usar un criptosistema como el de Diffie y Hellman utilizando, en vez del grupo multiplicativo sobre un cuerpo finito, el grupo de puntos de una curva elíptica sobre un cuerpo finito. El enunciado del problema es el siguiente:
 \begin{displayquote}
-  Sea $E$ verificando la ecuación de Weierstrass $y^2+a_1xy+a_3y=x^3+a_2x^2+a_4x+a_6$ con $a_i \in \mathbb{F}_q$. Consideramos $G$ un subgrupo de los puntos de $E$ de orden un primo $n$. Dados $P,Q \in G$ encuentra $x \mod{n}$ tal que $Q=xP$.
+  Sea $E$ verificando la ecuación de Weierstrass $y^2+a_1xy+a_3y=x^3+a_2x^2+a_4x+a_6$ con $a_i \in \mathbb{F}_q$. Consideramos $G$ un subgrupo de los puntos de $E$. Dados $P,Q \in G$ encuentra $x \mod{n}$ tal que $Q=xP$. 
 \end{displayquote} 
 %¿poner ecuación reducida?
 Este problema lo denominamos ``problema del logaritmo discreto para curvas elípticas'', aunque no aparezcan logaritmos en él, por su similitud con el problema del logaritmo discreto.
@@ -341,6 +317,12 @@ Las curvas supersingulares de característica 2 y 3 tenían otra ventaja: elevar
 
 Pese a que esta elección de parámetros fuera conveniente por los aspectos comentados, los autores que los usaron más adelante se arrepintieron, pues, en 1991, se descubrió que el problema del logaritmo discreto sobre curvas supersingulares es mcho más fácil de resolver que en la mayoría de las curvas. Aunque las curvas supersingulares son muy pocas dentro de todas las curvas elípticas definidas sobre un cuerpo finito, su uso común dio una impresión exagerada sobre su importancia. Así, se pueden usar curvas fáciles de calcular (?)  sin recurrir a las supersingulares.
 
+\subsubsection{Reacciones iniciales}
+Durante los años siguientes a la aparición de la criptografía de la curva elíptica la actitud general de los criptógrafos fue aceptación y curiosidad, nadie la consideró una amenaza comercial. Aunque la mayor parte de los investigadores nunca habían estudiado curvas elípticas y no entendían la teoría asociada reaccionaron positivamente a la idea de un nuevo tipo de criptografía basada en ellas. A finales de los años 80, un grupo amplio de matemáticos empezó a trabajar en el tema y los avances que introdujeron se tomaron como un indicador de que la criptografía de clave pública pronto estaría lista.
+
+Es en este periodo cuando tres profesores de la universidad de Waterloo crearon una compañía que desarrolló e impulsó la criptografía de la curva elíptica. 
+
+
 \subsubsection{Algoritmo de firma}
 
 La mayor parte de los algoritmos que utilizaban las curvas elípticas consistían en adaptar los ya existentes para este grupo, no aprovechaban la estructura específica de las curvas elípticas.
@@ -348,13 +330,13 @@ La mayor parte de los algoritmos que utilizaban las curvas elípticas consistía
 % TODO: contar aparición de DSA...NSA
 Destacamos la adapación del algoritmo DSA, ya que fue un proceso complicado. En ECDSA (\textit{Elliptic Curve Digital Signature Algorithm}) suponemos que Alice quiere firmar un mensaje con su clave privada ($k_A$) y Bob quiere validar la firma usando la clave pública de Alice ($K_A$). La única que debería poder emitir firmas válidas es Alice, y estas deberían poder ser verificadas por cualquiera que conozca su clave pública.
 
-Alice y Bob usarán los mismos parámetros. Necesitan estar trabajando sobre la misma curva elíptica definida sobre un cuerpo $\mathbb{F}_q$ que contiene un subgrupo $G$ de orden primo $n$ con generador $P$.
+Alice y Bob usarán los mismos parámetros. Necesitan estar trabajando sobre la misma curva elíptica definida sobre un cuerpo $\mathbb{F}_q$ que contiene un subgrupo $G$ de orden primo ($n$) con generador $P$.
 
 ECDSA no trabaja sobre el mensaje, sino sobre una función \textit{hash} del mismo, que deberá ser truncada si su longitud supera $n$ (el orden del subgrupo).
 
 Alice comienza \textit{generando sus claves}. Para ello, elige aleatoriamente un entero $x$ en el intervalo $[0,n-1]$ y calcula $Q=xP$. La clave pública de Alice será $K_A=Q$ y la privada $k_A=x$.
 
-Para \textit{firmar el mensaje} conociendo su valor \textit{hash} $H$, Alice:
+Para \textit{firmar el mensaje} conociendo su valor \textit{hash} H, Alice:
 
 \begin{enumerate}
 \item Elige aleatoriamente un entero $z$ en el intervalo $[1,n-1]$.
@@ -367,7 +349,7 @@ Para \textit{firmar el mensaje} conociendo su valor \textit{hash} $H$, Alice:
 
 La pareja $(r, s)$ es la firma del mensaje. Para obtenerla se generó un valor aleatorio $z$ que será escondido gracias a la multiplicación de puntos, a continuación, en el paso \ref{en:s}, $r$ es ligado al mensaje \textit{hash}. Para calcular el inverso de $z$ módulo $n$ es necesario que $n$ sea un número primo. Si el subgrupo no tiene orden primo, no podremos usar este algoritmo.
 
-Para \textit{verificar la firma} sobre un mensaje Bob necesita: la clave pública de Alice ($K_A$), el valor \textit{hash} del mensaje ($H$) y su firma ($(r,s)$). Una vez conozca estos tres valores puede comenzar la verificación, para ello:
+Para verificar la firma sobre un mensaje Bob necesita: la clave pública de Alice ($K_A$), el valor \textit{hash} del mensaje ($H$) y su firma ($(r,s)$). Una vez conozca estos tres valores puede comenzar la verificación, para ello:
 
 \begin{enumerate}
 \item Calcula $u_1 \equiv s^{-1}H \mod n$ y $u_2 \equiv s^{-1}r \mod n$.
@@ -376,38 +358,6 @@ Para \textit{verificar la firma} sobre un mensaje Bob necesita: la clave públic
 \end{enumerate}
 
 Si Alice generó su firma correctamente, entonces $u_1P+u_2K_A=(u_1+k_Au_2)P=zP$ porque $z \equiv s^{-1}(H+k_Ar) \mod n$ y $r \equiv x_0 \mod n$.
-
-
-\subsubsection{Primeros algoritmos para el problema del logaritmo discreto sobre la curva elíptica} %% TÍTULO MUY LARGO :/
-
-Los primeros algoritmos para resolver el problema del logaritmo discreto sobre curvas elípticas eran los genéricos, no aprovechaban la estructura específica del grupo de la curva elíptica. El primero de estos algoritmos, diseñado por Pohlig y Hellman [] para resolver el problema del logaritmo discreto en cuerpos finitos, usa el teorema chino del resto para reducir el problema al problema del logaritmo discreto en subgrupos de orden primo.
-
-En un grupo $G$ de orden primo $n$ los dos mejores algoritmos genéricos son el \textit{baby-step/giant-step} de Shanks (basado en que podemos expresar un entero $x$ como $x = am + b$) y el algoritmo \textit{rho} de Pollard. Ambos requieren tiempo $O(\sqrt{n})$ por lo que se conocen como ataques de raíz cuadrada para el problema del logaritmo discreto. Aunque el método de Shanks tiene la ventaja de ser determinista (en cada paso no se elige entre varias opciones, solo hay una posible), necesita mucha memoria, del orden de $\sqrt{n}$, y en la práctica se prefiere una versión aleatorizada del método \textit{rho} de Pollard. La idea general de este método es recorrer pseudo-aleatoriamente el grupo $G$ usando ciertas combinaciones del punto base $P$ y del punto $Q$ con el logaritmo discreto desconocido. Cuando al recorrer el grupo pasemos dos veces por el mismo sitio, podremos resolver el logaritmo discreto.
-
-Se encontraron más algoritmos para resolver este problema, algunos más rápidos que los de complejidad raíz cuadrada. Sin embargo, en las curvas elípticas elegidas en la mayor parte de las aplicaciones criptográficas los algoritmos más rápidos seguían siendo los genéricos.
-
-Otro algoritmo relevante para resolver el problema del logaritmo discreto es el \textit{ataque por emparejamiento de Weil}, que lo conseguía resolver en tiempo subexponencial (esto es, mayor que polinómico, pero menor que exponencial). Se basa en una aplicación bilineal que lleva parejas de puntos de la curva elíptica divisores de $n$ a las raíces $n$-ésimas de la unidad. Este algoritmo es especialmente efectivo en las curvas supersingulares, lo que provocó que este tipo de curvas se evitaran en criptografía.
-
-\subsubsection{Reacciones iniciales y enfrentamiento con RSA}
-Durante los años siguientes a la aparición de la criptografía de la curva elíptica la actitud general de los criptógrafos fue aceptación y curiosidad, nadie la consideró una amenaza comercial. Aunque la mayor parte de los investigadores nunca habían estudiado curvas elípticas y no entendían la teoría asociada reaccionaron positivamente a la idea de un nuevo tipo de criptografía basada en ellas. A finales de los años 80, un grupo amplio de matemáticos empezó a trabajar en el tema y los avances que introdujeron se tomaron como un indicador de que la criptografía de clave pública pronto estaría lista.
-
-Es en este periodo cuando tres profesores de la universidad de Waterloo crearon una compañía que desarrolló e impulsó la criptografía de la curva elíptica. Los investigadores asociados comenzaron a asistir a conferencias en las que se establecían los estándares criptográficos para luchar por la inclusión de los protocolos basados en curvas elípticas en los mismos. \textit{ECDSA} estaba avanzando como una alternativa eficiente a las firmas RSA y al DSA en el que se basa, aunque no fue incluido en los estándares hasta 1999 y 2000.
-
-Mientras, la seguridad basada en RSA estaba teniendo éxito comercial. La criptografía apoyada en RSA estaba consiguiendo una buena aceptación entre el público general y tenía el monopolio virtual de la criptografía de llave pública. Sin embrago, se avecinaban problemas, los métodos de factorización habían disminuido su tiempo de ejecución, provocando que los números recomendados para que el uso de RSA fuera seguro crecerían pronto a miles de bits. Los partidarios de la criptografía de la curva elíptica adevertían de que este es un problema importante en los dispositivos con poco espacio de almacenamiento como los teléfonos móviles, tarjetas, \dots
-
-En 1997, RSA Data Security puso en su página web una sección en la que advertía de que la criptografía basada en las curvas elípticas ponía en riesgo los datos de sus clientes. Argumentaba que el problema de factorización, en el que RSA basa su seguridad, había sido ampliamente estudiado mientras que el problema del logaritmo discreto, en el que la basa la criptografía de la curva elíptica, necesitaba todavía más estudio y pruebas. Además, decían, pocos criptógrafos entienden realmente las curvas elípticas, por lo que no se podrá evaluar correctamente su seguridad.
-
-Los defensores de la criptografía de la curva elíptica respondieron haciendo ver que aunque el problema de factorización se conociera desde siglos antes, fue la invención de la criptografía RSA en 1977 la que impulsó los esfuerzos para mejorar los algoritmos. Además, el problema del logaritmo discreto en curvas elípticas es análogo al correspondiente problema en cuerpos finitos y la mayor parte de las aproximaciones al problema en la curva elíptica aprovechaba lo que se había estudiado antes en el contexto de los cuerpos finitos. El problema del logaritmo discreto tuvo un papel importante en la criptografía mucho antes de la invención de RSA y la criptografía de clave pública. Por otro lado, no es del todo correcto de que sea necesario un conocimiento matemático profundo para estudiar posibles ataques en las curvas elípticas más que para el problema de factorización. Aunque haga falta un contexto matemático mayor para entender el grupo sobre na curva elíptica que la exponenciación utilizada en RSA, no por ello la investigación en este campo irá más lento. Asimismo, al contrario de lo afirmado en esta página web, en el momento de su publicación había menos criptógrafos con conocimiento matemático suficiente para analizar y mejorar los ataques sobre factorización que personas capaces de evaluar los mejores ataques hacia el problema del logaritmo discreto.
-
-En 1998 surge un nuevo ataque para el problema del logaritmo discreto, \textit{xedni}, utilizaba combinaciones aleatorias de los puntos $P$ Y $Q$ que elevaba a puntos con coordenadas enteras y una vez que encontraba una potencia racional que cumplía una serie de condiciones podía encontrar $x$.
-
-El tiempo de ejecución del algoritmo dependía en algunas consideraciones sutiles que eran difíciles de plasmar en términos computacionales. Al principio no estaba claro si este algoritmo sería más eficiente que otros que también resolvían logaritmos discretos sobre curvas elípticas.
-
-Cuando surge este ataque está candente la competición con RSA y los partidarios de la criptografía de la curva elíptica temen que sus competidores aprovechen este algoritmo para proclamar que la criptografía de la curva elíptica es insegura. Sin embargo, resultó que pequeñas modificaciones sobre este algoritmo se podían usar también para resolver el problema de factorizar un RSA módulo $N$. Así, si este algoritmo termina con la criptografía de la curva elíptica, también lo haría con la basada en RSA.
-
-Se descubrió que el algoritmo era tremendamente ineficiente, el motivo es similar al que se usó para demostrar que el \textit{index calculus} no funcionaría sobre curvas elípticas. Se cree que los ataques por exponenciación no funcionarán en en las curvas elípticas, aunque se sigue recomendando evitar los cuerpos para los que sea fácil exponenciar y que en algún momento un atacante pueda aprovechar esta debilidad.
-
-
 
 %Tamaño de las claves, número de parámetros, éxito.
 
