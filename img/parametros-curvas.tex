@@ -1,0 +1,56 @@
+%$ xelatex --shell-escape $0
+% Maria Eichlseder, June 2016
+% https://www.iacr.org/authors/tikz/
+\documentclass[crop,tikz]{standalone}
+
+\usepackage[no-math]{fontspec}
+\setmainfont{Libertinus Serif}
+\setsansfont{Libertinus Sans}
+\setmonofont{Libertinus Mono}
+
+\usepackage[math-style=TeX]{unicode-math}
+\setmathfont{Libertinus Math}
+
+\usepackage{tikz}
+\usepackage{amsfonts}
+\usetikzlibrary{intersections}
+
+
+\newcommand{\plotcurve}[3][thick, every plot/.style={smooth}]{
+  % plot curve y^2 = x^3 + a x + b in range [-3,3]^2
+  % parameter 1 (optional): style options for curve (color, etc)
+  % parameter 2: curve parameter a
+  % parameter 3: curve parameter b
+  \draw[gray] (-3,-3) rectangle (3,3);
+  \draw[->,>=latex,gray] (-3,0) -- (3,0);
+  \draw[->,>=latex,gray] (0,-3) -- (0,3);
+  \draw[name path=curve, #1] plot[id=curve#2#3, raw gnuplot] function {
+    f(x,y) = y**2 - x**3 - #2*x - #3;
+    set xrange [-3:3];
+    set yrange [-3:3];
+    set view 0,0;
+    set isosample 50,50;
+    set cont base;
+    set cntrparam levels incre 0,0.1,0;
+    unset surface;
+    splot f(x,y);
+  };
+}
+
+\begin{document}
+  \sffamily
+  \begin{tikzpicture}
+    \foreach \a in {-2,...,1} {
+      \foreach \b in {-1,...,2} {
+        \begin{scope}[xshift=1.75*\b cm,yshift=-1.75*\a cm,scale=.25]
+          \plotcurve{\a}{\b}
+        \end{scope}
+      }
+      \draw (-1.75*2+1,-1.75*\a) node[above,rotate=90] {$a=\a$};
+    }
+    \foreach \b in {-1,...,2} {
+      \draw (1.75*\b,1.75*3-1) node[above] {$b=\b$};
+    }
+    \node[above] at (1.75/2,-2*1.75) {$y^2 = x^3 + a \cdot x + b$};
+  \end{tikzpicture}
+\end{document}
