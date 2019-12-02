@@ -14,3 +14,5 @@
 *.run.xml
 .DS_Store
 __latexindent_temp.tex
+*.gnuplot
+*.table
