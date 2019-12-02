@@ -78,7 +78,7 @@
     \end{scope}
 
 
-    \begin{scope}[xshift=15cm]
+    \begin{scope}[yshift=-10cm]
       \plotcurve{-2}{2}
       \draw[thick, name path=chord] (-2.5,.5) -- (2.5,2.0);
       \draw[name intersections={of=curve and chord}] (intersection-1) node {$●$} node[above left] {$P$}
@@ -91,7 +91,7 @@
     \end{scope}
 
 
-    \begin{scope}[xshift=22.5cm]
+    \begin{scope}[xshift=7.5cm, yshift=-10cm]
 	  \draw[gray] (-3,-3) rectangle (3,3);
 	  \draw[->,>=latex,gray] (-3,0) -- (3,0);
 	  \draw[->,>=latex,gray] (0,-3) -- (0,3);
