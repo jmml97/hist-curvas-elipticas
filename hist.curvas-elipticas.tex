@@ -207,8 +207,8 @@ Un detalle intersante sobre las curvas elípticas es que se puede definir sobre 
 \begin{enumerate}
     \item En primer lugar, si $P=\mathcal{O}$ tendremos que la recta que une $P$ y $Q$ es vertical, luego interseca a la curva en el punto reflejado de $Q$, es decir, $\mathcal{O} + Q = - (-Q) = Q$. Hemos probado de camino que el punto $\mathcal{O}$ actúa como elemento identidad para la operación $+$.
     \item En lo que sigue consideraremos $P, Q \neq \mathcal{O}$. Abordamos primero el caso en el que $x_1 \neq x_2$. Entonces, la recta que une $P$ y $Q$ tiene pendiente \[ m = \frac{y_2 - y_1}{x_2 - x_1}, \] y veremos que corta a la recta en otro punto $R$ que permite aplicar el procedimiento general para calcular $P+Q$.	
-    \item Si $Q = P$ con segunda coordenada no nula, no podemos considerar la recta que los une, pero la aproximamos por la recta tangente a $E$ en el punto $P$. Es decir, tomando $y = y(x)$ en la expresión de la curva, podemos derivar implícitamente y obtener la pendiente de la recta tangente: \[ 2yy' = 3x^2 + A \implies m = y_1'(x) = \frac{3x_1^2 + A}{2y_1}. \]  Veremos también que la recta tangente corta a la curva en otro punto y podremos aplicar el procedimiento general, computando el valor de $P + P$.
-    \item Por último, consideramos el caso $Q = -P$, pues al ser las curvas simétricas respecto al eje $X$ no hay otra posibilidad. Así, la recta que une $P$ y $-P$ es vertical, corta a la curva en $\mathcal{O}$, y por tanto $P + (-P) = -\mathcal{O} = \mathcal{O}$, obteniendo que el elemento inverso de un punto $P$ es su reflejado $-P$. En el caso en que la segunda coordenada sea nula, consideramos de nuevo la recta tangente a $E$ en $P$, y tendremos que sigue siendo vertical y se verifica $P + P = \mathcal{O}$.
+    \item Si $Q = P$ con segunda coordenada no nula, no podemos considerar la recta que los une, pero la aproximamos por la recta tangente a $E$ en el punto $P$. Es decir, tomando $y = y(x)$ en la expresión de la curva, podemos derivar implícitamente y obtener la pendiente de la recta tangente: \[ 2yy' = 3x^2 + A \implies m = y_1'(x_1) = \frac{3x_1^2 + A}{2y_1}. \]  Veremos también que la recta tangente corta a la curva en otro punto y podremos aplicar el procedimiento general, computando el valor de $P + P$.
+    \item Por último, consideramos el caso $Q = -P$, pues al ser las curvas simétricas respecto al eje $X$ no hay otra posibilidad. Así, la recta que une $P$ y $-P$ es vertical, corta a la curva en $\mathcal{O}$, y por tanto $P + (-P) = -\mathcal{O} = \mathcal{O}$, obteniendo que el elemento inverso de un punto $P$ es su reflejado $-P$. En el caso en que la segunda coordenada sea nula, consideramos de nuevo la recta tangente a $E$ en $P$, y tenemos que sigue siendo vertical y corta a la curva en $\mathcal{O}$, verificándose $P + P = \mathcal{O}$.
 \end{enumerate}
 
 \begin{figure}[h]
@@ -218,8 +218,21 @@ Un detalle intersante sobre las curvas elípticas es que se puede definir sobre 
   \label{fig:operaciones-curvas}
 \end{figure}
 
-%% Cálculo de puntos de corte
+Veamos ahora cómo calcular el punto de corte de la recta considerada (de pendiente $m$) con la curva $E$, en los casos que no hemos determinado explícitamente la suma de $P+Q$. Podemos escribir la recta como \[ y = m(x - x_1) + y_1, \] y para ver el punto de corte con $E$, sustituimos en su expresión, quedando: \[ (m(x - x_1) + y_1)^2 = x^3 + Ax + B. \] Simplificando esta expresión, obtenemos otra de la forma
+\begin{equation}
+    \label{eq:corte}
+	0 = x^3 - m^2x^2 + bx + c 
+\end{equation} 
 
+    Notamos que no es necesario resolver la ecuación cúbica en $x$ para determinar los puntos de corte. Si tenemos un polinomio de la forma $x^3 + ax^2 + bx + c$ y conocemos sus tres raíces $r,s,t$, podemos escribir \[ x^3 + ax^2 + bx + c = (x-r)(x-s)(x-t) = x^3 - (r+s+t)x^2 + dx + e. \] Identificando coeficientes, vemos que $-a = r + s + t$, de donde $t = -a -r -s$. Es decir, si conocemos dos raíces de la expresión, podemos conocer la tercera de forma sencilla.
+    
+    Volviendo a nuestro caso, conocemos dos soluciones de \eqref{eq:corte}, a saber, $x_1$ y $x_2$ (incluyendo el caso de solución doble $x_1=x_2$). Como $a = -m^2$, podemos calcular la tercera solución de \eqref{eq:corte} fácilmente: \[ x_3 = m^2 - x_1 - x_2. \] Por último, sustituimos en la expresión de la recta para obtener la segunda coordenada del punto de corte, es decir, \[y_3 = m(x_3 - x_1) + y_1, \] y podemos escribir $P+Q = -R$ con $R=(x_3, y_3)$.
+    
+    Para poder afirmar que $(E, +)$ es un grupo abeliano, falta verificar la conmutatividad y la asociatividad. La primera es obvia o bien de las fórmulas desarrolladas o bien del hecho de que la recta que pasa por $P$ y por $Q$ es la misma que la que pasa por $Q$ y por $P$. La asociatividad es algo menos trivial, pero puede probarse también a partir de las fórmulas para la suma. Una prueba completa puede consultarse en la sección 2.4 de \parencite{elliptic_washington_2008}.
+    
+    %% Scalar multiplications
+    
+    
 \subsection{Curvas elípticas sobre cuerpos finitos}
 
 
