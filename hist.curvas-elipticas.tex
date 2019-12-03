@@ -186,7 +186,7 @@ El objetivo principal de la criptografía es el de la transmisión de informaci�
 Antes de analizar la historia y el papel de las curvas elípticas en el contexto de la criptografía, damos una definición de ellas como objetos matemáticos abstractos.
 
     Sea $K$ un cuerpo y $\overline{K}$ su clausura algebraica. Una \textit{curva elíptica} sobre $\overline{K}$ es una curva proyectiva no singular $E \subset \mathbb{P}^2(\overline{K})$ definida por una ecuación (afín) de la forma \[ y^2 + a_1xy + a_3y = x^3 +a_2x^2 + a_4x + a_6, \] donde todos los $a_i \in \overline{K}$.
-    Cuando la característica de $\overline{K}$ es distinta de $2$ y de $3$, podemos simplificar la ecuación como \[ y^2 = x^3 + Ax + B, \] con $A,B \in \overline{K}$. Una ecuación de esta forma se conoce como \textit{ecuación de Weierstrass}, y en este caso la condición de no singularidad implica que $4A^3 + 27B^2 \neq 0$. Si de hecho los coeficientes $A$ y $B$ están en $K$, decimos que la curva está definida sobre $K$, y nos referimos a ella como \[ E = E(K) = \{ (x, y) \in K \times K : y^2 = x^3 + Ax + B\} \cup \{\mathcal{O}\}, \] donde denotamos por $\mathcal{O}$ al punto en el infinito con coordenadas homogéneas $[0:1:0]$. Notamos que estas curvas son simétricas con respecto al eje de abscisas.
+    Cuando la característica de $\overline{K}$ es distinta de $2$ y de $3$, podemos simplificar la ecuación como \[ y^2 = x^3 + Ax + B, \] con $A,B \in \overline{K}$. Una ecuación de esta forma se conoce como \textit{ecuación de Weierstrass}, y en este caso la condición de no singularidad implica que $4A^3 + 27B^2 \neq 0$. Si de hecho los coeficientes $A$ y $B$ están en $K$, decimos que la curva está definida sobre $K$, y nos referimos a ella como \[ E = E(K) = \{ (x, y) \in K \times K : y^2 = x^3 + Ax + B\} \cup \{\mathcal{O}\}, \] donde denotamos por $\mathcal{O}$ al punto en el infinito con coordenadas homogéneas $[0:1:0]$. En lo que sigue trabajaremos siempre con esta representación de las curvas.
     
 \begin{figure}[h]
   \centering
@@ -203,7 +203,6 @@ Podemos ver en la figura \ref{fig:parametros} cómo afectan los parámetros $A$ 
   \caption{Ejemplos de curvas elípticas con distintos parámetros \parencite{eichlseder_elliptic_2016}.}
   \label{fig:parametros}
 \end{figure}
-
 
 \subsection{Operación de grupo en curvas elípticas}
 
@@ -237,15 +236,22 @@ Veamos ahora cómo calcular el punto de corte de la recta considerada (de pendie
     
     Para poder afirmar que $(E, +)$ es un grupo abeliano, falta verificar la conmutatividad y la asociatividad. La primera es obvia o bien de las fórmulas desarrolladas o bien del hecho de que la recta que pasa por $P$ y por $Q$ es la misma que la que pasa por $Q$ y por $P$. La asociatividad es algo menos trivial, pero puede probarse también a partir de las fórmulas para la suma. Una prueba completa puede consultarse en la sección 2.4 de \parencite{elliptic_washington_2008}.
     
-    %% Scalar multiplications
-    
+    Otra operación que podemos definir sobre puntos de curvas elípticas (y que tendrá mucha relevancia en sus aplicaciones criptográficas) es la \textit{multiplicación por escalares.} Dado un punto $P\in E$ y un natural $n$, podemos calcular \[ nP = \underbrace{P + P + \cdots + P}_{n}.\] Aunque parece que se necesitan realizar $n$ sumas, podemos calcular este punto con eficiencia $O(\log n)$, sin más que escribir $n$ en base 2 y realizar duplicaciones sucesivas. Por ejemplo, si queremos calcular $27P$, escribimos $27 = 2^4 + 2^3 + 2^1 + 2^0$, y así \[ 27P = 2^4P + 2^3P + 2P + P = 2(2^3P) + 2(2^2P) + 2P + P.\]
     
 \subsection{Curvas elípticas sobre cuerpos finitos}
 
+Hasta ahora hemos definido las curvas elípticas sobre un cuerpo $K$ cualquiera (o su clausura algebraica), pero es de especial interés el caso en que $K=\mathbb{F}_p$ con $p$ un primo, es decir, consideramos curvas sobre el cuerpo finito de $p$ elementos. En este caso se sigue manteniendo la estructura de grupo, teniendo en cuenta que si $Q = (x,y)$, entonces $-Q = (x, -y \bmod p)$. La operación de suma sigue teniendo las mismas expresiones algebraicas (siempre $\bmod p$), considerando que las rectas en $\mathbb{F}_p$ son el conjunto de puntos que verifican la ecuación \[ ax + by + c \equiv 0 \bmod p. \] Sin embargo, el método geométrico ya no es tan claro.
 
-%Fórmula concreta, analogía con el caso de R.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\textwidth]{img/cuerpos-curvas}
+  \caption{Curvas elípticas sobre distintos cuerpos \parencite{eichlseder_elliptic_2016}.}
+  \label{fig:cuerpos-curvas}
+\end{figure}
 
-% Ejemplo de curva sobre R y curva sobre Z_algo
+Luckily, there's a faster algorithm for computing the order: Schoof's algo-
+rithm. I won't enter the details of the algorithm — what matters is that it runs
+in polynomial time, and this is what we need.
 
 \section{Evolución de las curvas elípticas en la criptografía}
 
