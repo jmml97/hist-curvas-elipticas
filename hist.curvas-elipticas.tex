@@ -506,9 +506,69 @@ A pesar de los comentarios negativos sobre la criptografía de la curva elíptic
 \section{El futuro de las curvas elípticas}
 
 Como ya hemos visto, para que un atacante pudiera romper un cifrado basado en las técnicas de curvas elípticas actuales necesitaría resolver el problema del logaritmo discreto.
-%For example, breaking the widely used Curve25519 using the best attacks available would require more than 2^128 bit operations, an astronomical amount which agrees with the current security standards.
+Un atacante que posea un ordenador cuántico con una implementación del algoritmo de Shor (cita/referencia?) podría resolver dicho problema con facilidad. 
+En la actualidad se desconoce si es factible la construcción de dicho ordenador a corto o largo plazo, pero experimentos a tamaños muy reducidos han producido resultados satisfactorios, por lo que los criptógrafos se están tomando esta amenaza en serio.
+El hecho de que los tamaños recomendados para los parámetros de ECDH sean menores que para los de otros criptosistemas hace que se requiera una menor capacidad de cómputo cuántico para romperlo que, por ejemplo, RSA (citas).
 
-Un atacante que posea un ordenador cuántico con una implementación del algoritmo de Shor (cita/referencia?) podría resolver dicho problema con facilidad.
+El NIST comenzó en 2017 (cita) una recogida de propuestas para el desarrollo de criptosistemas que puedan resistir ataques por parte de ordenadores cuánticos con altas capacidades de computación.
+Se estima que el proceso de selección y evaluación de las propuestas enviadas pueda alargarse hasta 2022.
+La mayoría de las propuestas que hay sobre la mesa actualmente están basados en la resolución de problemas \textit{complicados}, como puede ser decodificar códigos lineales aleatorios, invertir funciones \textit{hash} o la resolución de sistemas de ecuaciones no lineales sobre cuerpos finitos.
+Hay otra propuesta que goza de cierta atención y reconocimiento últimamente y que se basa de nuevo en las curvas elípticas.
+El problema no es en este caso encontrar la relación entre dos puntos de una curva elíptica, sino encontrar la relación entre dos curvas elípticas dentro un gran conjunto de ellas.
+
+% Dadas dos curvas elípticas, \(E_1\) y \(E_2\), podemos definir una función \(\phi\), que llamamos \textit{isogenia}, asignando cada punto de \(E_1\) en uno de \(E_2\).
+% Aplicando de forma sucesiva dicha isogenia llegaremos a una curva \(E_p\).
+% La tarea de un atacante sería reconstruir el camino que se ha tomado desde la curva inicial hasta la final.
+
+Una \textit{isogenia} es una aplicación de un grupo en otro sobreyectiva, homomórfica y que preserva la estructura.
+En el caso de las curvas elípticas, una isogenia \(\phi\) asigna puntos de una curva \(E\) a puntos de otra curva \(E'\).
+
+El \(j\)-invariante es un valor que puede calcularse para cada curva elíptica utilizando sus parámetros. En el caso de las curvas en forma de Weierstrass, viene dado por \[
+  j(E) = 1728 \cdot \frac{4a^3}{4a^3 + 27b^2}.
+\]
+
+Algoritmo SIDH (Supersingular Isogeny Diffie-Hellman).
+
+Ambas partes generan una clave secreta, una isogenia basada en la curva \(E\), pública, y en los puntos \(P_a, Q_a, P_b, Q_b\) de \(E\). 
+A partir de esta isogenia cada parte genera una nueva curva, que serán consideradas las claves públicas.
+Cada parte uniendo su clave privada, la isogenia generada anteriormente con la curva de la otra parte (su clave pública) generan cada una una curva final que tienen el mismo \(j\)-invariante, valor que se convierte en la clave secreta que ambos comparten.
+
+Parámetros públicos:
+
+\begin{itemize}
+  \item Un primo \(p\).
+  \item Una curva elíptica supersingular (qué es) \(E\) sobre el cuerpo finito \(\mathbb F_p\).
+  \item Cuatro puntos fijos sobre \(E\), \(P_a, Q_a, P_b, Q_b\).
+\end{itemize}
+
+Alice:
+
+\begin{enumerate}
+  \item Genera aleatoriamente \(m_a\) y \(n_a\).
+  \item Obtiene el punto \(m_aP_a + n_aQ_a\).
+  \item Genera la isogenia \(\phi_a: E \to E_a = E/\langle R_a \rangle\).
+  \item Obtiene los puntos \(P'_b = \phi_a(P_b), Q'_b = \phi_a(Q_b)\).
+  \item Envía la tupla \((E_a, P'_b, Q'_b)\) a Bob.
+  \item Recibe la tupla \((E_b, P'_a, Q'_a)\) de Bob.
+  \item Calcula \(S_{ab} = m_aP'_a + n_aQ'_a\).
+  \item Genera la isogenia \(\phi_{ab} : E_a \to E_{ab} = E_a/\langle S_{ab} \rangle\).
+  \item Calcula la clave \(k = j_{ab} = j(E_{ab})\).
+\end{enumerate}
+
+Bob:
+
+\begin{enumerate}
+  \item Genera aleatoriamente \(m_b\) y \(n_b\).
+  \item Obtiene el punto \(m_bP_b + n_bQ_b\).
+  \item Genera la isogenia \(\phi_b: E \to E_b = E/\langle R_b \rangle\).
+  \item Obtiene los puntos \(P'_a = \phi_b(P_a), Q'_a = \phi_b(Q_a)\).
+  \item Envía la tupla \((E_b, P'_a, Q'_a)\) a Bob.
+  \item Recibe la tupla \((E_a, P'_b, Q'_b)\) de Bob.
+  \item Calcula \(S_{ba} = m_bP'_b + n_bQ'_b\).
+  \item Genera la isogenia \(\phi_{ba} : E_b \to E_{ba} = E_b/\langle S_{ba} \rangle\).
+  \item Calcula la clave \(k = j_{ba} = j(E_{ba})\).
+\end{enumerate}
+
 
 %Jose.
 
