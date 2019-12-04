@@ -186,7 +186,7 @@ El objetivo principal de la criptografía es el de la transmisión de informaci�
 Antes de analizar la historia y el papel de las curvas elípticas en el contexto de la criptografía, damos una definición de ellas como objetos matemáticos abstractos.
 
     Sea $K$ un cuerpo y $\overline{K}$ su clausura algebraica. Una \textit{curva elíptica} sobre $\overline{K}$ es una curva proyectiva no singular $E \subset \mathbb{P}^2(\overline{K})$ definida por una ecuación (afín) de la forma \[ y^2 + a_1xy + a_3y = x^3 +a_2x^2 + a_4x + a_6, \] donde todos los $a_i \in \overline{K}$.
-    Cuando la característica de $\overline{K}$ es distinta de $2$ y de $3$, podemos simplificar la ecuación como \[ y^2 = x^3 + Ax + B, \] con $A,B \in \overline{K}$. Una ecuación de esta forma se conoce como \textit{ecuación de Weierstrass}, y en este caso la condición de no singularidad implica que $4A^3 + 27B^2 \neq 0$. Si de hecho los coeficientes $A$ y $B$ están en $K$, decimos que la curva está definida sobre $K$, y nos referimos a ella como \[ E = E(K) = \{ (x, y) \in K \times K : y^2 = x^3 + Ax + B\} \cup \{\mathcal{O}\}, \] donde denotamos por $\mathcal{O}$ al punto en el infinito con coordenadas homogéneas $[0:1:0]$. Notamos que estas curvas son simétricas con respecto al eje de abscisas.
+    Cuando la característica de $\overline{K}$ es distinta de $2$ y de $3$, podemos simplificar la ecuación como \[ y^2 = x^3 + Ax + B, \] con $A,B \in \overline{K}$. Una ecuación de esta forma se conoce como \textit{ecuación de Weierstrass}, y en este caso la condición de no singularidad implica que $4A^3 + 27B^2 \neq 0$. Si de hecho los coeficientes $A$ y $B$ están en $K$, decimos que la curva está definida sobre $K$, y nos referimos a ella como \[ E = E(K) = \{ (x, y) \in K \times K : y^2 = x^3 + Ax + B\} \cup \{\mathcal{O}\}, \] donde denotamos por $\mathcal{O}$ al punto en el infinito con coordenadas homogéneas $[0:1:0]$. En lo que sigue trabajaremos siempre con esta representación de las curvas.
     
 \begin{figure}[h]
   \centering
@@ -200,14 +200,13 @@ Podemos ver en la figura \ref{fig:parametros} cómo afectan los parámetros $A$ 
 \begin{figure}[h]
   \centering
   \includegraphics[width=.75\textwidth]{img/parametros-curvas}
-  \caption{Ejemplos de curvas elípticas con distintos parámetros \parencite{eichlseder_elliptic_2016}.}
+  \caption{Ejemplos de curvas elípticas con distintos parámetros. Basado en  \parencite{eichlseder_elliptic_2016}.}
   \label{fig:parametros}
 \end{figure}
 
-
 \subsection{Operación de grupo en curvas elípticas}
 
-Un detalle intersante sobre las curvas elípticas es que se puede definir sobre ellas una operación $+$ de forma que $(E, +)$ sea un grupo abeliano, con elemento identidad el punto $\mathcal{O}$. Para definir esta operación, supondremos por un momento que $K = \mathbb{R}$, y entenderemos que el punto del infinito se encuentra ``al principio'' y ``al final'' del eje de ordenadas. Podemos pensar entonces que dos rectas paralelas se cortan en el punto $\mathcal{O}$, y también que una recta vertical interseca a $E$ en el infinito.
+Un detalle interesante sobre las curvas elípticas es que se puede definir sobre ellas una operación $+$ de forma que $(E, +)$ sea un grupo abeliano, con elemento identidad el punto $\mathcal{O}$. Para definir esta operación, supondremos por un momento que $K = \mathbb{R}$, y entenderemos que el punto del infinito se encuentra ``al principio'' y ``al final'' del eje de ordenadas. Podemos pensar entonces que dos rectas paralelas se cortan en el punto $\mathcal{O}$, y también que una recta vertical interseca a $E$ en el infinito.
 
     El procedimiento general es el que sigue. Dados dos puntos $P = (x_1, y_1)$ y $Q = (x_2, y_2)$ con $P,Q \in E$, consideramos la recta que los une y llamamos $R$ a la otra intersección de dicha recta con la curva $E$. Entonces, definimos $P + Q$ como el punto reflejado de $R$ con respecto al eje $X$, al que llamaremos $-R$. Notamos que este procedimiento funciona siempre que la recta considerada corte efectivamente a la curva en otro punto. Discutimos ahora los posibles casos particulares del método.
     
@@ -221,7 +220,7 @@ Un detalle intersante sobre las curvas elípticas es que se puede definir sobre 
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.65\textwidth]{img/operaciones-curvas}
-  \caption{Suma de puntos en curvas elípticas \parencite{eichlseder_elliptic_2016}.}
+  \caption{Suma de puntos en curvas elípticas. Basado en  \parencite{eichlseder_elliptic_2016}.}
   \label{fig:operaciones-curvas}
 \end{figure}
 
@@ -237,15 +236,32 @@ Veamos ahora cómo calcular el punto de corte de la recta considerada (de pendie
     
     Para poder afirmar que $(E, +)$ es un grupo abeliano, falta verificar la conmutatividad y la asociatividad. La primera es obvia o bien de las fórmulas desarrolladas o bien del hecho de que la recta que pasa por $P$ y por $Q$ es la misma que la que pasa por $Q$ y por $P$. La asociatividad es algo menos trivial, pero puede probarse también a partir de las fórmulas para la suma. Una prueba completa puede consultarse en la sección 2.4 de \parencite{elliptic_washington_2008}.
     
-    %% Scalar multiplications
-    
+    Otra operación que podemos definir sobre puntos de curvas elípticas (y que tendrá mucha relevancia en sus aplicaciones criptográficas) es la \textit{multiplicación por escalares.} Dado un punto $P\in E$ y un natural $n$, podemos calcular \[ nP = \underbrace{P + P + \cdots + P}_{n}.\] Aunque parece que se necesitan realizar $n$ sumas, podemos calcular este punto con eficiencia $O(\log n)$, sin más que escribir $n$ en base 2 y realizar duplicaciones sucesivas. Por ejemplo, si queremos calcular $27P$, escribimos $27 = 2^4 + 2^3 + 2^1 + 2^0$, y así \[ 27P = 2^4P + 2^3P + 2P + P = 2(2^3P) + 2(2^2P) + 2P + P.\]
     
 \subsection{Curvas elípticas sobre cuerpos finitos}
 
+Hasta ahora hemos definido las curvas elípticas sobre un cuerpo $K$ cualquiera (o su clausura algebraica), pero es de especial interés el caso en que $K=\mathbb{F}_p$ con $p$ un primo, es decir, consideramos curvas sobre el cuerpo finito de $p$ elementos. En este caso se sigue manteniendo la estructura de grupo, teniendo en cuenta que si $Q = (x,y)$, entonces $-Q = (x, -y \bmod p)$. La operación de suma sigue teniendo las mismas expresiones algebraicas (siempre $\bmod p$), considerando que las rectas en $\mathbb{F}_p$ son el conjunto de puntos que verifican la ecuación \[ ax + by + c \equiv 0 \bmod p. \] Sin embargo, el método geométrico ya no es tan claro, pues no es fácil visualizar las operaciones en $\mathbb{F}_p$.
 
-%Fórmula concreta, analogía con el caso de R.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\textwidth]{img/cuerpos-curvas}
+  \caption{Comparación de curvas elípticas sobre $\mathbb{R}$ y sobre $\mathbb{F}_p$. Basado en \parencite{eichlseder_elliptic_2016}.}
+  \label{fig:cuerpos-curvas}
+\end{figure}
 
-% Ejemplo de curva sobre R y curva sobre Z_algo
+Volviendo al problema de la multiplicación escalar, si elegimos un punto $P$ arbitrario de la curva podemos considerar el subgrupo cíclico generado por él, que sabemos por el \textit{teorema de Lagrange} que tendrá orden un divisor del orden del grupo $(E, +)$. Existe un procedimiento llamado \textit{Algoritmo de Schoof} que permite calcular el orden de $E$ en tiempo polinomial \parencite{schoof_points_1995}.
+
+Para nuestras aplicaciones nos interesará elegir un grupo cíclico de $E$ de orden elevado, para lo cual podemos proceder de la siguiente forma:
+
+\begin{enumerate}
+	\item Calcular el orden $N$ de $E$.
+	\item Escoger un factor \textbf{primo} $n$ de $N$.
+	\item Calcular el valor $h = N/n$, que sabemos que es un número entero porque $n$ divide a $N$.
+	\item Elegimos un punto cualquiera $P \in E$ y calculamos $g = hP$.
+	\item Si $g=0$, volvemos al punto anterior.
+\end{enumerate}
+
+Al finalizar, habremos encontrado un generador $g$ de un grupo cíclico de orden $n$, a saber, $G = \langle g \rangle$.
 
 \section{Evolución de las curvas elípticas en la criptografía}
 
@@ -393,7 +409,7 @@ Es en este periodo cuando tres profesores de la universidad de Waterloo crearon 
 La mayor parte de los algoritmos que utilizaban las curvas elípticas consistían en adaptar los ya existentes para este grupo, no aprovechaban la estructura específica de las curvas elípticas.
 
 % TODO: contar aparición de DSA...NSA
-Destacamos la adapación del algoritmo DSA, ya que fue un proceso complicado. En ECDSA (\textit{Elliptic Curve Digital Signature Algorithm}) suponemos que Alice quiere firmar un mensaje con su clave privada ($k_A$) y Bob quiere validar la firma usando la clave pública de Alice ($K_A$). La única que debería poder emitir firmas válidas es Alice, y estas deberían poder ser verificadas por cualquiera que conozca su clave pública.
+Destacamos la adaptación del algoritmo DSA, ya que fue un proceso complicado. En ECDSA (\textit{Elliptic Curve Digital Signature Algorithm}) suponemos que Alice quiere firmar un mensaje con su clave privada ($k_A$) y Bob quiere validar la firma usando la clave pública de Alice ($K_A$). La única que debería poder emitir firmas válidas es Alice, y estas deberían poder ser verificadas por cualquiera que conozca su clave pública.
 
 Alice y Bob usarán los mismos parámetros. Necesitan estar trabajando sobre la misma curva elíptica definida sobre un cuerpo $\mathbb{F}_q$ que contiene un subgrupo $G$ de orden primo ($n$) con generador $P$.
 
@@ -437,25 +453,44 @@ Otro algoritmo relevante para resolver el problema del logaritmo discreto es el 
 \subsubsection{Reacciones iniciales y enfrentamiento con RSA}
 Durante los años siguientes a la aparición de la criptografía de la curva elíptica la actitud general de los criptógrafos fue aceptación y curiosidad, nadie la consideró una amenaza comercial. Aunque la mayor parte de los investigadores nunca habían estudiado curvas elípticas y no entendían la teoría asociada reaccionaron positivamente a la idea de un nuevo tipo de criptografía basada en ellas. A finales de los años 80, un grupo amplio de matemáticos empezó a trabajar en el tema y los avances que introdujeron se tomaron como un indicador de que la criptografía de clave pública pronto estaría lista.
 
-Es en este periodo cuando tres profesores de la universidad de Waterloo crearon una compañía que desarrolló e impulsó la criptografía de la curva elíptica. Los investigadores asociados comenzaron a asistir a conferencias en las que se establecían los estándares criptográficos para luchar por la inclusión de los protocolos basados en curvas elípticas en los mismos. \textit{ECDSA} estaba avanzando como una alternativa eficiente a las firmas RSA y al DSA en el que se basa, aunque no fue incluido en los estándares hasta 1999 y 2000.
+Es en este periodo cuando tres profesores de la universidad de Waterloo crearon una compañía que desarrolló e impulsó la criptografía de la curva elíptica. Los investigadores asociados comenzaron a asistir a conferencias en las que se establecían los estándares criptográficos para luchar por la inclusión de los protocolos basados en curvas elípticas en los mismos. ECDSA estaba avanzando como una alternativa eficiente a las firmas RSA y al DSA en el que se basa, aunque no fue incluido en los estándares hasta 1999 y 2000.
 
-Mientras, la seguridad basada en RSA estaba teniendo éxito comercial. La criptografía apoyada en RSA estaba consiguiendo una buena aceptación entre el público general y tenía el monopolio virtual de la criptografía de llave pública. Sin embrago, se avecinaban problemas, los métodos de factorización habían disminuido su tiempo de ejecución, provocando que los números recomendados para que el uso de RSA fuera seguro crecerían pronto a miles de bits. Los partidarios de la criptografía de la curva elíptica adevertían de que este es un problema importante en los dispositivos con poco espacio de almacenamiento como los teléfonos móviles, tarjetas, \dots
+Mientras, la seguridad basada en RSA comenzaba a tener éxito comercial. La criptografía apoyada en RSA estaba consiguiendo una buena aceptación entre el público general y tenía el monopolio virtual de la criptografía de llave pública. Sin embrago, se avecinaban problemas, los métodos de factorización habían disminuido su tiempo de ejecución, provocando que los números recomendados para que el uso de RSA fuera seguro crecerían pronto a miles de bits. Los partidarios de la criptografía de la curva elíptica adevertían de que este es un problema importante en los dispositivos con poco espacio de almacenamiento como los teléfonos móviles, tarjetas, \dots
 
 En 1997, RSA Data Security puso en su página web una sección en la que advertía de que la criptografía basada en las curvas elípticas ponía en riesgo los datos de sus clientes. Argumentaba que el problema de factorización, en el que RSA basa su seguridad, había sido ampliamente estudiado mientras que el problema del logaritmo discreto, en el que la basa la criptografía de la curva elíptica, necesitaba todavía más estudio y pruebas. Además, decían, pocos criptógrafos entienden realmente las curvas elípticas, por lo que no se podrá evaluar correctamente su seguridad.
 
-Los defensores de la criptografía de la curva elíptica respondieron haciendo ver que aunque el problema de factorización se conociera desde siglos antes, fue la invención de la criptografía RSA en 1977 la que impulsó los esfuerzos para mejorar los algoritmos. Además, el problema del logaritmo discreto en curvas elípticas es análogo al correspondiente problema en cuerpos finitos y la mayor parte de las aproximaciones al problema en la curva elíptica aprovechaba lo que se había estudiado antes en el contexto de los cuerpos finitos. El problema del logaritmo discreto tuvo un papel importante en la criptografía mucho antes de la invención de RSA y la criptografía de clave pública. Por otro lado, no es del todo correcto de que sea necesario un conocimiento matemático profundo para estudiar posibles ataques en las curvas elípticas más que para el problema de factorización. Aunque haga falta un contexto matemático mayor para entender el grupo sobre na curva elíptica que la exponenciación utilizada en RSA, no por ello la investigación en este campo irá más lento. Asimismo, al contrario de lo afirmado en esta página web, en el momento de su publicación había menos criptógrafos con conocimiento matemático suficiente para analizar y mejorar los ataques sobre factorización que personas capaces de evaluar los mejores ataques hacia el problema del logaritmo discreto.
+Los defensores de la criptografía de la curva elíptica respondieron haciendo ver que aunque el problema de factorización se conociera desde siglos antes, fue la invención de la criptografía RSA, en 1977, la que impulsó los esfuerzos para mejorar los algoritmos. Además, el problema del logaritmo discreto en curvas elípticas es análogo al correspondiente problema en cuerpos finitos y la mayor parte de las aproximaciones al problema en la curva elíptica aprovechaba lo que se había estudiado antes en el contexto de los cuerpos finitos. El problema del logaritmo discreto tuvo un papel importante en la criptografía mucho antes de la invención de RSA y la criptografía de clave pública. Por otro lado, no es del todo correcto que sea necesario un conocimiento matemático profundo para estudiar posibles ataques en las curvas elípticas más que para el problema de factorización. Aunque haga falta un contexto matemático mayor para entender el grupo sobre una curva elíptica que la exponenciación utilizada en RSA, no por ello la investigación en este campo irá más lento. Asimismo, al contrario de lo afirmado en esta página web, en el momento de su publicación había menos criptógrafos con conocimiento matemático suficiente para analizar y mejorar los ataques sobre factorización que personas capaces de evaluar los mejores ataques hacia el problema del logaritmo discreto.
 
-En 1998 surge un nuevo ataque para el problema del logaritmo discreto, \textit{xedni}, utilizaba combinaciones aleatorias de los puntos $P$ Y $Q$ que elevaba a puntos con coordenadas enteras y una vez que encontraba una potencia racional que cumplía una serie de condiciones podía encontrar $x$.
+En 1998 surge un nuevo ataque para el problema del logaritmo discreto, \textit{xedni}, utilizaba combinaciones aleatorias de los puntos $P$ Y $Q$ que elevaba a puntos con coordenadas enteras y una vez que encontraba una potencia racional que cumplía una serie de condiciones podía encontrar el valor $x$ que resuelve el problema.
 
-El tiempo de ejecución del algoritmo dependía en algunas consideraciones sutiles que eran difíciles de plasmar en términos computacionales. Al principio no estaba claro si este algoritmo sería más eficiente que otros que también resolvían logaritmos discretos sobre curvas elípticas.
+El tiempo de ejecución del algoritmo dependía de algunas consideraciones sutiles que eran difíciles de plasmar en términos computacionales. Al principio no estaba claro si este algoritmo sería más eficiente que otros que también resolvían logaritmos discretos sobre curvas elípticas.
 
-Cuando surge este ataque está candente la competición con RSA y los partidarios de la criptografía de la curva elíptica temen que sus competidores aprovechen este algoritmo para proclamar que la criptografía de la curva elíptica es insegura. Sin embargo, resultó que pequeñas modificaciones sobre este algoritmo se podían usar también para resolver el problema de factorizar un RSA módulo $N$. Así, si este algoritmo termina con la criptografía de la curva elíptica, también lo haría con la basada en RSA.
+Cuando surge este ataque está candente la competición con RSA y los partidarios de la criptografía de la curva elíptica temen que sus competidores aprovechen este algoritmo para proclamar que la criptografía de la curva elíptica es insegura. Sin embargo, resultó que pequeñas modificaciones sobre el algoritmo \textit{xedni} se podían usar también para resolver el problema de factorizar un número módulo $N$. Así, si este algoritmo terminara con la criptografía de la curva elíptica, también lo haría con la basada en RSA.
 
-Se descubrió que el algoritmo era tremendamente ineficiente, el motivo es similar al que se usó para demostrar que el \textit{index calculus} no funcionaría sobre curvas elípticas. Se cree que los ataques por exponenciación no funcionarán en en las curvas elípticas, aunque se sigue recomendando evitar los cuerpos para los que sea fácil exponenciar y que en algún momento un atacante pueda aprovechar esta debilidad.
+Se descubrió que el algoritmo era tremendamente ineficiente. El argumento es similar al que se usó para demostrar que el \textit{index calculus} no funcionaría sobre curvas elípticas. Se cree que los ataques por exponenciación no funcionarán en las curvas elípticas, aunque se sigue recomendando evitar los cuerpos para los que sea fácil exponenciar y que en algún momento un atacante pueda aprovechar esta debilidad.
 
-%Tamaño de las claves, número de parámetros, éxito.
+\subsubsection{El papel de la NSA}
+En los años 90, durante polémica entre RSA y criptografía de la curva elíptica, la NSA comenzó a participar abiertamente en la comunidad investigadora en criptografía. El surgimiento de Internet y otras tecnologías que permitían comunicar mediante el uso de ordenadores hacían que la seguridad informática y la seguridad en las comunicaciones fueran inseparables. Además, las comunicaciones de la mayoría de los gobiernos estaban integradas en las redes públicas y se enfrentaban a las mismas amenazas que los demás.
 
-%Problemas existentes
+La incorporación pública de la NSA al mundo de la criptografía benefició enormemente a la criptografía de la curva elíptica. A mediados de los 90 RSA dominaba comercialmente a la principal compañía promotora de la criptografía de la curva elíptica. Asímismo, RSA estaba bien establecido y controlaba el mercado de la criptografía de clave pública. Sin embargo, la criba general del cuerpo de números, algoritmo clásico de factorización, provocaba que RSA tuviera que usar claves cada vez más largas. Los que comprendían las bases matemáticas de ambos sistemas veían que con el tiempo RSA sería inferior a la criptografía de la curva elíptica en los entornos donde la memoria y el ancho de banda estuvieran limitados.
+
+A principios de los 90 el NIST propuso un protocolo de firma desarrollado por la NSA donde la seguridad se basaba en el problema del logaritmo discreto. Aunque este algoritmo, que se comercializó en 1994, no estaba basado en curvas elípticas, mostró el descontento con RSA que existía por parte de la NSA.
+
+Los técnicos de la NSA habían sentido interés en la criptografía de la curva elíptica desde los años 80, pero esto no fue conocido hasta una reunión del Instituto Nacional de Estándares Americanos (ANSI por sus siglas en inglés, \textit{American National Standards Institute} en diciembre de 1995. En dicha reunión los promotores de RSA estaban cuestionando la seguridad de los protocolos basados en criptografía de la curva elíptica. Durante el debate, un representante de la NSA proclamó que la NSA creía que la criptografía de la curva elíptica era lo suficientemente segura para ser usada en las comunicaciones entre las agencias del gobierno de los Estados Unidos. Normalmente los representantes de la NSA no intervenían en las reuniones de los estándares, nadie esperaba esta afirmación a favor de la criptografía de la curva elíptica. Así, en 1997 se publica el primer artículo en un congreso sobre criptografía por un miembro de la NSA. Contenía un procedimiento para mejorar la eficiencia de la criptografía de la curva elíptica usando \textit{curvas binarias anómalas}.
+
+A lo largo de los años el apoyo de la NSA a la criptografía de la curva elíptica fue más evidente. En 2003 autorizó 26 patentes relacionadas con la criptografía de la curva elíptica y en 2005 publicó un artículo en su web donde fomenta el uso de este tipo de criptosistemas. El interés de la NSA en la criptografía de la curva elíptica logró balancear la discusión entre RSA y la criptografía de la curva elíptica.
+
+\subsubsection{XTR}
+
+En el año 2000, en un congreso sobre criptografía, A. Lenstra y Verheul propusieron un nuevo tipo de criptosistema: XTR. Sus creadores afirmaban que estaba al nivel de RSA y la criptografía de la curva elíptica. Además, veían ventajoso que no dependiera de los parámetros escogidos, como ocurre con la criptografía de la curva elíptica.
+
+Otros criptógrafos, Menezes y Vanstone, señalaron que el grupo usado en XTR es precisamente un grupo evitado en la criptografía de la curva elíptica, por las debilidades existentes frente al algoritmo por emparejamiento de Weil. Mediante la aplicación utilizada, se puede llevar el problema del logaritmo discreto en una curva elíptica a un grupo XTR, pero no al revés. Si se demostrara la existencia de alguna aplicación que fuera en la dirección contraria ambos problemas serían equivalentes.
+
+Lenstra y Verheul estaban preocupados por los indicios de que su sistema era equivalente al caso singular de la criptografía de la curva elíptica, que en ese año todavía se consideraba muy débil.
+
+Verheul fue capaz de probar que si existiera un isomorfismo computable del grupo XTR a la curva, entonces el problema de Diffie-Hellman sería fácil de resolver en ambos grupos; como esto no es probable, concluyó que la aplicación solo podía ir en un sentido. Tomó su teorema como evidencia suficiente para afirmar que XTR tenía mayor seguridad (en el sentido de cómo de difícil es resolver el problema del logaritmo discreto) que la curva elíptica análoga. Sin embargo, no hay pruebas de que exista ningún método para resolver el problema del logaritmo discreto  en una curva singular más rápido que pasando a su grupo XTR y luego resolviendo el problema del logaritmo discreto allí. Que no parezca probable que se vaya a encontrar una prueba de que los problemas son equivalentes no significa que en la práctica no lo sean.
+
+A pesar de los comentarios negativos sobre la criptografía de la curva elíptica por parte de los promotores de XTR, la desconfianza en este tipo de criptosistemas estaba disminuyendo a comienzos de este milenio. Los organismos de estándares industriales respaldaban algunas formas de criptografía de la curva elíptica y la publicación en la página web de RSA en contra de este tipo de criptografía se había eliminado.
 
 \subsection{<<Paradigm shift>>}
 
