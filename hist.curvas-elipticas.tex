@@ -492,12 +492,21 @@ Verheul fue capaz de probar que si existiera un isomorfismo computable del grupo
 
 A pesar de los comentarios negativos sobre la criptografía de la curva elíptica por parte de los promotores de XTR, la desconfianza en este tipo de criptosistemas estaba disminuyendo a comienzos de este milenio. Los organismos de estándares industriales respaldaban algunas formas de criptografía de la curva elíptica y la publicación en la página web de RSA en contra de este tipo de criptografía se había eliminado.
 
-\subsection{<<Paradigm shift>>}
+\subsection{\textit{Pairing-based cryptography}}
 
-%Sofi.
+En 2001, Dan Boneh, Matt Frankling y otros propusieron un criptosistema basado en emparejamientos. Aunque en los años anteriores se habían comenzado a estudiar, hasta este momento no se había descubierto su potencial.
 
-%Pairing-based cryptography
+La idea principal es que los algoritmos basados en emparejamientos sobre curvas elípticas permiten ejecutar de forma más eficiente algunas funciones criptográficas.
 
+Uno de los primeros usos de la criptografía basada en emparejamientos respondía a un problema que había propuesto Shamir[] en 1984, ¿se puede montar un sistema de encriptación en el que la clave pública de un usuario sea su propio identificador? A estos sistemas se les conoce como \textit{criptosistemas basados en identidad}.
+
+Otro uso de la criptografía basada en emparejamientos fue un algoritmo para firmar mensajes. Usando las curvas elípticas supersingulares definidas sobre $\mathbb{F}_p, p \equiv 3 \mod 4$, podemos definir una aplicación que lleve un punto sobre ellas a uno sobre los puntos de $\mathbb{F}_{p^2}$ de la curva. Así, para fimar un mensaje el emisor generará un número aleatorio que multiplica por el valor \textit{hash} del mensaje. Para verificarlo, el receptor calcula el valor \textit{hash} del mensaje y la ``pareja'' de la clave, además de la ``pareja'' del generador del grupo. Compara los pares (valor \textit{hash}, pareja de la clave pública), (firma, pareja del generador), si coinciden el receptor tendrá la confianza de que su emisor fue el que envió el mensaje.
+
+Este algoritmo de firma genera firmas más cortas, si se implementa con curvas elegidas de la forma adecuada, y es más fácil que ECDSA, y, al revés que en ECDSA, usa las propiedades de la curva elíptica de forma fundamental y no tiene un algoritmo análogo en el grupo $\mathbb{F}_q$.
+
+La criptografía basada en emparejamientos fue aceptada desde el principio. Al contrario que la criptografía basada en curvas elípticas tradicional, no sufrió un periodo inicial de escepticismo y oposición. Este hecho es especialmente llamativo, ya que las curvas utilizadas en la criptografía basada en emparejamientos son precisamente las que se evitaban en la basada en la curva elíptica tras descubrir el algoritmo por emparejamiento de Weil.
+
+Este hecho pudo ser debido a diferentes motivos. En primer lugar, la criptografía basada en emparejamientos es más simple que la basada en la curva elíptica. Además, los inicios de este tipo de criptografía coinciden con los años en los que la criptografía de la curva elíptica tradicional comenzaba a ser aceptada y la rivalidad con RSA había terminado (a finales del siglo los paquetes de RSA ya incluían una versión de criptografía de la curva elíptica). Otro factor determinante fue que en 2001 los artículos sobre seguridad informática debían incluir una \textit{demostración de la seguridad}, como casi todos los artículos sobre criptografía basada en emparejamientos la incluían, sirvió para convencer a la gente sobre la seguridad del sistema. Estas pruebas consistían en reducir un posible ataque a un problema matemático que se suponía intratable. Otro motivo que hizo que estos criptosistemas fueran rápidamente aceptados fue que nadie los consideró una amenaza, ni desde el punto de vista comercial ni desde la criptografía tradicional. 
 \subsection{Estado actual y algoritmos utilizados}
 
 %Antonio.
