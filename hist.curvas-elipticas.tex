@@ -200,7 +200,7 @@ Podemos ver en la figura \ref{fig:parametros} cómo afectan los parámetros $A$ 
 \begin{figure}[h]
   \centering
   \includegraphics[width=.75\textwidth]{img/parametros-curvas}
-  \caption{Ejemplos de curvas elípticas con distintos parámetros \parencite{eichlseder_elliptic_2016}.}
+  \caption{Ejemplos de curvas elípticas con distintos parámetros. Basado en  \parencite{eichlseder_elliptic_2016}.}
   \label{fig:parametros}
 \end{figure}
 
@@ -220,7 +220,7 @@ Un detalle interesante sobre las curvas elípticas es que se puede definir sobre
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.65\textwidth]{img/operaciones-curvas}
-  \caption{Suma de puntos en curvas elípticas \parencite{eichlseder_elliptic_2016}.}
+  \caption{Suma de puntos en curvas elípticas. Basado en  \parencite{eichlseder_elliptic_2016}.}
   \label{fig:operaciones-curvas}
 \end{figure}
 
@@ -240,18 +240,28 @@ Veamos ahora cómo calcular el punto de corte de la recta considerada (de pendie
     
 \subsection{Curvas elípticas sobre cuerpos finitos}
 
-Hasta ahora hemos definido las curvas elípticas sobre un cuerpo $K$ cualquiera (o su clausura algebraica), pero es de especial interés el caso en que $K=\mathbb{F}_p$ con $p$ un primo, es decir, consideramos curvas sobre el cuerpo finito de $p$ elementos. En este caso se sigue manteniendo la estructura de grupo, teniendo en cuenta que si $Q = (x,y)$, entonces $-Q = (x, -y \bmod p)$. La operación de suma sigue teniendo las mismas expresiones algebraicas (siempre $\bmod p$), considerando que las rectas en $\mathbb{F}_p$ son el conjunto de puntos que verifican la ecuación \[ ax + by + c \equiv 0 \bmod p. \] Sin embargo, el método geométrico ya no es tan claro.
+Hasta ahora hemos definido las curvas elípticas sobre un cuerpo $K$ cualquiera (o su clausura algebraica), pero es de especial interés el caso en que $K=\mathbb{F}_p$ con $p$ un primo, es decir, consideramos curvas sobre el cuerpo finito de $p$ elementos. En este caso se sigue manteniendo la estructura de grupo, teniendo en cuenta que si $Q = (x,y)$, entonces $-Q = (x, -y \bmod p)$. La operación de suma sigue teniendo las mismas expresiones algebraicas (siempre $\bmod p$), considerando que las rectas en $\mathbb{F}_p$ son el conjunto de puntos que verifican la ecuación \[ ax + by + c \equiv 0 \bmod p. \] Sin embargo, el método geométrico ya no es tan claro, pues no es fácil visualizar las operaciones en $\mathbb{F}_p$.
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.85\textwidth]{img/cuerpos-curvas}
-  \caption{Curvas elípticas sobre distintos cuerpos \parencite{eichlseder_elliptic_2016}.}
+  \caption{Comparación de curvas elípticas sobre $\mathbb{R}$ y sobre $\mathbb{F}_p$. Basado en \parencite{eichlseder_elliptic_2016}.}
   \label{fig:cuerpos-curvas}
 \end{figure}
 
-Luckily, there's a faster algorithm for computing the order: Schoof's algo-
-rithm. I won't enter the details of the algorithm — what matters is that it runs
-in polynomial time, and this is what we need.
+Volviendo al problema de la multiplicación escalar, si elegimos un punto $P$ arbitrario de la curva podemos considerar el subgrupo cíclico generado por él, que sabemos por el \textit{teorema de Lagrange} que tendrá orden un divisor del orden del grupo $(E, +)$. Existe un procedimiento llamado \textit{Algoritmo de Schoof} que permite calcular el orden de $E$ en tiempo polinomial \parencite{schoof_points_1995}.
+
+Para nuestras aplicaciones nos interesará elegir un grupo cíclico de $E$ de orden elevado, para lo cual podemos proceder de la siguiente forma:
+
+\begin{enumerate}
+	\item Calcular el orden $N$ de $E$.
+	\item Escoger un factor \textbf{primo} $n$ de $N$.
+	\item Calcular el valor $h = N/n$, que sabemos que es un número entero porque $n$ divide a $N$.
+	\item Elegimos un punto cualquiera $P \in E$ y calculamos $g = hP$.
+	\item Si $g=0$, volvemos al punto anterior.
+\end{enumerate}
+
+Al finalizar, habremos encontrado un generador $g$ de un grupo cíclico de orden $n$, a saber, $G = \langle g \rangle$.
 
 \section{Evolución de las curvas elípticas en la criptografía}
 
