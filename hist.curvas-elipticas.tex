@@ -197,11 +197,18 @@ afterskip=2ex]{section,subsection,subsubsection}
 
 \section{Introducción}
 
-El objetivo principal de la criptografía es el de la transmisión de información confidencial a través de un canal inseguro.
+El objetivo principal de la criptografía es la transmisión de información confidencial a través de un canal inseguro. Ya desde la antigüedad una de las preocupaciones era el intercambio de mensajes de forma privada, sobre todo en el contexto de asuntos bélicos y políticos. Un ejemplo famoso es el \textit{cifrado de César}, que consistía en sustituir cada carácter del mensaje por otro prefijado. A lo largo de la historia se fueron desarrollando otros métodos más sofisticados, pero es con la aparición de los ordenadores y su uso en las comunicaciones cuando la investigación en este ámbito experimenta una evolución sin precedentes.
+
+En la década de los 70 aparecen varios algortimos y protocolos para tratar de aumentar la seguridad en el intercambio de información, basados principalmente en ciertos problemas matemáticos considerados difíciles de resolver incluso con la capacidad de cómputo que introdujeron los ordenadores. Es por esto que se comenzó a adaptar diferentes herramientas matemáticas que en principio no tenían relación con la criptografía para intentar desarrollar algoritmos, sistemas y protocolos difíciles de comprometer. Un ejemplo de esto es la introducción en los sistemas criptográficos de \textit{curvas elípticas}, cuya evolución es precisamente el objeto de estudio de este trabajo.
+
+En la Sección \ref{sec:curvas} daremos una definición general de curvas elípticas, comentaremos su estructura de grupo y estudiaremos un caso particular ampliamente utilizado en cripotografía: las curvas elípticas sobre cuerpos finitos. Continuaremos en la Sección \ref{sec:historia} con un repaso al estado de la criptografía anterior a la introducción de las curvas elípticas en ese campo, describiendo posteriormente su irrupción y evolución, que no estuvo exenta de polémica, hasta llegar a los tiempos actuales en los que gozan de gran aceptación. Finalmente, en la Sección \ref{sec:futuro} hablaremos sobre posibles usos de las curvas elípticas en un hipotético futuro dominado por los ordenadores cuánticos, cuya llegada se especula que rompería todos los esquemas criptográficos actuales y comprometería enormemente la seguridad de los sistemas informáticos. 
+
+
 
 %TODO: completar introducción
 
 \section{Curvas elípticas}
+\label{sec:curvas}
 
 Antes de analizar la historia y el papel de las curvas elípticas en el contexto de la criptografía, damos una definición de ellas como objetos matemáticos abstractos.
 
@@ -285,6 +292,7 @@ Para nuestras aplicaciones nos interesará elegir un grupo cíclico de $E$ de or
 Al finalizar, habremos encontrado un generador de un grupo cíclico de orden $n$, a saber, $\langle G \rangle$.
 
 \section{Evolución de las curvas elípticas en la criptografía}
+\label{sec:historia}
 
 Un criptosistema es una familia uniparamétrica \(\{S_K\}_{K \in \{K\}}\) de aplicaciones invertibles \[S_K: \{P\} \to \{C\},\] del conjunto de mensajes en claro, \(\{P\}\), al conjunto de mensajes cifrados, \(\{C\}\). 
 El parámetro \(K\) se denomina \textit{clave} y el rango de posibles valores que puede tomar 
@@ -484,7 +492,7 @@ Otro algoritmo relevante para resolver el problema del logaritmo discreto es el 
 \subsubsection{Reacciones iniciales y enfrentamiento con RSA}
 Durante los años siguientes a la aparición de la criptografía de la curva elíptica la actitud general de los criptógrafos fue de aceptación y curiosidad y nadie la consideró una amenaza comercial. Aunque la mayor parte de los investigadores nunca había estudiado curvas elípticas y no entendía la teoría asociada, estos reaccionaron positivamente a la idea de un nuevo tipo de criptografía basada en ellas. A finales de los años 80, un grupo amplio de matemáticos empezó a trabajar en el tema y los avances que introdujeron se tomaron como un indicador de que la criptografía de clave pública pronto estaría lista para ser usada por el público general.
 
-%TODO contar aparición de RSA y situarla en este contexto, referenciar paper
+%TODO referenciar paper
 
 Mientras, la seguridad basada en RSA comenzaba a tener éxito comercial. RSA es un sistema de clave pública que apareció en el año 1977 y cuya seguridad radica en el problema de factorización. La criptografía apoyada en RSA estaba consiguiendo una buena aceptación entre el público general y tenía el monopolio virtual de la criptografía de llave pública. Sin embrago, se avecinaban problemas. Los métodos de factorización habían disminuido su tiempo de ejecución, provocando que los números recomendados para que el uso de RSA fuera seguro comenzaran a crecer hasta llegar a miles de bits. Los partidarios de ECC advertían que este era un problema importante en los dispositivos con poco espacio de almacenamiento como los teléfonos móviles, tarjetas, etc.
 
@@ -509,42 +517,47 @@ La incorporación pública de la NSA al mundo de la criptografía benefició eno
 
 A principios de los 90 el NIST propuso un protocolo de firma desarrollado por la NSA donde la seguridad se basaba en el problema del logaritmo discreto. Aunque este algoritmo, que se comercializó en 1994, no estaba basado en curvas elípticas, mostró el descontento con RSA que existía por parte de la NSA.
 
-Los técnicos de la NSA habían sentido interés en ECC desde los años 80, pero esto no fue conocido hasta una reunión del Instituto Nacional de Estándares Americanos (ANSI por sus siglas en inglés, \textit{American National Standards Institute}) en diciembre de 1995. En dicha reunión los promotores de RSA estaban cuestionando la seguridad de los protocolos basados en ECC. Durante el debate, un representante de la NSA proclamó que dicha agencia creía que ECC era lo suficientemente segura para ser usada en las comunicaciones entre las agencias del gobierno de los Estados Unidos. Normalmente los representantes de la NSA no intervenían en las reuniones de los estándares, por lo que nadie esperaba esta afirmación a favor de ECC. Así, en 1997 se publica el primer artículo en un congreso sobre criptografía por un miembro de la NSA. Contenía un procedimiento para mejorar la eficiencia de ECC usando \textit{curvas binarias anómalas}.
+Los técnicos de la NSA habían sentido interés en ECC desde los años 80, pero esto no fue conocido hasta una reunión del Instituto Nacional de Estándares Americanos (ANSI por sus siglas en inglés, \textit{American National Standards Institute}) en diciembre de 1995. En dicha reunión los promotores de RSA estaban cuestionando la seguridad de los protocolos basados en ECC. Durante el debate, un representante de la NSA proclamó que dicha agencia creía que ECC era lo suficientemente segura para ser usada en las comunicaciones entre las agencias del Gobierno de los Estados Unidos. Normalmente los representantes de la NSA no intervenían en las reuniones de los estándares, por lo que nadie esperaba esta declaración a favor de ECC. Así, en 1997 un miembro de la NSA publica el primer artículo en un congreso sobre criptografía. Contenía un procedimiento para mejorar la eficiencia de ECC usando \textit{curvas binarias anómalas}.
 
 A lo largo de los años el apoyo de la NSA a la criptografía de la curva elíptica fue más evidente. En 2003 autorizó 26 patentes relacionadas con ECC y en 2005 publicó un artículo en su web donde fomenta el uso de este tipo de criptosistemas. El interés de la NSA en la criptografía de la curva elíptica logró balancear la discusión entre RSA y ECC.
 
 \subsubsection{XTR}
 
+%TODO: XTR
+
 En el año 2000, en un congreso sobre criptografía, A. Lenstra y Verheul propusieron un nuevo tipo de criptosistema: XTR. Sus creadores afirmaban que estaba al nivel de RSA y ECC. Además, veían ventajoso que no dependiera de los parámetros escogidos, como ocurre con ECC.
 
-Otros criptógrafos, Menezes y Vanstone, señalaron que el grupo usado en XTR es precisamente un grupo evitado en ECC por las debilidades existentes frente al algoritmo por emparejamiento de Weil. Mediante la aplicación utilizada en este último se puede llevar el problema del logaritmo discreto en una curva elíptica a un grupo XTR, pero no al revés. Si se demostrara la existencia de alguna aplicación que fuera en la dirección contraria ambos problemas serían equivalentes. 
+Otros criptógrafos, Menezes y Vanstone, señalaron que el grupo usado en XTR es precisamente un grupo evitado en ECC por las debilidades existentes frente al algoritmo por emparejamiento de Weil. Mediante la aplicación utilizada en este último se puede llevar el problema del logaritmo discreto en una curva elíptica a un grupo de los utilizados en XTR, pero no al revés. Si se demostrara la existencia de alguna aplicación que fuera en la dirección contraria ambos problemas serían equivalentes. 
 
-Lenstra y Verheul estaban preocupados por los indicios de que su sistema era equivalente al caso singular de la criptografía de la curva elíptica, que en ese año todavía se consideraba muy débil. Verheul fue capaz de probar que si existiera un isomorfismo computable del grupo XTR a la curva, entonces el problema de Diffie-Hellman sería fácil de resolver en ambos grupos; como esto no es probable, concluyó que la aplicación solo podía ir en un sentido. Tomó su teorema como evidencia suficiente para afirmar que XTR tenía mayor seguridad (en el sentido de cómo de difícil es resolver el problema del logaritmo discreto) que la curva elíptica análoga. Sin embargo, no hay pruebas de que exista ningún método para resolver el problema del logaritmo discreto  en una curva singular más rápido que pasando a su grupo XTR y luego resolviendo el problema del logaritmo discreto allí. Que no parezca probable que se vaya a encontrar una prueba de que los problemas son equivalentes no significa que en la práctica no lo sean.
+Lenstra y Verheul estaban preocupados por los indicios de que su sistema era equivalente al caso supersingular de la criptografía de la curva elíptica, que en ese año todavía se consideraba muy débil. Verheul fue capaz de probar que si existiera un isomorfismo calculable del grupo XTR a la curva, entonces el problema de Diffie-Hellman sería fácil de resolver en ambos grupos; como esto no es probable, concluyó que la aplicación solo podía ir en un sentido. Tomó su teorema como evidencia suficiente para afirmar que XTR tenía mayor seguridad (en el sentido de cómo de difícil es resolver el problema del logaritmo discreto) que la curva elíptica asociada. Sin embargo, no hay pruebas de que exista ningún método para resolver el problema del logaritmo discreto  en una curva supersingular más rápido que pasando a su grupo XTR y luego resolviendo el problema del logaritmo discreto allí. Que no parezca probable que se vaya a encontrar una prueba de que los problemas son equivalentes no significa que en la práctica no lo sean.
 
 A pesar de los comentarios negativos sobre ECC por parte de los promotores de XTR, la desconfianza en este tipo de criptosistemas estaba disminuyendo a comienzos de este milenio. Los organismos de estándares industriales respaldaban algunas formas de criptografía de curvas elípticas y la publicación en la página web de RSA en contra de este tipo de criptografía se había eliminado.
 
 \subsection{\textit{Pairing-based cryptography}}
+
+%TODO citar
 En 2001, Dan Boneh, Matt Frankling y otros propusieron un criptosistema basado en emparejamientos. Aunque en los años anteriores se habían comenzado a estudiar, hasta este momento no se había descubierto su potencial. La idea principal es que los algoritmos basados en emparejamientos sobre curvas elípticas permiten ejecutar de forma más eficiente algunas funciones criptográficas.
 
 %TODO citar
-Uno de los primeros usos de la criptografía basada en emparejamientos respondía a un problema que había propuesto Shamir[] en 1984, ¿se puede montar un sistema de cifrado en el que la clave pública de un usuario sea su propio identificador? A estos sistemas se les conoce como \textit{criptosistemas basados en identidad}.
+Uno de los primeros usos de la criptografía basada en emparejamientos respondía a un problema que había propuesto Shamir[] en 1984: ¿se puede montar un sistema de cifrado en el que la clave pública de un usuario sea su propio identificador? A estos sistemas se les conoce como \textit{criptosistemas basados en identidad}.
 
-Otro uso de la criptografía basada en emparejamientos fue un algoritmo para firmar mensajes. Usando la curva elíptica supersingular $y^2 = x^3- x$ definida sobre $\mathbb{F}_p$ con $p \equiv 3 \bmod 4$, podemos definir una aplicación que lleve un punto sobre ellas a uno sobre los puntos de $\mathbb{F}_{p^2}$ de la curva, que denominamos su \textquote{pareja}. Así, para fimar un mensaje el emisor generará unas claves pública y privada de forma análoga a como se hacía en ECDH, y multiplica la clave privada por el valor \textit{hash} del mensaje. Para verificarlo, el receptor calcula el valor \textit{hash} del mensaje y la pareja de la clave pública del emisor, además de la pareja del generador del grupo cíclico en el que ambos trabajan. Después, compara los pares obtenidos, y si coinciden el receptor tendrá la confianza de que su emisor fue el que envió el mensaje, gracias a las propiedades que tiene la aplicación que asocia a cada punto su pareja.
+Otro uso de la criptografía basada en emparejamientos fue un algoritmo para firmar mensajes. Usando la curva elíptica supersingular $y^2 = x^3- x$ definida sobre $\mathbb{F}_p$ con $p \equiv 3 \bmod 4$, podemos definir una aplicación que lleve un punto sobre ella a un punto de $\mathbb{F}_{p^2}$ de la curva, que denominamos su \textquote{pareja}. Así, para fimar un mensaje el emisor generará unas claves pública y privada de forma análoga a como se hacía en ECDH, y multiplica la clave privada por el valor \textit{hash} del mensaje. Para verificarlo, el receptor calcula el valor \textit{hash} del mensaje y la pareja de la clave pública del emisor, además de la pareja del generador del grupo cíclico en el que ambos trabajan. Después, compara los pares obtenidos, y si coinciden el receptor tendrá la confianza de que su emisor fue el que envió el mensaje, gracias a las propiedades que tiene la aplicación que asocia a cada punto su pareja.
 
-Este algoritmo de firma genera firmas más cortas, si se implementa con curvas elegidas de la forma adecuada, y es más fácil de implementar que ECDSA. Al contrario que este, usa también las propiedades de la curva elíptica de forma fundamental y no tiene un algoritmo análogo en cuerpos finitos.
+Este algoritmo de firma genera firmas más cortas si se implementa con curvas elegidas de la forma adecuada, y es más fácil de implementar que ECDSA. Al contrario que este, usa las propiedades de la curva elíptica de forma fundamental y no tiene un algoritmo análogo en cuerpos finitos.
 
 La criptografía basada en emparejamientos fue aceptada desde el principio. Al contrario que la criptografía basada en curvas elípticas tradicional, no sufrió un periodo inicial de escepticismo y oposición. Este hecho es especialmente llamativo, ya que las curvas utilizadas en la criptografía basada en emparejamientos son precisamente las que se evitaban en ECC tras descubrir el algoritmo por emparejamiento de Weil.
 
-Este hecho pudo ser debido a diferentes motivos. En primer lugar, la criptografía basada en emparejamientos es más simple que la basada en curvas elípticas. Además, los inicios de este tipo de criptografía coinciden con los años en los que la criptografía de la curva elíptica tradicional comenzaba a ser aceptada y la rivalidad con RSA había terminado (a finales del siglo 20 los paquetes de RSA ya incluían una versión de ECC). Otro factor determinante fue que en 2001 los artículos sobre seguridad informática debían incluir una \textit{demostración de la seguridad}, y como casi todos los artículos sobre criptografía basada en emparejamientos la incluían, sirvió para convencer a la gente sobre la seguridad y robustez del sistema. Estas pruebas consistían en reducir un posible ataque a un problema matemático que se suponía intratable. Otro motivo que hizo que estos criptosistemas fueran rápidamente aceptados fue que nadie los consideró una amenaza, ni desde el punto de vista comercial ni desde la criptografía tradicional. 
+Este hecho pudo ser debido a diferentes motivos. En primer lugar, la criptografía basada en emparejamientos es más simple que la basada en curvas elípticas. Además, los inicios de este tipo de criptografía coinciden con los años en los que la criptografía de la curva elíptica tradicional comenzaba a ser aceptada y la rivalidad con RSA había terminado (a finales del siglo XX los paquetes de RSA ya incluían una versión de ECC). Otro factor determinante fue que en el momento de su aparición los artículos sobre seguridad informática debían incluir una \textit{demostración de la seguridad}, y como casi todos los artículos sobre criptografía basada en emparejamientos la incluían, sirvió para convencer al público sobre la seguridad y robustez del sistema. Estas pruebas consistían en reducir un posible ataque a un problema matemático que se suponía intratable. Otro motivo que hizo que estos criptosistemas fueran rápidamente aceptados fue que nadie los consideró una amenaza, ni desde el punto de vista comercial ni desde la criptografía tradicional. 
 
 \section{El futuro de las curvas elípticas}
+\label{sec:futuro}
 
 Como ya hemos visto, para que un atacante pudiera romper un cifrado basado en las técnicas de curvas elípticas actuales necesitaría resolver el problema del logaritmo discreto.
 Un atacante que posea un ordenador cuántico con una implementación del algoritmo de Shor (cita/referencia?) podría resolver dicho problema con facilidad. 
 En la actualidad se desconoce si es factible la construcción de dicho ordenador a corto o largo plazo, pero experimentos a tamaños muy reducidos han producido resultados satisfactorios, por lo que los criptógrafos se están tomando esta amenaza en serio.
 El hecho de que los tamaños recomendados para los parámetros de ECDH sean menores que para los de otros criptosistemas hace que se requiera una menor capacidad de cómputo cuántico para romperlo que, por ejemplo, RSA \parencite{beauregard_circuit_2003} \parencite{proos_shors_2004}.
 
-El NIST comenzó en 2017 una recogida de propuestas para el desarrollo de criptosistemas que puedan resistir ataques por parte de ordenadores cuánticos con altas capacidades de computación \parencite{computer_security_division_call_2017}.
+El NIST comenzó en 2017 una recogida de propuestas para el desarrollo de criptosistemas que puedan resistir ataques por parte de ordenadores cuánticos con altas capacidades de cómputo \parencite{computer_security_division_call_2017}.
 Se estima que el proceso de selección y evaluación de las propuestas enviadas pueda alargarse hasta 2022.
 La mayoría de las propuestas que hay sobre la mesa actualmente están basados en la resolución de problemas \textit{complicados}, como puede ser decodificar códigos lineales aleatorios, invertir funciones \textit{hash} o la resolución de sistemas de ecuaciones no lineales sobre cuerpos finitos.
 Hay otra propuesta que goza de cierta atención y reconocimiento últimamente y que se basa de nuevo en las curvas elípticas.
@@ -557,18 +570,15 @@ El \(j\)\textit{-invariante} es un valor que puede calcularse para cada curva el
   j(E) = 1728 \cdot \frac{4a^3}{4a^3 + 27b^2}\,.
 \]
 
-%FIXME: ya aparecen mencionadas antes
-Una curva supersingular es una curva (definición).
-
 \subsection{Algoritmo Supersingular Isogeny Diffie-Hellman}
 
-En 2011 los investigadores Luca de Feo, David Jao y Jérôme Plût propusieron el algoritmo que ahora se conoce como SIDH (siglas en inglés de \textit{Supersingular Isogeny Diffie-Hellman}) \parencite{yang_towards_2011}.
+En 2011 los investigadores Luca de Feo, David Jao y Jérôme Plût propusieron el algoritmo que ahora se conoce como SIDH (por sus siglas en inglés de \textit{Supersingular Isogeny Diffie-Hellman}) \parencite{yang_towards_2011}.
 Veamos una descripción sencilla antes de entrar en detalle. 
 Supongamos que Alice y Bob quieren compartir información de forma segura.
-Ambas partes generan una clave privada, que va a ser una isogenia basada en la curva \(E\), pública, y en los puntos \(P_a, Q_a, P_b, Q_b\) de \(E\). 
+Ambas partes generan una clave privada, que va a ser una isogenia basada en la curva \(E\), conocida por ambos, y en los puntos \(P_a, Q_a, P_b, Q_b\) de \(E\). 
 A partir de esta isogenia cada parte genera una nueva curva, que serán consideradas las claves públicas.
-Ambas partes intercambian dicha curva y cada una de ellas une su clave privada, la isogenia generada anteriormente, con la curva recién recibida, generando una
-curva final que tienen el mismo \(j\)-invariante, valor que se convierte en la clave secreta que ambos comparten.
+Ambas partes intercambian dicha curva y cada una de ellas une su clave privada, la isogenia generada anteriormente, con la curva recién recibida, generando ambos una
+curva final con el mismo \(j\)-invariante, valor que se convierte en la clave secreta que ambos comparten.
 
 Veamos el algoritmo ahora paso por paso. Los siguientes parámetros son fijos y conocidos para todas las comunicaciones:
 \begin{itemize}
@@ -614,9 +624,7 @@ Para el intercambio de información Alice realiza los pasos descritos en el Algo
 
 La clave \(k\) que han obtenido ambos será la que permita el cifrado de la información y que en ningún momento han tenido que intercambiarse por un canal inseguro.
 
-%Jose.
-
-%Quantum. https://www.esat.kuleuven.be/cosic/elliptic-curves-are-quantum-dead-long-live-elliptic-curves/
+Al tratarse de un sistema relativamente nuevo, SIDH no ha conseguido posicionarse como un referente de la criptografía de clave pública en la era cuántica, y hasta ahora no ha logrado superar a ninguno de los principales competidores. Sin embargo, se continúa investigando en este campo, tanto en términos de seguridad como de eficiencia, buscando algoritmos que, como SIDH, dependan de un tipo de problema matemático muy distinto al de factorización y al problema del logaritmo discreto. 
 
 %-------------------------------------------------------------------------------
 %	BIBLIOGRAFÍA
