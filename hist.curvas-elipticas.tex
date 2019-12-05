@@ -205,17 +205,17 @@ El objetivo principal de la criptografía es el de la transmisión de informaci�
 
 Antes de analizar la historia y el papel de las curvas elípticas en el contexto de la criptografía, damos una definición de ellas como objetos matemáticos abstractos.
 
-    Sea $K$ un cuerpo y $\overline{K}$ su clausura algebraica. Una \textit{curva elíptica} sobre $\overline{K}$ es una curva proyectiva no singular $E \subset \mathbb{P}^2(\overline{K})$ definida por una ecuación (afín) de la forma \[ y^2 + a_1xy + a_3y = x^3 +a_2x^2 + a_4x + a_6, \] donde todos los $a_i \in \overline{K}$.
+    Sea $K$ un cuerpo y $\overline{K}$ su clausura algebraica. Una \textit{curva elíptica} sobre $\overline{K}$ es una curva proyectiva no singular $E \subset \mathbb{P}^2(\overline{K})$ definida por una ecuación afín de la forma \[ y^2 + a_1xy + a_3y = x^3 +a_2x^2 + a_4x + a_6, \] donde todos los $a_i \in \overline{K}$.
     Cuando la característica de $\overline{K}$ es distinta de $2$ y de $3$, podemos simplificar la ecuación como \[ y^2 = x^3 + Ax + B, \] con $A,B \in \overline{K}$. Una ecuación de esta forma se conoce como \textit{ecuación de Weierstrass}, y en este caso la condición de no singularidad implica que $4A^3 + 27B^2 \neq 0$. Si de hecho los coeficientes $A$ y $B$ están en $K$, decimos que la curva está definida sobre $K$, y nos referimos a ella como \[ E = E(K) = \{ (x, y) \in K \times K : y^2 = x^3 + Ax + B\} \cup \{\mathcal{O}\}, \] donde denotamos por $\mathcal{O}$ al punto en el infinito con coordenadas homogéneas $[0:1:0]$. En lo que sigue trabajaremos siempre con esta representación de las curvas.
-    
+
+En la Figura \ref{fig:curva} algunas representaciones de curvas elípticas, mientras que en la Figura \ref{fig:parametros} vemos cómo afectan los parámetros $A$ y $B$ a la representación de las curvas elípticas.
+
 \begin{figure}[h]
   \centering
   \includegraphics[width=.75\textwidth]{img/ejemplos-curvas}
   \caption{Ejemplos de curvas elípticas sobre $\mathbb{R}$. Basado en \parencite{eichlseder_elliptic_2016}.}
   \label{fig:curva}
 \end{figure}
-
-Podemos ver en la figura \ref{fig:parametros} cómo afectan los parámetros $A$ y $B$ a la representación de las curvas elípticas.
 
 \begin{figure}[h]
   \centering
@@ -226,15 +226,16 @@ Podemos ver en la figura \ref{fig:parametros} cómo afectan los parámetros $A$ 
 
 \subsection{Operación de grupo en curvas elípticas}
 
-Un detalle interesante sobre las curvas elípticas es que se puede definir sobre ellas una operación $+$ de forma que $(E, +)$ sea un grupo abeliano, con elemento identidad el punto $\mathcal{O}$. Para definir esta operación, supondremos por un momento que $K = \mathbb{R}$, y entenderemos que el punto del infinito se encuentra ``al principio'' y ``al final'' del eje de ordenadas. Podemos pensar entonces que dos rectas paralelas se cortan en el punto $\mathcal{O}$, y también que una recta vertical interseca a $E$ en el infinito.
+Un detalle interesante sobre las curvas elípticas es que se puede definir sobre ellas una operación $+$ de forma que $(E, +)$ sea un grupo abeliano, con elemento identidad el punto $\mathcal{O}$. Para definir esta operación, supondremos por un momento que $K = \mathbb{R}$, y entenderemos que el punto del infinito se encuentra <<al principio>> y <<al final>> del eje de ordenadas. 
+Podemos pensar entonces que que una recta vertical siempre interseca a $E$ al menos en el punto \(\mathcal{O}\).
 
-    El procedimiento general es el que sigue. Dados dos puntos $P = (x_1, y_1)$ y $Q = (x_2, y_2)$ con $P,Q \in E$, consideramos la recta que los une y llamamos $R$ a la otra intersección de dicha recta con la curva $E$. Entonces, definimos $P + Q$ como el punto reflejado de $R$ con respecto al eje $X$, al que llamaremos $-R$. Notamos que este procedimiento funciona siempre que la recta considerada corte efectivamente a la curva en otro punto. Discutimos ahora los posibles casos particulares del método.
+El procedimiento general es el que sigue. Dados dos puntos $P = (x_1, y_1)$ y $Q = (x_2, y_2)$ con $P,Q \in E$, consideramos la recta que los une y llamamos $R$ a la otra intersección de dicha recta con la curva $E$. Entonces, definimos $P + Q$ como el punto reflejado de $R$ con respecto al eje $X$, al que llamaremos $-R$. Notamos que este procedimiento funciona siempre que la recta considerada corte efectivamente a la curva en otro punto. Discutimos ahora los posibles casos particulares del método, que podemos visualizar en la Figura \ref{fig:operaciones-curvas}.
     
 \begin{enumerate}
-    \item En primer lugar, si $P=\mathcal{O}$ tendremos que la recta que une $P$ y $Q$ es vertical, luego interseca a la curva en el punto reflejado de $Q$, es decir, $\mathcal{O} + Q = - (-Q) = Q$. Hemos probado de camino que el punto $\mathcal{O}$ actúa como elemento identidad para la operación $+$.
-    \item En lo que sigue consideraremos $P, Q \neq \mathcal{O}$. Abordamos primero el caso en el que $x_1 \neq x_2$. Entonces, la recta que une $P$ y $Q$ tiene pendiente \[ m = \frac{y_2 - y_1}{x_2 - x_1}, \] y veremos que corta a la recta en otro punto $R$ que permite aplicar el procedimiento general para calcular $P+Q$.	
-    \item Si $Q = P$ con segunda coordenada no nula, no podemos considerar la recta que los une, pero la aproximamos por la recta tangente a $E$ en el punto $P$. Es decir, tomando $y = y(x)$ en la expresión de la curva, podemos derivar implícitamente y obtener la pendiente de la recta tangente: \[ 2yy' = 3x^2 + A \implies m = y_1'(x_1) = \frac{3x_1^2 + A}{2y_1}. \]  Veremos también que la recta tangente corta a la curva en otro punto y podremos aplicar el procedimiento general, computando el valor de $P + P$.
-    \item Por último, consideramos el caso $Q = -P$, pues al ser las curvas simétricas respecto al eje $X$ no hay otra posibilidad. Así, la recta que une $P$ y $-P$ es vertical, corta a la curva en $\mathcal{O}$, y por tanto $P + (-P) = -\mathcal{O} = \mathcal{O}$, obteniendo que el elemento inverso de un punto $P$ es su reflejado $-P$. En el caso en que la segunda coordenada sea nula, consideramos de nuevo la recta tangente a $E$ en $P$, y tenemos que sigue siendo vertical y corta a la curva en $\mathcal{O}$, verificándose $P + P = \mathcal{O}$.
+  \item En primer lugar, si $P=\mathcal{O}$ tendremos que la recta que une $P$ y $Q$ es vertical, luego interseca a la curva en el punto reflejado de $Q$, es decir, $\mathcal{O} + Q = - (-Q) = Q$. Hemos probado de camino que el punto $\mathcal{O}$ actúa como elemento identidad para la operación $+$.
+  \item En lo que sigue consideraremos $P, Q \neq \mathcal{O}$. Abordamos primero el caso en el que $x_1 \neq x_2$. Entonces, la recta que une $P$ y $Q$ tiene pendiente \[ m = \frac{y_2 - y_1}{x_2 - x_1}, \] y veremos que corta a la recta en otro punto $R$ que permite aplicar el procedimiento general para calcular $P+Q$.	
+  \item Si $Q = P$ con segunda coordenada no nula, no podemos considerar la recta que los une, pero la aproximamos por la recta tangente a $E$ en el punto $P$. Es decir, tomando $y = y(x)$ en la expresión de la curva, podemos derivar implícitamente y obtener la pendiente de la recta tangente: \[ 2yy' = 3x^2 + A \implies m = y_1'(x_1) = \frac{3x_1^2 + A}{2y_1(x_1)}. \]  Veremos también que la recta tangente corta a la curva en otro punto y podremos aplicar el procedimiento general, computando el valor de $P + P$.
+  \item Por último, consideramos el caso $Q = -P$, pues al ser las curvas simétricas respecto al eje $X$ no hay otra posibilidad. Así, la recta que une $P$ y $-P$ es vertical, corta a la curva en $\mathcal{O}$, y por tanto $P + (-P) = -\mathcal{O} = \mathcal{O}$, obteniendo que el elemento inverso de un punto $P$ es su reflejado $-P$. En el caso en que la segunda coordenada sea nula, el punto se encuentra sobre el eje de abscisas. Consideramos de nuevo la recta tangente a $E$ en $P$, y tenemos que sigue siendo vertical y corta a la curva en $\mathcal{O}$, verificándose $P + P = \mathcal{O}$.
 \end{enumerate}
 
 \begin{figure}[h]
@@ -247,20 +248,20 @@ Un detalle interesante sobre las curvas elípticas es que se puede definir sobre
 Veamos ahora cómo calcular el punto de corte de la recta considerada (de pendiente $m$) con la curva $E$, en los casos que no hemos determinado explícitamente la suma de $P+Q$. Podemos escribir la recta como \[ y = m(x - x_1) + y_1, \] y para ver el punto de corte con $E$ sustituimos en su expresión, quedando: \[ (m(x - x_1) + y_1)^2 = x^3 + Ax + B. \] Simplificando esta expresión, obtenemos otra de la forma
 \begin{equation}
     \label{eq:corte}
-	0 = x^3 - m^2x^2 + bx + c 
+	0 = x^3 - m^2x^2 + bx + c.
 \end{equation} 
 
     Notamos que no es necesario resolver la ecuación cúbica en $x$ para determinar los puntos de corte. Si tenemos un polinomio de la forma $x^3 + ax^2 + bx + c$ y conocemos sus tres raíces $r,s,t$, podemos escribir \[ x^3 + ax^2 + bx + c = (x-r)(x-s)(x-t) = x^3 - (r+s+t)x^2 + dx + e. \] Identificando coeficientes, vemos que $-a = r + s + t$, de donde $t = -a -r -s$. Es decir, si conocemos dos raíces de la expresión, podemos conocer la tercera de forma sencilla.
     
     Volviendo a nuestro caso, conocemos dos soluciones de \eqref{eq:corte}, a saber, $x_1$ y $x_2$ (incluyendo el caso de solución doble $x_1=x_2$). Como $a = -m^2$, podemos calcular la tercera solución de \eqref{eq:corte} fácilmente: \[ x_3 = m^2 - x_1 - x_2. \] Por último, sustituimos en la expresión de la recta para obtener la segunda coordenada del punto de corte, es decir, \[y_3 = m(x_3 - x_1) + y_1, \] y podemos escribir $P+Q = -R$ con $R=(x_3, y_3)$.
     
-    Para poder afirmar que $(E, +)$ es un grupo abeliano, falta verificar la conmutatividad y la asociatividad. La primera es obvia o bien de las fórmulas desarrolladas o bien del hecho de que la recta que pasa por $P$ y por $Q$ es la misma que la que pasa por $Q$ y por $P$. La asociatividad es algo menos trivial, pero puede comprobarse también a partir de las fórmulas para la suma. Una prueba completa puede consultarse en la sección 2.4 de \parencite{elliptic_washington_2008}.
+    Para poder afirmar que $(E, +)$ es un grupo abeliano, falta verificar la conmutatividad y la asociatividad. La primera es obvia, o bien de las fórmulas desarrolladas, o bien del hecho de que la recta que une $P$ y $Q$ es la misma que la que une $Q$ y $P$. La asociatividad es algo menos trivial, pero puede comprobarse también a partir de las fórmulas para la suma. Una prueba completa puede consultarse en \parencite[sección 2.4]{elliptic_washington_2008}.
     
-    Otra operación que podemos definir sobre puntos de curvas elípticas (y que tendrá mucha relevancia en sus aplicaciones criptográficas) es la \textit{multiplicación por escalares.} Dado un punto $P\in E$ y un natural $n$, podemos calcular \[ nP = \underbrace{P + P + \cdots + P}_{n}.\] Aunque parece que se necesitan realizar $n$ sumas, podemos calcular este punto con eficiencia $O(\log n)$, sin más que escribir $n$ en base 2 y realizar duplicaciones sucesivas. Por ejemplo, si queremos calcular $27P$, escribimos $27 = 2^4 + 2^3 + 2^1 + 2^0$, y así \[ 27P = 2^4P + 2^3P + 2P + P = 2(2^3P) + 2(2^2P) + 2P + P.\]
+    Otra operación que podemos definir sobre puntos de curvas elípticas (y que tendrá mucha relevancia en sus aplicaciones criptográficas) es la \textit{multiplicación por escalares.} Dado un punto $P\in E$ y un natural $n$, podemos calcular \[ nP = \underbrace{P + P + \cdots + P}_{n}.\] Aunque parece que se necesitan realizar $n$ sumas, podemos calcular este punto con eficiencia $O(\log n)$ sin más que escribir $n$ en base 2 y realizar duplicaciones sucesivas. Por ejemplo, si queremos calcular $27P$, escribimos $27 = 2^4 + 2^3 + 2^1 + 2^0$, y así \[ 27P = 2^4P + 2^3P + 2P + P = 2(2^3P) + 2(2^2P) + 2P + P.\]
     
 \subsection{Curvas elípticas sobre cuerpos finitos}
 
-Hasta ahora hemos definido las curvas elípticas sobre un cuerpo $K$ cualquiera (o su clausura algebraica), pero es de especial interés el caso en que $K=\mathbb{F}_p$ con $p$ un primo, es decir, consideramos curvas sobre el cuerpo finito de $p$ elementos. En este caso se sigue manteniendo la estructura de grupo, teniendo en cuenta que si $Q = (x,y)$, entonces $-Q = (x, -y \bmod p)$. La operación de suma sigue teniendo las mismas expresiones algebraicas (siempre $\bmod p$), considerando que las rectas en $\mathbb{F}_p$ son el conjunto de puntos que verifican la ecuación \[ ax + by + c \equiv 0 \bmod p. \] Sin embargo, el método geométrico ya no es tan claro, pues no es fácil visualizar las operaciones en $\mathbb{F}_p$.
+Hasta ahora hemos definido las curvas elípticas sobre un cuerpo $K$ cualquiera (o su clausura algebraica), pero es de especial interés el caso en que $K=\mathbb{F}_p$ con $p$ un primo, es decir, consideramos curvas sobre el cuerpo finito de $p$ elementos. En este caso se sigue manteniendo la estructura de grupo, teniendo en cuenta que si $Q = (x,y)$, entonces $-Q = (x, -y \bmod p)$. La operación de suma sigue teniendo las mismas expresiones algebraicas (siempre $\bmod\, p$), considerando que las rectas en $\mathbb{F}_p$ son el conjunto de puntos que verifican la ecuación \[ ax + by + c \equiv 0 \bmod p. \] Sin embargo, el método geométrico ya no es tan claro, pues no es fácil visualizar las operaciones en $\mathbb{F}_p$. Podemos ver en la Figura \ref{fig:cuerpos-curvas} una representación de una curva elíptica sobre un cuerpo finito.
 
 \begin{figure}[h]
   \centering
@@ -271,14 +272,14 @@ Hasta ahora hemos definido las curvas elípticas sobre un cuerpo $K$ cualquiera 
 
 Volviendo al problema de la multiplicación por escalares, si elegimos un punto arbitrario de la curva podemos considerar el subgrupo cíclico generado por él, que sabemos por el \textit{teorema de Lagrange} que tendrá orden un divisor del orden del grupo $(E, +)$. Existe un procedimiento llamado \textit{Algoritmo de Schoof} que permite calcular el orden de $E$ en tiempo polinomial \parencite{schoof_points_1995}.
 
-Para nuestras aplicaciones nos interesará elegir un grupo cíclico de $E$ de orden elevado, para lo cual podemos proceder de la siguiente forma:
+Para nuestras aplicaciones nos interesará elegir un grupo cíclico de $E$ de orden un primo de gran tamaño, para lo cual podemos proceder de la siguiente forma:
 
 \begin{enumerate}
 	\item Calcular el orden $N$ de $E$.
-	\item Escoger un factor \textbf{primo} $n$ de $N$.
+	\item Escoger un factor primo $n$ de $N$.
 	\item Calcular el valor $h = N/n$, que sabemos que es un número entero porque $n$ divide a $N$.
 	\item Elegimos un punto cualquiera $P \in E$ y calculamos $G = hP$.
-	\item Si $G=0$, volvemos al punto anterior.
+	\item Si $G=\mathcal{O}$, volvemos al punto anterior.
 \end{enumerate}
 
 Al finalizar, habremos encontrado un generador de un grupo cíclico de orden $n$, a saber, $\langle G \rangle$.
@@ -305,9 +306,10 @@ En 2002 fue reemplazado por el algoritmo AES (\textit{Advanced Encryption Standa
 \subsubsection{Protocolo de Diffie y Hellman}
 
 El segundo avance significativo, y el que verdaderamente es relevante para nuestro estudio, fue la publicación en 1976 del artículo \textit{New Directions in Cryptography} \parencite{diffie_new_1976} en el que los autores introducen por primera vez la idea del cifrado de clave pública. 
-Hasta el momento, todo algoritmo de cifrado necesitaba una clave secreta, compartida únicamente entre el emisor y el receptor. 
-La dificultad para llevar a cabo la comunicación cifrada radicaba entonces en la transmisión de dicha clave de forma segura. 
-Diffie y Hellman propusieron un criptosistema asimétrico que utiliza una pareja de claves: una pública y otra privada, eliminando así el obstáculo que suponía la transmisión de la clave.
+Todo algoritmo de cifrado necesita una clave secreta, compartida únicamente entre el emisor y el receptor. 
+Hasta el momento la dificultad para llevar a cabo la comunicación cifrada radicaba entonces en la transmisión de dicha clave de forma segura. 
+Diffie y Hellman propusieron un protocolo de intercambio de claves asimétrico que permitió resolver este problema. 
+Dicho protocolo utiliza una pareja de claves: una pública y otra privada, de forma que ambas partes de la comunicación pueden obtener una única clave sin tener que intercambiarla de forma explícita. 
 
 La técnica se basa en la dificultad de calcular logaritmos en un cuerpo finito de \(q\) elementos, denotado \(\mathbb F_q\), siendo \(q\) un número primo. 
 Sea \[Y = \alpha^X \mod q, \qquad \text{para } 1 \leq X \leq q - 1,\] donde \(\alpha\) es fijo y es una \textit{raíz primitiva módulo} \(q\), es decir, todo número coprimo con \(q\) es congruente a una potencia de \(\alpha\) módulo \(q\). 
@@ -332,7 +334,7 @@ Observamos que el protocolo de Diffie-Hellman tiene tres parámetros: \begin{ite
   \item La clave \(X\) a la que elevamos \(\alpha\).
 \end{itemize}
 
-Existen varias recomendaciones sobre el tamaño de los parámetros \(q\) y \(X\). Por ejemplo la Agencia Nacional de la Seguridad de Sistemas de Información francesa (ANSSI por sus siglas en francés) hace la recomendación descrita en la tabla \ref{tab:tam-anssi} \parencite{anssi_mecanismes_2014}, mientras que el NIST recomienda los tamaños descritos en la tabla \ref{tab:tam-nist} \parencite{barker_recommendation_2016}.
+Existen varias recomendaciones sobre el tamaño de los parámetros \(q\) y \(X\). Por ejemplo la Agencia Nacional de la Seguridad de Sistemas de Información francesa (ANSSI por sus siglas en francés) hace la recomendación descrita en la Tabla \ref{tab:tam-anssi} \parencite{anssi_mecanismes_2014}, mientras que el NIST recomienda los tamaños descritos en la Tabla \ref{tab:tam-nist} \parencite{barker_recommendation_2016}.
 
 Como se puede observar, para ofrecer niveles de seguridad significativos son necesarios tamaños de los parámetros bastante grandes. Al estudiar la criptografía de curvas elípticas veremos que los tamaños de los parámetros utilizados son mucho menores. 
 
@@ -534,9 +536,9 @@ Este hecho pudo ser debido a diferentes motivos. En primer lugar, la criptograf�
 Como ya hemos visto, para que un atacante pudiera romper un cifrado basado en las técnicas de curvas elípticas actuales necesitaría resolver el problema del logaritmo discreto.
 Un atacante que posea un ordenador cuántico con una implementación del algoritmo de Shor (cita/referencia?) podría resolver dicho problema con facilidad. 
 En la actualidad se desconoce si es factible la construcción de dicho ordenador a corto o largo plazo, pero experimentos a tamaños muy reducidos han producido resultados satisfactorios, por lo que los criptógrafos se están tomando esta amenaza en serio.
-El hecho de que los tamaños recomendados para los parámetros de ECDH sean menores que para los de otros criptosistemas hace que se requiera una menor capacidad de cómputo cuántico para romperlo que, por ejemplo, RSA (citas).
+El hecho de que los tamaños recomendados para los parámetros de ECDH sean menores que para los de otros criptosistemas hace que se requiera una menor capacidad de cómputo cuántico para romperlo que, por ejemplo, RSA \parencite{beauregard_circuit_2003} \parencite{proos_shors_2004}.
 
-El NIST comenzó en 2017 (cita) una recogida de propuestas para el desarrollo de criptosistemas que puedan resistir ataques por parte de ordenadores cuánticos con altas capacidades de computación.
+El NIST comenzó en 2017 una recogida de propuestas para el desarrollo de criptosistemas que puedan resistir ataques por parte de ordenadores cuánticos con altas capacidades de computación \parencite{computer_security_division_call_2017}.
 Se estima que el proceso de selección y evaluación de las propuestas enviadas pueda alargarse hasta 2022.
 La mayoría de las propuestas que hay sobre la mesa actualmente están basados en la resolución de problemas \textit{complicados}, como puede ser decodificar códigos lineales aleatorios, invertir funciones \textit{hash} o la resolución de sistemas de ecuaciones no lineales sobre cuerpos finitos.
 Hay otra propuesta que goza de cierta atención y reconocimiento últimamente y que se basa de nuevo en las curvas elípticas.
@@ -546,15 +548,15 @@ Antes de abordar este nuevo algoritmo necesitamos definir algunos conceptos.
 Una \textit{isogenia} es una aplicación de un grupo en otro sobreyectiva, homomórfica y que preserva la estructura.
 En el caso de las curvas elípticas, una isogenia \(\phi\) asigna puntos de una curva \(E\) a puntos de otra curva \(E'\).
 El \(j\)\textit{-invariante} es un valor que puede calcularse para cada curva elíptica utilizando sus parámetros. En el caso de las curvas en forma de Weierstrass, viene dado por \[
-  j(E) = 1728 \cdot \frac{4a^3}{4a^3 + 27b^2}.
+  j(E) = 1728 \cdot \frac{4a^3}{4a^3 + 27b^2}\,.
 \]
 
 %FIXME: ya aparecen mencionadas antes
 Una curva supersingular es una curva (definición).
 
-\subsection{Algoritmo SIDH (Supersingular Isogeny Diffie-Hellman)}
+\subsection{Algoritmo Supersingular Isogeny Diffie-Hellman}
 
-En 2011 los investigadores Luca de Feo, David Jao y Jérôme Plût propusieron (cita) el algoritmo que ahora se conoce como SIDH (siglas en inglés de\textit{Supersingular Isogeny Diffie-Hellman}).
+En 2011 los investigadores Luca de Feo, David Jao y Jérôme Plût propusieron el algoritmo que ahora se conoce como SIDH (siglas en inglés de \textit{Supersingular Isogeny Diffie-Hellman}) \parencite{yang_towards_2011}.
 Veamos una descripción sencilla antes de entrar en detalle. 
 Supongamos que Alice y Bob quieren compartir información de forma segura.
 Ambas partes generan una clave privada, que va a ser una isogenia basada en la curva \(E\), pública, y en los puntos \(P_a, Q_a, P_b, Q_b\) de \(E\). 
@@ -568,7 +570,7 @@ Veamos el algoritmo ahora paso por paso. Los siguientes parámetros son fijos y 
   \item Una curva elíptica supersingular \(E\) sobre el cuerpo finito \(\mathbb F_p\).
   \item Cuatro puntos fijos sobre \(E\), \(P_a, Q_a, P_b, Q_b\).
 \end{itemize}
-Para el intercambio de información Alice realiza los pasos descritos en el algoritmo \ref{algo:sidh-alice}, mientras que Bob realiza los descritos en el algoritmo \ref{algo:sidh-bob}, recíprocos a los de Alice.
+Para el intercambio de información Alice realiza los pasos descritos en el Algoritmo \ref{algo:sidh-alice}, mientras que Bob realiza los descritos en el Algoritmo \ref{algo:sidh-bob}, recíprocos a los de Alice.
 
 \begin{algorithm}[h]
   \KwIn{\(P_a\)\,, \(Q_a\)\,, \(P_b\)\,, \(Q_b\)}
