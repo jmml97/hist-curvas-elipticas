@@ -270,7 +270,7 @@ Hasta ahora hemos definido las curvas elípticas sobre un cuerpo $K$ cualquiera 
   \label{fig:cuerpos-curvas}
 \end{figure}
 
-Volviendo al problema de la multiplicación por escalares, si elegimos un punto arbitrario de la curva podemos considerar el subgrupo cíclico generado por él, que sabemos por el \textit{teorema de Lagrange} que tendrá orden un divisor del orden del grupo $(E, +)$. Existe un procedimiento llamado \textit{Algoritmo de Schoof} que permite calcular el orden de $E$ en tiempo polinomial \parencite{schoof_points_1995}.
+Volviendo al problema de la multiplicación por escalares, si elegimos un punto arbitrario de la curva podemos considerar el subgrupo cíclico generado por él, que sabemos por el \textit{teorema de Lagrange} que tendrá orden un divisor del orden del grupo $(E, +)$. Existe un procedimiento llamado \textit{Algoritmo de Schoof} que permite calcular el orden de $E$ en tiempo polinómico \parencite{schoof_points_1995}.
 
 Para nuestras aplicaciones nos interesará elegir un grupo cíclico de $E$ de orden un primo de gran tamaño, para lo cual podemos proceder de la siguiente forma:
 
@@ -287,9 +287,13 @@ Al finalizar, habremos encontrado un generador de un grupo cíclico de orden $n$
 \section{Evolución de las curvas elípticas en la criptografía}
 
 Un criptosistema es una familia uniparamétrica \(\{S_K\}_{K \in \{K\}}\) de aplicaciones invertibles \[S_K: \{P\} \to \{C\},\] del conjunto de mensajes en claro, \(\{P\}\), al conjunto de mensajes cifrados, \(\{C\}\). 
-El parámetro \(K\) se denomina \textit{clave} y el rango de posibles valores que puede tomar \(\{K\}\), \textit{espacio de claves}.
+El parámetro \(K\) se denomina \textit{clave} y el rango de posibles valores que puede tomar 
+%\(\{K\}\)
+, \textit{espacio de claves}.
 
-El objetivo a la hora de diseñar un criptosistema \(\{S_K\}\) ha de ser procurar que las operaciones de cifrado y descifrado resulten sencillas pero asegurarse que el análisis criptográfico por parte de terceras personas con el fin de interceptar y descifrar los mensajes cifrados sea lo suficientemente difícil.
+El objetivo a la hora de diseñar un criptosistema 
+%\(\{S_K\}\)
+ ha de ser procurar que las operaciones de cifrado y descifrado resulten sencillas, asegurándose que el análisis criptográfico por parte de terceras personas con el fin de interceptar y descifrar los mensajes cifrados sea lo suficientemente difícil.
 
 \subsection{Criptografía moderna anterior a los años 80}
 
@@ -307,9 +311,9 @@ En 2002 fue reemplazado por el algoritmo AES (\textit{Advanced Encryption Standa
 
 El segundo avance significativo, y el que verdaderamente es relevante para nuestro estudio, fue la publicación en 1976 del artículo \textit{New Directions in Cryptography} \parencite{diffie_new_1976} en el que los autores introducen por primera vez la idea del cifrado de clave pública. 
 Todo algoritmo de cifrado necesita una clave secreta, compartida únicamente entre el emisor y el receptor. 
-Hasta el momento la dificultad para llevar a cabo la comunicación cifrada radicaba entonces en la transmisión de dicha clave de forma segura. 
+Hasta el momento la dificultad para llevar a cabo la comunicación cifrada radicaba en la transmisión de dicha clave de forma segura. 
 Diffie y Hellman propusieron un protocolo de intercambio de claves asimétrico que permitió resolver este problema. 
-Dicho protocolo utiliza una pareja de claves: una pública y otra privada, de forma que ambas partes de la comunicación pueden obtener una única clave sin tener que intercambiarla de forma explícita. 
+Dicho protocolo utiliza una pareja de claves: una pública y otra privada, de forma que ambas partes de la comunicación pueden obtener una única clave compartida sin tener que intercambiarla de forma explícita. 
 
 La técnica se basa en la dificultad de calcular logaritmos en un cuerpo finito de \(q\) elementos, denotado \(\mathbb F_q\), siendo \(q\) un número primo. 
 Sea \[Y = \alpha^X \mod q, \qquad \text{para } 1 \leq X \leq q - 1,\] donde \(\alpha\) es fijo y es una \textit{raíz primitiva módulo} \(q\), es decir, todo número coprimo con \(q\) es congruente a una potencia de \(\alpha\) módulo \(q\). 
@@ -318,7 +322,7 @@ El cálculo de \(Y\) a partir de \(X\) es sencillo, necesitándose para ello com
 Sin embargo, la operación inversa de calcular \(X\) a partir de \(Y\) es mucho más compleja, y en ello radica la seguridad de este sistema, como comentaremos más adelante.
 
 A la hora de establecer la comunicación cifrada cada usuario genera un número aleatorio \(X_i\) de forma independiente dentro del rango de enteros \(\{1, 2, \dots, q - 1\}\). 
-Dicho número se guarda en secreto, pero se hace público el número \[Y_i = \alpha^{X_i} \mod q\] junto al nombre y dirección que permiten identificar al usuario. 
+Dicho número se conoce como \textit{clave privada} y se guarda en secreto, pero se hace público el número \[Y_i = \alpha^{X_i} \mod q,\] conocido como \textit{clave pública}. 
 Cuando los usuarios \(i\) y \(j\) quieren comunicarse de forma segura utilizan la clave \(K_{ij} = \cramped{\alpha^{X_iX_j}} \mod q\). 
 El usuario \(i\) obtiene la clave \(K_{ij}\) a partir del número público \(Y_j\) realizando las operaciones \begin{align*}
   K_{ij} &= Y_j^{X_i} \mod q \\
@@ -395,17 +399,17 @@ El problema de Diffie-Hellman es en consecuencia intratable para ciertos grupos,
 % TODO: Enlazar con el apartado anterior
 
 %TODO: citar 1984. Algoritmo de Lenstra
-En 1984 Hendrik Lenstra propone un nuevo algoritmo de factorización. Su característica más destacada es el uso de las curvas elípticas, ya que es el primer algoritmo criptográfico que las utiliza. A partir de este momento, se comenzó a buscar usos criptográficos para muchas herramientas matemáticas que nunca habían sido utilizadas con este propósito.
+En 1984 Hendrik Lenstra propone un nuevo algoritmo de factorización de enteros \parencite{lenstra_divisors_1984}. Su característica más destacada es el uso de las curvas elípticas, ya que es el primer algoritmo criptográfico que las utiliza. A partir de este momento, se comenzó a buscar usos criptográficos para muchas herramientas matemáticas que nunca habían sido utilizadas con este propósito.
 
 %TODO: citar 1985. Problema del logaritmo discreto con curvas elípticas. N. Koblitz y V. Miller (de forma independiente)
 Al año siguiente, N. Koblitz y V. Miller proponen de forma independiente un uso diferente de las curvas elípticas en criptografía. Su idea fue usar un criptosistema como el de Diffie y Hellman utilizando, en vez del grupo multiplicativo sobre un cuerpo finito, el grupo de puntos de una curva elíptica sobre un cuerpo finito. El enunciado del problema es el siguiente:
 \begin{displayquote}
-  Sea $E(\mathbb{F}_q)$ verificando la ecuación de Weierstrass $y^2 =x^3 + Ax + B$. Consideramos $\langle G \rangle$ un subgrupo cíclico de orden $n$ de los puntos de $E$. Dados $P,Q \in \langle G \rangle$ encuentra $x \bmod{n}$ tal que $Q=xP$. 
+  Sea $E(\mathbb{F}_p)$ verificando la ecuación de Weierstrass $y^2 =x^3 + Ax + B$. Consideramos $\langle G \rangle$ un subgrupo cíclico de orden $n$ de los puntos de $E$. Dados $P,Q \in \langle G \rangle$ encuentra $x \bmod{n}$ tal que $Q=xP$. 
 \end{displayquote} 
 
 Este problema lo denominamos \textit{problema del logaritmo discreto para curvas elípticas}, aunque no aparezcan logaritmos en él, por su similitud con el ya mencionado problema del logaritmo discreto en cuerpos finitos. A partir de esta definición, se pensó en adaptar el protocolo de Diffie y Hellman para intercambio de claves introduciendo curvas elípticas, y fue así como nació el protocolo ECDH (por sus siglas en inglés, \textit{Elliptic Curve Diffie-Hellman}), que describimos brevemente.
 
-    Consideramos un subgrupo cíclico $\langle G \rangle$ de $E(\mathbb{F}_p)$ de orden $n$, y elegimos un valor $0 < x < n$. La clave pública será el punto $H = xG$, y la clave privada el número $x$. Si Alice quiere enviar un mensaje a Bob, se deberán seguir los siguientes pasos:
+    Consideramos un subgrupo cíclico $\langle G \rangle$ de $E(\mathbb{F}_p)$ de orden $n$, y elegimos un valor \(x\) de forma $0 < x < n$. La clave pública será el punto $H = xG$, y la clave privada el número $x$. Si Alice quiere enviar un mensaje a Bob, se deberán seguir los siguientes pasos:
     
     \begin{enumerate}
 	\item Alice genera una pareja de claves pública y privada, digamos $x_1$ y $H_1$, y Bob hace lo propio para obtener $x_2$ y $H_2$, utilizando los mismos parámetros de la curva como base.
@@ -413,36 +417,36 @@ Este problema lo denominamos \textit{problema del logaritmo discreto para curvas
 	\item Alice calcula el secreto compartido como $S = x_1H_2$ y Bob calcula el mismo punto pero utilizando la expresión $S = x_2H_1$. Vemos que coinciden, pues \[ S = x_1H_2 = x_1(x_2G) = x_2(x_1G) = x_2H_1. \]
 \end{enumerate}
 
-Ahora Alice y Bob puede utilizar el secreto compartido como clave de un sistema de encriptación simétrico para establecer una comunicación.
+Ahora Alice y Bob pueden utilizar el secreto compartido como clave de un sistema de cifrado simétrico para establecer una comunicación.
 
 %TODO: comentar tamaños de claves para ECDH (tabla).
 
 % TODO: cita Miller
 %%TODO: referencia index cálculus.
-    La razón más importante para considerar la criptografía de la curva elíptica (ECC, por sus siglas en inglés \textit{Elliptic Curve Cryptography}) fue que no parecía que se pudiera adaptar el método de \textit{index calculus} para el cálculo del logaritmo discreto en el grupo de una curva elíptica. El motivo es que en este método hay que fijar un conjunto de elementos pequeños (factor base) de forma que podamos escribir el resto de elementos de forma eficiente a partir de ellos. Miller [] demostró que si se utiliza la noción más natural de \textquote{pequeño} se descubre que no hay suficientes puntos para formar una base para el algoritmo de \textit{index calculus}.
+La razón más importante para considerar la criptografía de la curva elíptica (ECC, por sus siglas en inglés \textit{Elliptic Curve Cryptography}) fue que no parecía que se pudiera adaptar el método de \textit{index calculus} para el cálculo del logaritmo discreto en el grupo de una curva elíptica. El motivo es que en este método hay que fijar un conjunto de elementos pequeños (factor base) de forma que podamos escribir el resto de elementos de forma eficiente a partir de ellos. Miller demostró que no puede utilizarse el algoritmo de \textit{index calculus} para curvas elípticas \parencite{williams_use_1986}.
 
-En los comienzos de ECC unas curvas muy populares eran las definidas en un cuerpo $\mathbb{F}_p$ que verificaban la ecuación $y^2 = x^3 - x$. El caso \textit{supersingular} es aquel en el que se cumple $p \equiv 3 \mod 4$, y en este caso es rápido encontrar un número $p$ primo tal que el grupo definido por la curva tenga un subgrupo grande de orden un primo. Las curvas supersingulares de característica 2 y 3 tenían otra ventaja: elevar al cuadrado en curvas de característica 2 y al cubo en curvas de característica 3 tardaba un tiempo despreciable.
+En los comienzos de ECC unas curvas muy populares eran las definidas en un cuerpo $\mathbb{F}_p$ que verificaban la ecuación $y^2 = x^3 - x$. El caso \textit{supersingular} es aquel en el que se cumple $p \equiv 3 \bmod 4$, y en este caso es rápido encontrar un número $p$ primo tal que el grupo definido por la curva tenga un subgrupo grande de orden un primo. Las curvas supersingulares de característica 2 y 3 tenían otra ventaja: elevar al cuadrado en curvas de característica 2 y al cubo en curvas de característica 3 tardaba un tiempo despreciable.
 
 %TODO citation needed
-Pese a que esta elección de parámetros fuera conveniente por los aspectos comentados, los autores que los usaron más adelante se arrepintieron, pues en 1991 se descubrió que el problema del logaritmo discreto sobre curvas supersingulares es mucho más fácil de resolver que en la mayoría de las curvas. Aunque las curvas supersingulares son muy pocas dentro de la familia de todas las curvas elípticas definidas sobre un cuerpo finito, su uso común dio una impresión exagerada sobre su importancia. Así, se aceptó que se pueden usar curvas fáciles tratar sin recurrir a las supersingulares.
+Pese a que esta elección de parámetros fuera conveniente por los aspectos comentados, los autores que los usaron se arrepintieron más adelante, pues en 1991 se descubrió que el problema del logaritmo discreto sobre curvas supersingulares es mucho más fácil de resolver que en la mayoría de las curvas. Aunque las curvas supersingulares son muy pocas dentro de la familia de todas las curvas elípticas definidas sobre un cuerpo finito, su uso común dio una impresión exagerada sobre su importancia. Así, se aceptó que se pueden usar curvas fáciles de tratar sin recurrir a las supersingulares.
 
-A finales de los años 80 se fueron introduciendo adaptaciones de modelos criptográficos que utilizaban de alguna forma curvas elípticas. Un ejemplo concreto de estos avances es la propuesta de adaptación por parte de Koblitz en 1987 \parencite{koblitz_elgamal_1987} del algoritmo de encriptación de clave pública conocido como ElGamal, descrito dos años antes por Tahir ElGamal \parencite{elgamal_cryptosytem_1985}. Para adaptar su funcionamiento, elegimos una curva $E(\mathbb{F}_p)$ y un grupo $\langle G \rangle$ de orden $n$. En primer lugar, necesitamos una función (pública) $m \mapsto P_m$ que sea invertible y transforme mensajes en puntos de la curva. Una posible estrategia para conseguirlo es transformar $m$ en un elemento de $\mathbb{F}_p$ y usarlo como $x$ en la ecuación de la curva, calculando el correspondiente valor de $y$. Después, cada usuario debe elegir un secreto $0 < x < n$ y publicar la clave $Y = xG$. Una vez que tenemos estos ingredientes, podemos cifrar y descifrar mensajes:
+A finales de los años 80 se fueron introduciendo adaptaciones de modelos criptográficos que utilizaban de alguna forma curvas elípticas. Un ejemplo concreto de estos avances es la propuesta de adaptación por parte de Koblitz en 1987 \parencite{koblitz_elgamal_1987} del algoritmo de cifrado de clave pública conocido como ElGamal, descrito dos años antes por Tahir ElGamal \parencite{elgamal_cryptosytem_1985}. Para adaptar su funcionamiento, elegimos una curva $E(\mathbb{F}_p)$ y un grupo $\langle G \rangle$ de orden $n$. En primer lugar, necesitamos una función (pública) $m \mapsto P_m$ que sea invertible y transforme mensajes en puntos de la curva. Una posible estrategia para conseguirlo es transformar $m$ en un elemento de $\mathbb{F}_p$ y usarlo como $x$ en la ecuación de la curva, calculando el correspondiente valor de $y$. Después, cada usuario debe elegir un secreto \(s\) tal que $0 < x < n$ y publicar la clave $Y = sG$. Ahora, podemos cifrar y descifrar mensajes:
     
 \begin{itemize}
-	\item Para el cifrado, elegimos otro número $0 < k < n$ y definimos $C =kG$, $C' = kY$. El texto cifrado será la tupla $(C, C' + P_m)$.
+	\item Para el cifrado, elegimos otro número \(k\) que verifica $0 < k < n$ y definimos los puntos $C =kG$ y $C' = kY$. El texto cifrado será la tupla $(C, C' + P_m)$.
 	\item Para el descifrado, recibimos una tupla $(C, D)$, calculamos $C'' = xC$ y recuperamos el mensaje como \[ P_m = D - C'' = (k(xG) + P_m) - x(kG)). \] Solo falta invertir la transformación $P_m \mapsto m$ para leer el mensaje original.
 \end{itemize}
 
-\subsubsection{Algoritmo de firma}
+%\subsubsection{Algoritmo de firma}
 
-La mayor parte de los algoritmos que utilizaban las curvas elípticas consistían en adaptar los ya existentes para este grupo y no aprovechaban la estructura específica de las curvas elípticas.
+%La mayor parte de los algoritmos que utilizaban las curvas elípticas consistían en adaptar los ya existentes para este grupo y no aprovechaban la estructura específica de las curvas elípticas.
 
 % TODO: contar aparición de DSA.
-Destacamos la adaptación del algoritmo DSA (\textit{Digital Signature Algorithm}), ya que fue un proceso complicado. En ECDSA (\textit{Elliptic Curve Digital Signature Algorithm}) suponemos que Alice quiere firmar un mensaje con su clave privada, y que Bob quiere validar la firma usando la clave pública de Alice. La única que debería poder emitir firmas válidas es Alice, y estas deberían poder ser verificadas por cualquiera que conozca su clave pública.
+Destacamos también la adaptación del algoritmo DSA (\textit{Digital Signature Algorithm}), ya que fue un proceso complicado. En ECDSA (\textit{Elliptic Curve Digital Signature Algorithm}) suponemos que Alice quiere firmar un mensaje con su clave privada, y que Bob quiere validar la firma usando la clave pública de Alice. La única que debería poder emitir firmas válidas es Alice, y estas deberían poder ser verificadas por cualquiera que conozca su clave pública.
 
-Alice y Bob usarán los mismos parámetros. Necesitan estar trabajando sobre la misma curva elíptica definida sobre un cuerpo $\mathbb{F}_q$ que contiene un subgrupo $G$ de orden primo ($n$) con generador $P$.
+Alice y Bob usarán los mismos parámetros. Necesitan estar trabajando sobre la misma curva elíptica definida sobre un cuerpo $\mathbb{F}_p$ que contiene un subgrupo $G$ de orden primo ($n$) con generador $P$.
 
-ECDSA no trabaja sobre el mensaje, sino sobre una función \textit{hash} del mismo, que deberá ser truncada si su longitud supera $n$. Alice comienza \textit{generando sus claves}. Para ello, elige un entero $x$ en el intervalo $[1,n-1]$ y calcula $Q=xP$. La clave pública de Alice será $K_A=Q$ y la privada $k_A=x$. Para \textit{firmar el mensaje} conociendo su valor \textit{hash} H, Alice:
+ECDSA no trabaja sobre el mensaje, sino sobre una función \textit{hash} del mismo, que deberá ser truncada si su longitud supera $n$. Alice comienza \textit{generando sus claves}. Para ello, elige un entero $x$ en el intervalo $[1,n-1]$ y calcula $Q=xP$. La clave pública de Alice será $K_A=Q$ y la privada $k_A=x$. Para \textit{firmar el mensaje} conociendo su valor \textit{hash} \(H\), Alice:
 
 \begin{enumerate}
 \item Elige aleatoriamente un entero $z$ en el intervalo $[1,n-1]$.
@@ -455,7 +459,7 @@ ECDSA no trabaja sobre el mensaje, sino sobre una función \textit{hash} del mis
 
 La pareja $(r, s)$ es la firma del mensaje. Para obtenerla se generó un valor aleatorio $z$ que será escondido gracias a la multiplicación de puntos, y a continuación en el paso \ref{en:s}, $r$ es ligado al mensaje \textit{hash}. Para calcular el inverso de $z$ módulo $n$ es necesario que $n$ sea un número primo. Si el subgrupo no tiene orden primo, no podremos usar este algoritmo.
 
-Para verificar la firma sobre un mensaje Bob necesita la clave pública de Alice ($K_A$), el valor \textit{hash} del mensaje ($H$) y su firma $(r,s)$. Una vez conozca estos tres valores puede comenzar la verificación, para ello:
+Para \textit{verificar la firma} sobre un mensaje Bob necesita la clave pública de Alice ($K_A$), el valor \textit{hash} del mensaje ($H$) y su firma $(r,s)$. Una vez conozca estos tres valores puede comenzar la verificación, para ello:
 
 \begin{enumerate}
 \item Calcula $u_1 \equiv s^{-1}H \bmod n$ y $u_2 \equiv s^{-1}r \bmod n$.
@@ -463,7 +467,7 @@ Para verificar la firma sobre un mensaje Bob necesita la clave pública de Alice
 \item La firma será válida si, y solo si, $r \equiv x_0 \bmod n$.
 \end{enumerate}
 
-Para ver por qué el último paso es así, observamos que si Alice generó su firma correctamente, entonces \[u_1P+u_2K_A=(u_1+k_Au_2)P=zP,\] porque $z \equiv s^{-1}(H+k_Ar) \bmod n$ y tendríamos por cómo hemos elegido $zP$ que $r \equiv x_0 \bmod n$.
+Para ver por qué el último paso es así, observamos que si Alice generó su firma correctamente, entonces \[u_1P+u_2K_A=(u_1+k_Au_2)P=zP,\] porque $z \equiv s^{-1}(H+k_Ar) \bmod n$, y tendríamos por cómo hemos elegido $zP$ que $r \equiv x_0 \bmod n$.
 
 \subsubsection{Primeros algoritmos para el problema del logaritmo discreto sobre curvas elípticas}
 
@@ -471,26 +475,28 @@ Para ver por qué el último paso es así, observamos que si Alice generó su fi
 Los primeros algoritmos para resolver el problema del logaritmo discreto sobre curvas elípticas eran los mismos que se utilizaban para resolver el problema en cuerpos finitos, y no aprovechaban la estructura específica del grupo de la curva elíptica. El primero de estos algoritmos, diseñado por Pohlig y Hellman [], usa el teorema chino del resto para reducir el problema al problema del logaritmo discreto en subgrupos de orden primo.
 
 %% TODO: citar algoritmos
-En un grupo $G$ de orden primo $n$ los dos mejores algoritmos genéricos son el \textit{baby-step/giant-step} de Shanks (basado en que podemos expresar un entero $x$ como $x = am + b$) y el algoritmo \textit{rho} de Pollard. Ambos requieren tiempo $O(\sqrt{n})$ por lo que se conocen como ataques de raíz cuadrada para el problema del logaritmo discreto. Aunque el método de Shanks tiene la ventaja de ser determinista (en cada paso no se elige entre varias opciones, solo hay una posible), necesita mucha memoria, del orden de $\sqrt{n}$, y en la práctica se prefiere una versión aleatorizada del método \textit{rho} de Pollard. La idea general de este método es recorrer pseudo-aleatoriamente el grupo $G$ usando ciertas combinaciones del punto base $P$ y del punto $Q$ con el logaritmo discreto desconocido. Cuando al recorrer el grupo pasemos dos veces por el mismo sitio, podremos resolver el logaritmo discreto.
+En un grupo $G$ de orden primo $n$ los dos mejores algoritmos genéricos son el \textit{baby-step/giant-step} de Shanks (basado en que podemos expresar un entero $x$ como $x = am + b$) y el algoritmo \textit{rho} de Pollard. Ambos requieren tiempo $O(\sqrt{n})$ por lo que se conocen como ataques de raíz cuadrada para el problema del logaritmo discreto. Aunque el método de Shanks tiene la ventaja de ser determinista (en cada paso no se elige entre varias opciones, solo hay una posible), necesita mucha memoria, del orden de $\sqrt{n}$, y en la práctica se prefiere una versión aleatorizada del método \textit{rho} de Pollard. La idea general de este método es recorrer pseudo-aleatoriamente el grupo $G$ usando ciertas combinaciones del punto base $P$ y del punto $Q$, cuyo logaritmo discreto desconocemos. Cuando al recorrer el grupo pasemos dos veces por el mismo sitio, habremos resuelto el problema.
 
 Se encontraron más algoritmos para resolver este problema, algunos más rápidos que los de complejidad raíz cuadrada. Sin embargo, en las curvas elípticas elegidas en la mayor parte de las aplicaciones criptográficas los algoritmos más rápidos seguían siendo los genéricos.
 
-Otro algoritmo relevante para resolver el problema del logaritmo discreto es el \textit{ataque por emparejamiento de Weil}, que lo conseguía resolver en tiempo subexponencial (esto es, mayor que polinómico, pero menor que exponencial). Se basa en una aplicación bilineal que lleva parejas de puntos de la curva elíptica divisores de $n$ a las raíces $n$-ésimas de la unidad. Este algoritmo es especialmente efectivo en las curvas supersingulares, lo que provocó que este tipo de curvas se evitaran en criptografía.
+Otro algoritmo relevante para resolver el problema del logaritmo discreto es el \textit{ataque por emparejamiento de Weil}, que lo conseguía resolver en tiempo subexponencial (esto es, mayor que polinómico, pero menor que exponencial). Se basa en una aplicación bilineal que lleva parejas de puntos de la curva elíptica que sean divisores de $n$ a las raíces $n$-ésimas de la unidad. Este algoritmo es especialmente efectivo en las curvas supersingulares, lo que provocó que este tipo de curvas se evitaran en criptografía, como ya hemos comentado.
 
 \subsubsection{Reacciones iniciales y enfrentamiento con RSA}
-Durante los años siguientes a la aparición de la criptografía de la curva elíptica la actitud general de los criptógrafos fue aceptación y curiosidad, nadie la consideró una amenaza comercial. Aunque la mayor parte de los investigadores nunca habían estudiado curvas elípticas y no entendían la teoría asociada reaccionaron positivamente a la idea de un nuevo tipo de criptografía basada en ellas. A finales de los años 80, un grupo amplio de matemáticos empezó a trabajar en el tema y los avances que introdujeron se tomaron como un indicador de que la criptografía de clave pública pronto estaría lista.
+Durante los años siguientes a la aparición de la criptografía de la curva elíptica la actitud general de los criptógrafos fue de aceptación y curiosidad y nadie la consideró una amenaza comercial. Aunque la mayor parte de los investigadores nunca había estudiado curvas elípticas y no entendía la teoría asociada, estos reaccionaron positivamente a la idea de un nuevo tipo de criptografía basada en ellas. A finales de los años 80, un grupo amplio de matemáticos empezó a trabajar en el tema y los avances que introdujeron se tomaron como un indicador de que la criptografía de clave pública pronto estaría lista para ser usada por el público general.
 
-%TODO contar aparición de RSA y situarla en este contexto.
+%TODO contar aparición de RSA y situarla en este contexto, referenciar paper
 
-Mientras, la seguridad basada en RSA comenzaba a tener éxito comercial. La criptografía apoyada en RSA estaba consiguiendo una buena aceptación entre el público general y tenía el monopolio virtual de la criptografía de llave pública. Sin embrago, se avecinaban problemas, los métodos de factorización habían disminuido su tiempo de ejecución, provocando que los números recomendados para que el uso de RSA fuera seguro crecerían pronto a miles de bits. Los partidarios de ECC adevertían de que este es un problema importante en los dispositivos con poco espacio de almacenamiento como los teléfonos móviles, tarjetas, etc.
+Mientras, la seguridad basada en RSA comenzaba a tener éxito comercial. RSA es un sistema de clave pública que apareció en el año 1977 y cuya seguridad radica en el problema de factorización. La criptografía apoyada en RSA estaba consiguiendo una buena aceptación entre el público general y tenía el monopolio virtual de la criptografía de llave pública. Sin embrago, se avecinaban problemas. Los métodos de factorización habían disminuido su tiempo de ejecución, provocando que los números recomendados para que el uso de RSA fuera seguro comenzaran a crecer hasta llegar a miles de bits. Los partidarios de ECC advertían que este era un problema importante en los dispositivos con poco espacio de almacenamiento como los teléfonos móviles, tarjetas, etc.
 
-Es en este periodo cuando tres profesores de la universidad de Waterloo crearon una compañía que desarrolló e impulsó la criptografía de la curva elíptica, ahora llamada Certicom. Los investigadores asociados comenzaron a asistir a conferencias en las que se establecían los estándares criptográficos para luchar por la inclusión de los protocolos basados en curvas elípticas en los mismos. ECDSA estaba avanzando como una alternativa eficiente a las firmas RSA y al DSA en el que se basa, aunque no fue incluido en los estándares hasta 1999 y 2000.
+Es en este periodo cuando tres profesores de la universidad de Waterloo crearon una compañía que desarrolló e impulsó la criptografía de la curva elíptica. Los investigadores asociados comenzaron a asistir a conferencias en las que se establecían los estándares criptográficos con el objetivo de luchar por la inclusión de los protocolos basados en curvas elípticas en los mismos. ECDSA estaba avanzando como una alternativa eficiente a las firmas RSA y al DSA en el que se basa, aunque no fue incluido en los estándares hasta 1999 y 2000.
 
-En 1997, RSA Data Security puso en su página web una sección en la que advertía de que la criptografía basada en las curvas elípticas ponía en riesgo los datos de sus clientes. Argumentaba que el problema de factorización, en el que RSA basa su seguridad, había sido ampliamente estudiado mientras que el problema del logaritmo discreto, en el que la basa ECC, necesitaba todavía más estudio y pruebas. Además, decían, pocos criptógrafos entienden realmente las curvas elípticas, por lo que no se podrá evaluar correctamente su seguridad.
+En 1997, RSA Data Security puso en su página web una sección en la que advertía que la criptografía basada en las curvas elípticas ponía en riesgo los datos de sus clientes. Argumentaba que el problema de factorización, en el que RSA basa su seguridad, había sido ampliamente estudiado mientras que el problema del logaritmo discreto, en el que la basa ECC, necesitaba todavía más estudio y pruebas. Además, decían, pocos criptógrafos entienden realmente las curvas elípticas, por lo que no se podrá evaluar correctamente su seguridad.
 
-Los defensores de ECC respondieron haciendo ver que aunque el problema de factorización se conociera desde siglos antes, fue la invención de la criptografía RSA, en 1977, la que impulsó los esfuerzos para mejorar los algoritmos. Además, el problema del logaritmo discreto en curvas elípticas es análogo al correspondiente problema en cuerpos finitos y la mayor parte de las aproximaciones al problema en la curva elíptica aprovechaba lo que se había estudiado antes en el contexto de los cuerpos finitos. El problema del logaritmo discreto tuvo un papel importante en la criptografía mucho antes de la invención de RSA y la criptografía de clave pública. Por otro lado, no es del todo correcto que sea necesario un conocimiento matemático profundo para estudiar posibles ataques en las curvas elípticas más que para el problema de factorización. Aunque haga falta un contexto matemático mayor para entender el grupo sobre una curva elíptica que la exponenciación utilizada en RSA, no por ello la investigación en este campo irá más lenta. Asimismo, al contrario de lo afirmado en esta página web, en el momento de su publicación había menos criptógrafos con conocimiento matemático suficiente para analizar y mejorar los ataques sobre factorización que personas capaces de evaluar los mejores ataques hacia el problema del logaritmo discreto.
+Los defensores de ECC respondieron haciendo ver que aunque el problema de factorización se conociera desde siglos antes, fue la invención de la criptografía RSA la que impulsó los esfuerzos para mejorar los algoritmos. Además, el problema del logaritmo discreto en curvas elípticas es análogo al correspondiente problema en cuerpos finitos y la mayor parte de las aproximaciones al problema en la curva elíptica aprovechaba lo que se había estudiado antes en el contexto de los cuerpos finitos. El problema del logaritmo discreto tuvo un papel importante en la criptografía mucho antes de la invención de RSA y la criptografía de clave pública. Por otro lado, no es del todo correcto que sea necesario un conocimiento matemático más profundo para estudiar posibles ataques en las curvas elípticas que para el problema de factorización. Aunque haga falta un contexto matemático mayor para entender el grupo sobre una curva elíptica que la exponenciación utilizada en RSA, no por ello la investigación en este campo irá más lenta. Asimismo, al contrario de lo afirmado en esta página web, en el momento de su publicación había menos criptógrafos con conocimiento matemático suficiente para analizar y mejorar los ataques sobre factorización que personas capaces de evaluar los mejores ataques hacia el problema del logaritmo discreto.
 
-En 1998 surge un nuevo ataque para el problema del logaritmo discreto, conocido como \textit{xedni}. Utilizaba combinaciones aleatorias de los puntos $P$ y $Q$ que elevaba a puntos con coordenadas enteras, y una vez que encontraba una potencia racional que cumplía una serie de condiciones podía encontrar el valor $x$ que resolvía el problema. El tiempo de ejecución del algoritmo dependía de algunas consideraciones sutiles que eran difíciles de plasmar en términos computacionales, por lo que al principio no estaba claro si este algoritmo sería más eficiente que otros que también resolvían logaritmos discretos sobre curvas elípticas.
+%TODO: citar xedni
+
+En 1998 surge un nuevo ataque para el problema del logaritmo discreto, conocido como \textit{xedni}. Utilizaba combinaciones aleatorias de los puntos $P$ y $Q$, que elevaba a puntos con coordenadas enteras, y una vez que encontraba una potencia racional que cumplía una serie de condiciones podía encontrar el valor $x$ que resolvía el problema. El tiempo de ejecución del algoritmo dependía de algunas consideraciones sutiles que eran difíciles de plasmar en términos computacionales, por lo que al principio no estaba claro si este algoritmo sería más eficiente que otros que también resolvían logaritmos discretos sobre curvas elípticas.
 
 Cuando surge este ataque, la competición con RSA se encuentra en pleno apogeo, y los partidarios de ECC temen que sus competidores aprovechen este algoritmo para proclamar que esta es insegura. Sin embargo, resultó que pequeñas modificaciones sobre el algoritmo \textit{xedni} se podían usar también para resolver el problema de factorizar un número módulo $N$. Así, se concluyó que si este algoritmo fuese a terminar con la criptografía de la curva elíptica, también lo haría con la basada en RSA.
 
@@ -499,7 +505,7 @@ A la postre se descubrió que el algoritmo era tremendamente ineficiente. El arg
 \subsubsection{El papel de la NSA}
 En los años 90, durante la polémica entre RSA y ECC, la NSA comenzó a participar abiertamente en la comunidad investigadora en criptografía. El surgimiento de Internet y otras tecnologías que permitían establecer comunicaciones mediante el uso de ordenadores hacían que la seguridad informática y la seguridad en las comunicaciones fueran inseparables. Además, las comunicaciones de la mayoría de los gobiernos estaban integradas en las redes públicas y se enfrentaban a las mismas amenazas que los demás.
 
-La incorporación pública de la NSA al mundo de la criptografía benefició enormemente a la criptografía de la curva elíptica. A mediados de los 90 RSA dominaba comercialmente a la principal compañía promotora de ECC. Asímismo, RSA estaba bien establecido y controlaba el mercado de la criptografía de clave pública. Sin embargo, la criba general del cuerpo de números, algoritmo clásico de factorización, provocaba que RSA tuviera que usar claves cada vez más largas. Los que comprendían las bases matemáticas de ambos sistemas veían que con el tiempo RSA sería inferior a ECC en los entornos donde la memoria y el ancho de banda estuvieran limitados.
+La incorporación pública de la NSA al mundo de la criptografía benefició enormemente a la criptografía de la curva elíptica. A mediados de los 90 RSA dominaba comercialmente a la principal compañía promotora de ECC. Asímismo, RSA estaba bien establecido y controlaba el mercado de la criptografía de clave pública. Sin embargo, la criba general del cuerpo de números, algoritmo clásico de factorización, provocaba que RSA tuviera que usar claves cada vez más largas. Los que comprendían las bases matemáticas de ambos sistemas veían que con el tiempo RSA sería inferior a ECC en los entornos donde la memoria y el ancho de banda estuvieran limitados. Podemos comprobar en la Tabla (ref) los valores recomendados para los parámetros de ambos criptosistemas.
 
 A principios de los 90 el NIST propuso un protocolo de firma desarrollado por la NSA donde la seguridad se basaba en el problema del logaritmo discreto. Aunque este algoritmo, que se comercializó en 1994, no estaba basado en curvas elípticas, mostró el descontento con RSA que existía por parte de la NSA.
 
@@ -521,7 +527,7 @@ A pesar de los comentarios negativos sobre ECC por parte de los promotores de XT
 En 2001, Dan Boneh, Matt Frankling y otros propusieron un criptosistema basado en emparejamientos. Aunque en los años anteriores se habían comenzado a estudiar, hasta este momento no se había descubierto su potencial. La idea principal es que los algoritmos basados en emparejamientos sobre curvas elípticas permiten ejecutar de forma más eficiente algunas funciones criptográficas.
 
 %TODO citar
-Uno de los primeros usos de la criptografía basada en emparejamientos respondía a un problema que había propuesto Shamir[] en 1984, ¿se puede montar un sistema de encriptación en el que la clave pública de un usuario sea su propio identificador? A estos sistemas se les conoce como \textit{criptosistemas basados en identidad}.
+Uno de los primeros usos de la criptografía basada en emparejamientos respondía a un problema que había propuesto Shamir[] en 1984, ¿se puede montar un sistema de cifrado en el que la clave pública de un usuario sea su propio identificador? A estos sistemas se les conoce como \textit{criptosistemas basados en identidad}.
 
 Otro uso de la criptografía basada en emparejamientos fue un algoritmo para firmar mensajes. Usando la curva elíptica supersingular $y^2 = x^3- x$ definida sobre $\mathbb{F}_p$ con $p \equiv 3 \bmod 4$, podemos definir una aplicación que lleve un punto sobre ellas a uno sobre los puntos de $\mathbb{F}_{p^2}$ de la curva, que denominamos su \textquote{pareja}. Así, para fimar un mensaje el emisor generará unas claves pública y privada de forma análoga a como se hacía en ECDH, y multiplica la clave privada por el valor \textit{hash} del mensaje. Para verificarlo, el receptor calcula el valor \textit{hash} del mensaje y la pareja de la clave pública del emisor, además de la pareja del generador del grupo cíclico en el que ambos trabajan. Después, compara los pares obtenidos, y si coinciden el receptor tendrá la confianza de que su emisor fue el que envió el mensaje, gracias a las propiedades que tiene la aplicación que asocia a cada punto su pareja.
 
