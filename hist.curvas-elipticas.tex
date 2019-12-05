@@ -89,6 +89,19 @@
 }
 \renewcommand{\lstlistingname}{Listado}
 
+% Algoritmos
+
+\usepackage[linesnumbered, vlined]{algorithm2e}
+\SetAlFnt{\sffamily}
+\newcommand{\mykwfont}{\bfseries\sffamily}
+\SetKwSty{mykwfont}
+
+\SetKwInput{KwIn}{Entrada}%
+\SetKwInput{KwOut}{Salida}%
+
+\SetAlCapSkip{1em}
+\SetAlCapFnt{\normalfont\scshape}
+
 % Bibliografía
 
 \usepackage[sorting=none, style=apa, isbn=true]{biblatex}
@@ -529,59 +542,67 @@ La mayoría de las propuestas que hay sobre la mesa actualmente están basados e
 Hay otra propuesta que goza de cierta atención y reconocimiento últimamente y que se basa de nuevo en las curvas elípticas.
 El problema no es en este caso encontrar la relación entre dos puntos de una curva elíptica, sino encontrar la relación entre dos curvas elípticas dentro un gran conjunto de ellas.
 
-% Dadas dos curvas elípticas, \(E_1\) y \(E_2\), podemos definir una función \(\phi\), que llamamos \textit{isogenia}, asignando cada punto de \(E_1\) en uno de \(E_2\).
-% Aplicando de forma sucesiva dicha isogenia llegaremos a una curva \(E_p\).
-% La tarea de un atacante sería reconstruir el camino que se ha tomado desde la curva inicial hasta la final.
-
+Antes de abordar este nuevo algoritmo necesitamos definir algunos conceptos.
 Una \textit{isogenia} es una aplicación de un grupo en otro sobreyectiva, homomórfica y que preserva la estructura.
 En el caso de las curvas elípticas, una isogenia \(\phi\) asigna puntos de una curva \(E\) a puntos de otra curva \(E'\).
-
-El \(j\)-invariante es un valor que puede calcularse para cada curva elíptica utilizando sus parámetros. En el caso de las curvas en forma de Weierstrass, viene dado por \[
+El \(j\)\textit{-invariante} es un valor que puede calcularse para cada curva elíptica utilizando sus parámetros. En el caso de las curvas en forma de Weierstrass, viene dado por \[
   j(E) = 1728 \cdot \frac{4a^3}{4a^3 + 27b^2}.
 \]
+Una curva supersingular es una curva (definición).
 
-Algoritmo SIDH (Supersingular Isogeny Diffie-Hellman).
+\subsection{Algoritmo SIDH (Supersingular Isogeny Diffie-Hellman)}
 
-Ambas partes generan una clave secreta, una isogenia basada en la curva \(E\), pública, y en los puntos \(P_a, Q_a, P_b, Q_b\) de \(E\). 
+En 2011 los investigadores Luca de Feo, David Jao y Jérôme Plût propusieron (cita) el algoritmo que ahora se conoce como SIDH (siglas en inglés de\textit{Supersingular Isogeny Diffie-Hellman}).
+Veamos una descripción sencilla antes de entrar en detalle. 
+Supongamos que Alice y Bob quieren compartir información de forma segura.
+Ambas partes generan una clave privada, que va a ser una isogenia basada en la curva \(E\), pública, y en los puntos \(P_a, Q_a, P_b, Q_b\) de \(E\). 
 A partir de esta isogenia cada parte genera una nueva curva, que serán consideradas las claves públicas.
-Cada parte uniendo su clave privada, la isogenia generada anteriormente con la curva de la otra parte (su clave pública) generan cada una una curva final que tienen el mismo \(j\)-invariante, valor que se convierte en la clave secreta que ambos comparten.
+Ambas partes intercambian dicha curva y cada una de ellas une su clave privada, la isogenia generada anteriormente, con la curva recién recibida, generando una
+curva final que tienen el mismo \(j\)-invariante, valor que se convierte en la clave secreta que ambos comparten.
 
-Parámetros públicos:
-
+Veamos el algoritmo ahora paso por paso. Los siguientes parámetros son fijos y conocidos para todas las comunicaciones:
 \begin{itemize}
-  \item Un primo \(p\).
-  \item Una curva elíptica supersingular (qué es) \(E\) sobre el cuerpo finito \(\mathbb F_p\).
+  \item Un número primo \(p\).
+  \item Una curva elíptica supersingular \(E\) sobre el cuerpo finito \(\mathbb F_p\).
   \item Cuatro puntos fijos sobre \(E\), \(P_a, Q_a, P_b, Q_b\).
 \end{itemize}
+Para el intercambio de información Alice realiza los pasos descritos en el algoritmo \ref{algo:sidh-alice}, mientras que Bob realiza los descritos en el algoritmo \ref{algo:sidh-bob}, recíprocos a los de Alice.
 
-Alice:
+\begin{algorithm}[h]
+  \KwIn{\(P_a\)\,, \(Q_a\)\,, \(P_b\)\,, \(Q_b\)}
+  \KwOut{\(k\)}
+  Genera aleatoriamente los valores \(m_a\) y \(n_a\)\,\;
+  Calcula el punto \(m_aP_a + n_aQ_a\)\,\;
+  Genera la isogenia \(\phi_a: E \to E_a = E/\langle R_a \rangle\)\,\;
+  Obtiene los puntos \(P'_b = \phi_a(P_b), Q'_b = \phi_a(Q_b)\)\,\;
+  Envía la tupla \((E_a, P'_b, Q'_b)\) a Bob\,\;
+  Recibe la tupla \((E_b, P'_a, Q'_a)\) de Bob\,\;
+  Calcula el punto \(S_{ab} = m_aP'_a + n_aQ'_a\)\,\;
+  Genera la isogenia \(\phi_{ab} : E_a \to E_{ab} = E_a/\langle S_{ab} \rangle\)\,\;
+  Calcula la clave \(k = j_{ab} = j(E_{ab})\)\,\;
+  
+  \caption{Pasos a realizar por Alice para generar una clave con la que comunicarse con Bob.}
+  \label{algo:sidh-alice}
+\end{algorithm}
 
-\begin{enumerate}
-  \item Genera aleatoriamente \(m_a\) y \(n_a\).
-  \item Obtiene el punto \(m_aP_a + n_aQ_a\).
-  \item Genera la isogenia \(\phi_a: E \to E_a = E/\langle R_a \rangle\).
-  \item Obtiene los puntos \(P'_b = \phi_a(P_b), Q'_b = \phi_a(Q_b)\).
-  \item Envía la tupla \((E_a, P'_b, Q'_b)\) a Bob.
-  \item Recibe la tupla \((E_b, P'_a, Q'_a)\) de Bob.
-  \item Calcula \(S_{ab} = m_aP'_a + n_aQ'_a\).
-  \item Genera la isogenia \(\phi_{ab} : E_a \to E_{ab} = E_a/\langle S_{ab} \rangle\).
-  \item Calcula la clave \(k = j_{ab} = j(E_{ab})\).
-\end{enumerate}
+\begin{algorithm}[h]
+  \KwIn{\(P_a\)\,, \(Q_a\)\,, \(P_b\)\,, \(Q_b\)}
+  \KwOut{\(k\)}
+  Genera aleatoriamente los valores \(m_b\) y \(n_b\)\,\;
+  Calcula el punto \(m_bP_b + n_bQ_b\)\,\;
+  Genera la isogenia \(\phi_b: E \to E_b = E/\langle R_b \rangle\)\,\;
+  Obtiene los puntos \(P'_a = \phi_b(P_a), Q'_a = \phi_b(Q_a)\)\,\;
+  Envía la tupla \((E_b, P'_a, Q'_a)\) a Alice\,\;
+  Recibe la tupla \((E_a, P'_b, Q'_b)\) de Alice\,\;
+  Calcula el punto \(S_{ba} = m_bP'_b + n_bQ'_b\)\,\;
+  Genera la isogenia \(\phi_{ba} : E_b \to E_{ba} = E_b/\langle S_{ba} \rangle\)\,\;
+  Calcula la clave \(k = j_{ba} = j(E_{ba})\)\,\;
+  
+  \caption{Pasos a realizar por Bob para generar una clave con la que comunicarse con Alice.}
+  \label{algo:sidh-bob}
+\end{algorithm}
 
-Bob:
-
-\begin{enumerate}
-  \item Genera aleatoriamente \(m_b\) y \(n_b\).
-  \item Obtiene el punto \(m_bP_b + n_bQ_b\).
-  \item Genera la isogenia \(\phi_b: E \to E_b = E/\langle R_b \rangle\).
-  \item Obtiene los puntos \(P'_a = \phi_b(P_a), Q'_a = \phi_b(Q_a)\).
-  \item Envía la tupla \((E_b, P'_a, Q'_a)\) a Bob.
-  \item Recibe la tupla \((E_a, P'_b, Q'_b)\) de Bob.
-  \item Calcula \(S_{ba} = m_bP'_b + n_bQ'_b\).
-  \item Genera la isogenia \(\phi_{ba} : E_b \to E_{ba} = E_b/\langle S_{ba} \rangle\).
-  \item Calcula la clave \(k = j_{ba} = j(E_{ba})\).
-\end{enumerate}
-
+La clave \(k\) que han obtenido ambos será la que permita el cifrado de la información y que en ningún momento han tenido que intercambiarse por un canal inseguro.
 
 %Jose.
 
