@@ -303,7 +303,7 @@ En primer lugar, en 1973 la Oficina Nacional de Normas (NBS por sus siglas en in
 El 17 de marzo de 1975 se publicó el primer borrador del \textit{Data Encryption Standard} (DES), sistema de cifrado propuesto por un grupo de investigación de IBM.
 Tras recibir varias modificaciones con la ayuda de la Agencia de Seguridad Nacional (NSA por sus siglas en inglés, \textit{National Security Agency}) la versión final del algoritmo fue aprobada y publicada por la NBS en noviembre de 1976 y se convirtió en el primer estándar aprobado por una agencia del Gobierno Federal de los Estados Unidos. 
 El hecho de que la NSA colaborase en el diseño del algoritmo --modificando la propuesta original de IBM-- suscitó las sospechas de numerosos investigadores, quienes creían que la NSA había introducido una \textit{puerta trasera} en el algoritmo. 
-Finalmente, en los años 90 se llegó a la conclusión de que los cambios aportados por la NSA resultaron ser mejoras. %TODO: citation needed
+Finalmente, en los años 90 se llegó a la conclusión de que los cambios aportados por la NSA resultaron ser mejoras.
 Otra de las críticas que suscitó fue el tamaño elegido para los bloques.
 En 2002 fue reemplazado por el algoritmo AES (\textit{Advanced Encryption Standard}), aprobado como estándar por el sucesor de la NBS, el Instituto Nacional de Estándares y Tecnología (NIST por sus siglas en inglés, \textit{National Institute of Standards and Technology}).
 
@@ -396,13 +396,9 @@ El problema de Diffie-Hellman es en consecuencia intratable para ciertos grupos,
 
 \subsection{Primera aparición de las curvas elípticas en criptografía}
 
-% TODO: Enlazar con el apartado anterior
-
-%TODO: citar 1984. Algoritmo de Lenstra
 En 1984 Hendrik Lenstra propone un nuevo algoritmo de factorización de enteros \parencite{lenstra_divisors_1984}. Su característica más destacada es el uso de las curvas elípticas, ya que es el primer algoritmo criptográfico que las utiliza. A partir de este momento, se comenzó a buscar usos criptográficos para muchas herramientas matemáticas que nunca habían sido utilizadas con este propósito.
 
-%TODO: citar 1985. Problema del logaritmo discreto con curvas elípticas. N. Koblitz y V. Miller (de forma independiente)
-Al año siguiente, N. Koblitz y V. Miller proponen de forma independiente un uso diferente de las curvas elípticas en criptografía. Su idea fue usar un criptosistema como el de Diffie y Hellman utilizando, en vez del grupo multiplicativo sobre un cuerpo finito, el grupo de puntos de una curva elíptica sobre un cuerpo finito. El enunciado del problema es el siguiente:
+Al año siguiente, N. Koblitz \parencite{koblitz_elliptic_1987} y V. Miller \parencite{williams_use_1986} proponen de forma independiente un uso diferente de las curvas elípticas en criptografía. Su idea fue usar un criptosistema como el de Diffie y Hellman utilizando, en vez del grupo multiplicativo sobre un cuerpo finito, el grupo de puntos de una curva elíptica sobre un cuerpo finito. El enunciado del problema es el siguiente:
 \begin{displayquote}
   Sea $E(\mathbb{F}_p)$ verificando la ecuación de Weierstrass $y^2 =x^3 + Ax + B$. Consideramos $\langle G \rangle$ un subgrupo cíclico de orden $n$ de los puntos de $E$. Dados $P,Q \in \langle G \rangle$ encuentra $x \bmod{n}$ tal que $Q=xP$. 
 \end{displayquote} 
@@ -419,16 +415,11 @@ Este problema lo denominamos \textit{problema del logaritmo discreto para curvas
 
 Ahora Alice y Bob pueden utilizar el secreto compartido como clave de un sistema de cifrado simétrico para establecer una comunicación.
 
-%TODO: comentar tamaños de claves para ECDH (tabla).
-
-% TODO: cita Miller
-%%TODO: referencia index cálculus.
 La razón más importante para considerar la criptografía de la curva elíptica (ECC, por sus siglas en inglés \textit{Elliptic Curve Cryptography}) fue que no parecía que se pudiera adaptar el método de \textit{index calculus} para el cálculo del logaritmo discreto en el grupo de una curva elíptica. El motivo es que en este método hay que fijar un conjunto de elementos pequeños (factor base) de forma que podamos escribir el resto de elementos de forma eficiente a partir de ellos. Miller demostró que no puede utilizarse el algoritmo de \textit{index calculus} para curvas elípticas \parencite{williams_use_1986}.
 
 En los comienzos de ECC unas curvas muy populares eran las definidas en un cuerpo $\mathbb{F}_p$ que verificaban la ecuación $y^2 = x^3 - x$. El caso \textit{supersingular} es aquel en el que se cumple $p \equiv 3 \bmod 4$, y en este caso es rápido encontrar un número $p$ primo tal que el grupo definido por la curva tenga un subgrupo grande de orden un primo. Las curvas supersingulares de característica 2 y 3 tenían otra ventaja: elevar al cuadrado en curvas de característica 2 y al cubo en curvas de característica 3 tardaba un tiempo despreciable.
 
-%TODO citation needed
-Pese a que esta elección de parámetros fuera conveniente por los aspectos comentados, los autores que los usaron se arrepintieron más adelante, pues en 1991 se descubrió que el problema del logaritmo discreto sobre curvas supersingulares es mucho más fácil de resolver que en la mayoría de las curvas. Aunque las curvas supersingulares son muy pocas dentro de la familia de todas las curvas elípticas definidas sobre un cuerpo finito, su uso común dio una impresión exagerada sobre su importancia. Así, se aceptó que se pueden usar curvas fáciles de tratar sin recurrir a las supersingulares.
+Pese a que esta elección de parámetros fuera conveniente por los aspectos comentados, los autores que los usaron se arrepintieron más adelante, pues en 1991 se descubrió que el problema del logaritmo discreto sobre curvas supersingulares es mucho más fácil de resolver que en la mayoría de las curvas \parencite[785]{koblitz_elliptic_2011}. Aunque las curvas supersingulares son muy pocas dentro de la familia de todas las curvas elípticas definidas sobre un cuerpo finito, su uso común dio una impresión exagerada sobre su importancia. Así, se aceptó que se pueden usar curvas fáciles de tratar sin recurrir a las supersingulares.
 
 A finales de los años 80 se fueron introduciendo adaptaciones de modelos criptográficos que utilizaban de alguna forma curvas elípticas. Un ejemplo concreto de estos avances es la propuesta de adaptación por parte de Koblitz en 1987 \parencite{koblitz_elgamal_1987} del algoritmo de cifrado de clave pública conocido como ElGamal, descrito dos años antes por Tahir ElGamal \parencite{elgamal_cryptosytem_1985}. Para adaptar su funcionamiento, elegimos una curva $E(\mathbb{F}_p)$ y un grupo $\langle G \rangle$ de orden $n$. En primer lugar, necesitamos una función (pública) $m \mapsto P_m$ que sea invertible y transforme mensajes en puntos de la curva. Una posible estrategia para conseguirlo es transformar $m$ en un elemento de $\mathbb{F}_p$ y usarlo como $x$ en la ecuación de la curva, calculando el correspondiente valor de $y$. Después, cada usuario debe elegir un secreto \(s\) tal que $0 < x < n$ y publicar la clave $Y = sG$. Ahora, podemos cifrar y descifrar mensajes:
     
@@ -441,7 +432,6 @@ A finales de los años 80 se fueron introduciendo adaptaciones de modelos cripto
 
 %La mayor parte de los algoritmos que utilizaban las curvas elípticas consistían en adaptar los ya existentes para este grupo y no aprovechaban la estructura específica de las curvas elípticas.
 
-% TODO: contar aparición de DSA.
 Destacamos también la adaptación del algoritmo DSA (\textit{Digital Signature Algorithm}), ya que fue un proceso complicado. En ECDSA (\textit{Elliptic Curve Digital Signature Algorithm}) suponemos que Alice quiere firmar un mensaje con su clave privada, y que Bob quiere validar la firma usando la clave pública de Alice. La única que debería poder emitir firmas válidas es Alice, y estas deberían poder ser verificadas por cualquiera que conozca su clave pública.
 
 Alice y Bob usarán los mismos parámetros. Necesitan estar trabajando sobre la misma curva elíptica definida sobre un cuerpo $\mathbb{F}_p$ que contiene un subgrupo $G$ de orden primo ($n$) con generador $P$.
@@ -471,11 +461,9 @@ Para ver por qué el último paso es así, observamos que si Alice generó su fi
 
 \subsubsection{Primeros algoritmos para el problema del logaritmo discreto sobre curvas elípticas}
 
-%% TODO: cita Pohling y Hellman
-Los primeros algoritmos para resolver el problema del logaritmo discreto sobre curvas elípticas eran los mismos que se utilizaban para resolver el problema en cuerpos finitos, y no aprovechaban la estructura específica del grupo de la curva elíptica. El primero de estos algoritmos, diseñado por Pohlig y Hellman [], usa el teorema chino del resto para reducir el problema al problema del logaritmo discreto en subgrupos de orden primo.
+Los primeros algoritmos para resolver el problema del logaritmo discreto sobre curvas elípticas eran los mismos que se utilizaban para resolver el problema en cuerpos finitos, y no aprovechaban la estructura específica del grupo de la curva elíptica. El primero de estos algoritmos, diseñado por Pohlig y Hellman \parencite{pohlig_improved_1978}, usa el teorema chino del resto para reducir el problema al problema del logaritmo discreto en subgrupos de orden primo.
 
-%% TODO: citar algoritmos
-En un grupo $G$ de orden primo $n$ los dos mejores algoritmos genéricos son el \textit{baby-step/giant-step} de Shanks (basado en que podemos expresar un entero $x$ como $x = am + b$) y el algoritmo \textit{rho} de Pollard. Ambos requieren tiempo $O(\sqrt{n})$ por lo que se conocen como ataques de raíz cuadrada para el problema del logaritmo discreto. Aunque el método de Shanks tiene la ventaja de ser determinista (en cada paso no se elige entre varias opciones, solo hay una posible), necesita mucha memoria, del orden de $\sqrt{n}$, y en la práctica se prefiere una versión aleatorizada del método \textit{rho} de Pollard. La idea general de este método es recorrer pseudo-aleatoriamente el grupo $G$ usando ciertas combinaciones del punto base $P$ y del punto $Q$, cuyo logaritmo discreto desconocemos. Cuando al recorrer el grupo pasemos dos veces por el mismo sitio, habremos resuelto el problema.
+En un grupo $G$ de orden primo $n$ los dos mejores algoritmos genéricos son el \textit{baby-step/giant-step} de Shanks \parencite{shanks_class_1969}, basado en que podemos expresar un entero $x$ como $x = am + b$, y el algoritmo \textit{rho} de Pollard \parencite{pollard_monte_1975}. Ambos requieren tiempo $O(\sqrt{n})$ por lo que se conocen como ataques de raíz cuadrada para el problema del logaritmo discreto. Aunque el método de Shanks tiene la ventaja de ser determinista (en cada paso no se elige entre varias opciones, solo hay una posible), necesita mucha memoria, del orden de $\sqrt{n}$, y en la práctica se prefiere una versión aleatorizada del método \textit{rho} de Pollard. La idea general de este método es recorrer pseudo-aleatoriamente el grupo $G$ usando ciertas combinaciones del punto base $P$ y del punto $Q$, cuyo logaritmo discreto desconocemos. Cuando al recorrer el grupo pasemos dos veces por el mismo sitio, habremos resuelto el problema.
 
 Se encontraron más algoritmos para resolver este problema, algunos más rápidos que los de complejidad raíz cuadrada. Sin embargo, en las curvas elípticas elegidas en la mayor parte de las aplicaciones criptográficas los algoritmos más rápidos seguían siendo los genéricos.
 
@@ -486,7 +474,7 @@ Durante los años siguientes a la aparición de la criptografía de la curva el�
 
 %TODO contar aparición de RSA y situarla en este contexto, referenciar paper
 
-Mientras, la seguridad basada en RSA comenzaba a tener éxito comercial. RSA es un sistema de clave pública que apareció en el año 1977 y cuya seguridad radica en el problema de factorización. La criptografía apoyada en RSA estaba consiguiendo una buena aceptación entre el público general y tenía el monopolio virtual de la criptografía de llave pública. Sin embrago, se avecinaban problemas. Los métodos de factorización habían disminuido su tiempo de ejecución, provocando que los números recomendados para que el uso de RSA fuera seguro comenzaran a crecer hasta llegar a miles de bits. Los partidarios de ECC advertían que este era un problema importante en los dispositivos con poco espacio de almacenamiento como los teléfonos móviles, tarjetas, etc.
+Mientras, la seguridad basada en RSA comenzaba a tener éxito comercial. RSA es un sistema de clave pública que apareció en el año 1977 \parencite{rivest_method_1978} y cuya seguridad radica en el problema de factorización. La criptografía apoyada en RSA estaba consiguiendo una buena aceptación entre el público general y tenía el monopolio virtual de la criptografía de llave pública. Sin embrago, se avecinaban problemas. Los métodos de factorización habían disminuido su tiempo de ejecución, provocando que los números recomendados para que el uso de RSA fuera seguro comenzaran a crecer hasta llegar a miles de bits. Los partidarios de ECC advertían que este era un problema importante en los dispositivos con poco espacio de almacenamiento como los teléfonos móviles, tarjetas, etc.
 
 Es en este periodo cuando tres profesores de la universidad de Waterloo crearon una compañía que desarrolló e impulsó la criptografía de la curva elíptica. Los investigadores asociados comenzaron a asistir a conferencias en las que se establecían los estándares criptográficos con el objetivo de luchar por la inclusión de los protocolos basados en curvas elípticas en los mismos. ECDSA estaba avanzando como una alternativa eficiente a las firmas RSA y al DSA en el que se basa, aunque no fue incluido en los estándares hasta 1999 y 2000.
 
@@ -494,9 +482,7 @@ En 1997, RSA Data Security puso en su página web una sección en la que advert�
 
 Los defensores de ECC respondieron haciendo ver que aunque el problema de factorización se conociera desde siglos antes, fue la invención de la criptografía RSA la que impulsó los esfuerzos para mejorar los algoritmos. Además, el problema del logaritmo discreto en curvas elípticas es análogo al correspondiente problema en cuerpos finitos y la mayor parte de las aproximaciones al problema en la curva elíptica aprovechaba lo que se había estudiado antes en el contexto de los cuerpos finitos. El problema del logaritmo discreto tuvo un papel importante en la criptografía mucho antes de la invención de RSA y la criptografía de clave pública. Por otro lado, no es del todo correcto que sea necesario un conocimiento matemático más profundo para estudiar posibles ataques en las curvas elípticas que para el problema de factorización. Aunque haga falta un contexto matemático mayor para entender el grupo sobre una curva elíptica que la exponenciación utilizada en RSA, no por ello la investigación en este campo irá más lenta. Asimismo, al contrario de lo afirmado en esta página web, en el momento de su publicación había menos criptógrafos con conocimiento matemático suficiente para analizar y mejorar los ataques sobre factorización que personas capaces de evaluar los mejores ataques hacia el problema del logaritmo discreto.
 
-%TODO: citar xedni
-
-En 1998 surge un nuevo ataque para el problema del logaritmo discreto, conocido como \textit{xedni}. Utilizaba combinaciones aleatorias de los puntos $P$ y $Q$, que elevaba a puntos con coordenadas enteras, y una vez que encontraba una potencia racional que cumplía una serie de condiciones podía encontrar el valor $x$ que resolvía el problema. El tiempo de ejecución del algoritmo dependía de algunas consideraciones sutiles que eran difíciles de plasmar en términos computacionales, por lo que al principio no estaba claro si este algoritmo sería más eficiente que otros que también resolvían logaritmos discretos sobre curvas elípticas.
+En 1998 surge un nuevo ataque para el problema del logaritmo discreto, conocido como \textit{xedni} \parencite{silverman_xedni_2000}. Utilizaba combinaciones aleatorias de los puntos $P$ y $Q$, que elevaba a puntos con coordenadas enteras, y una vez que encontraba una potencia racional que cumplía una serie de condiciones podía encontrar el valor $x$ que resolvía el problema. El tiempo de ejecución del algoritmo dependía de algunas consideraciones sutiles que eran difíciles de plasmar en términos computacionales, por lo que al principio no estaba claro si este algoritmo sería más eficiente que otros que también resolvían logaritmos discretos sobre curvas elípticas.
 
 Cuando surge este ataque, la competición con RSA se encuentra en pleno apogeo, y los partidarios de ECC temen que sus competidores aprovechen este algoritmo para proclamar que esta es insegura. Sin embargo, resultó que pequeñas modificaciones sobre el algoritmo \textit{xedni} se podían usar también para resolver el problema de factorizar un número módulo $N$. Así, se concluyó que si este algoritmo fuese a terminar con la criptografía de la curva elíptica, también lo haría con la basada en RSA.
 
@@ -505,7 +491,26 @@ A la postre se descubrió que el algoritmo era tremendamente ineficiente. El arg
 \subsubsection{El papel de la NSA}
 En los años 90, durante la polémica entre RSA y ECC, la NSA comenzó a participar abiertamente en la comunidad investigadora en criptografía. El surgimiento de Internet y otras tecnologías que permitían establecer comunicaciones mediante el uso de ordenadores hacían que la seguridad informática y la seguridad en las comunicaciones fueran inseparables. Además, las comunicaciones de la mayoría de los gobiernos estaban integradas en las redes públicas y se enfrentaban a las mismas amenazas que los demás.
 
-La incorporación pública de la NSA al mundo de la criptografía benefició enormemente a la criptografía de la curva elíptica. A mediados de los 90 RSA dominaba comercialmente a la principal compañía promotora de ECC. Asímismo, RSA estaba bien establecido y controlaba el mercado de la criptografía de clave pública. Sin embargo, la criba general del cuerpo de números, algoritmo clásico de factorización, provocaba que RSA tuviera que usar claves cada vez más largas. Los que comprendían las bases matemáticas de ambos sistemas veían que con el tiempo RSA sería inferior a ECC en los entornos donde la memoria y el ancho de banda estuvieran limitados. Podemos comprobar en la Tabla (ref) los valores recomendados para los parámetros de ambos criptosistemas.
+La incorporación pública de la NSA al mundo de la criptografía benefició enormemente a la criptografía de la curva elíptica. A mediados de los 90 RSA dominaba comercialmente a la principal compañía promotora de ECC. Asímismo, RSA estaba bien establecido y controlaba el mercado de la criptografía de clave pública. Sin embargo, la criba general del cuerpo de números, algoritmo clásico de factorización, provocaba que RSA tuviera que usar claves cada vez más largas. Los que comprendían las bases matemáticas de ambos sistemas veían que con el tiempo RSA sería inferior a ECC en los entornos donde la memoria y el ancho de banda estuvieran limitados. Podemos comprobar en la Tabla \ref{tab:rsa-ecc-nist} los valores recomendados por el NIST para los parámetros de ambos criptosistemas.
+
+\begin{table}[h]
+  \centering
+  \sffamily
+  \begin{tabular}{lccc}
+    \toprule
+     & \multicolumn{3}{c}{Tamaño en bits} \\
+    Periodo & nivel de seguridad & RSA & ECC \\
+    \midrule
+    Pasado & 80 & 1024 & 160\\
+    \multirow[t]{4}{*}{2016-2030} & 112 & 2048 & 224\\
+     & 128 & 3072 & 256\\
+     & 192 & 7680 & 384\\
+     & 256 & 15360 & 512\\
+    \bottomrule
+  \end{tabular}
+  \caption{Recomendaciones del NIST para el tamaño de las claves de RSA y ECC. Un nivel de seguridad de \(S\) bits indica que se necesitan aproximadamente \(2^S\) operaciones para romper el cifrado.}
+  \label{tab:rsa-ecc-nist}
+\end{table}
 
 A principios de los 90 el NIST propuso un protocolo de firma desarrollado por la NSA donde la seguridad se basaba en el problema del logaritmo discreto. Aunque este algoritmo, que se comercializó en 1994, no estaba basado en curvas elípticas, mostró el descontento con RSA que existía por parte de la NSA.
 
@@ -526,8 +531,7 @@ A pesar de los comentarios negativos sobre ECC por parte de los promotores de XT
 \subsection{\textit{Pairing-based cryptography}}
 En 2001, Dan Boneh, Matt Frankling y otros propusieron un criptosistema basado en emparejamientos. Aunque en los años anteriores se habían comenzado a estudiar, hasta este momento no se había descubierto su potencial. La idea principal es que los algoritmos basados en emparejamientos sobre curvas elípticas permiten ejecutar de forma más eficiente algunas funciones criptográficas.
 
-%TODO citar
-Uno de los primeros usos de la criptografía basada en emparejamientos respondía a un problema que había propuesto Shamir[] en 1984, ¿se puede montar un sistema de cifrado en el que la clave pública de un usuario sea su propio identificador? A estos sistemas se les conoce como \textit{criptosistemas basados en identidad}.
+Uno de los primeros usos de la criptografía basada en emparejamientos respondía a un problema que había propuesto Shamir \parencite{blakley_identity-based_1985}, ¿se puede montar un sistema de cifrado en el que la clave pública de un usuario sea su propio identificador? A estos sistemas se les conoce como \textit{criptosistemas basados en identidad}.
 
 Otro uso de la criptografía basada en emparejamientos fue un algoritmo para firmar mensajes. Usando la curva elíptica supersingular $y^2 = x^3- x$ definida sobre $\mathbb{F}_p$ con $p \equiv 3 \bmod 4$, podemos definir una aplicación que lleve un punto sobre ellas a uno sobre los puntos de $\mathbb{F}_{p^2}$ de la curva, que denominamos su \textquote{pareja}. Así, para fimar un mensaje el emisor generará unas claves pública y privada de forma análoga a como se hacía en ECDH, y multiplica la clave privada por el valor \textit{hash} del mensaje. Para verificarlo, el receptor calcula el valor \textit{hash} del mensaje y la pareja de la clave pública del emisor, además de la pareja del generador del grupo cíclico en el que ambos trabajan. Después, compara los pares obtenidos, y si coinciden el receptor tendrá la confianza de que su emisor fue el que envió el mensaje, gracias a las propiedades que tiene la aplicación que asocia a cada punto su pareja.
 
@@ -540,7 +544,7 @@ Este hecho pudo ser debido a diferentes motivos. En primer lugar, la criptograf�
 \section{El futuro de las curvas elípticas}
 
 Como ya hemos visto, para que un atacante pudiera romper un cifrado basado en las técnicas de curvas elípticas actuales necesitaría resolver el problema del logaritmo discreto.
-Un atacante que posea un ordenador cuántico con una implementación del algoritmo de Shor (cita/referencia?) podría resolver dicho problema con facilidad. 
+Un atacante que posea un ordenador cuántico con una implementación del algoritmo de Shor \parencite{shor_polynomial-time_1999} podría resolver dicho problema con facilidad. 
 En la actualidad se desconoce si es factible la construcción de dicho ordenador a corto o largo plazo, pero experimentos a tamaños muy reducidos han producido resultados satisfactorios, por lo que los criptógrafos se están tomando esta amenaza en serio.
 El hecho de que los tamaños recomendados para los parámetros de ECDH sean menores que para los de otros criptosistemas hace que se requiera una menor capacidad de cómputo cuántico para romperlo que, por ejemplo, RSA \parencite{beauregard_circuit_2003} \parencite{proos_shors_2004}.
 
