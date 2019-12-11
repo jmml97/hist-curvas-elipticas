@@ -15,6 +15,7 @@
 *.run.xml
 *.nav
 *.snm
+*.vrb
 .DS_Store
 __latexindent_temp.tex
 

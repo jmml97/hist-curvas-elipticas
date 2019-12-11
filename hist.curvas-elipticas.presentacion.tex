@@ -60,6 +60,15 @@
   tabsize=2
 }
 
+% Bibliografía
+
+\usepackage[sorting=none, style=apa, isbn=true]{biblatex}
+\DefineBibliographyStrings{spanish}{
+  urlseen = {Consultado},
+  retrieved = {Consultado},
+}
+\addbibresource{bibliografia.bib}
+
 %%% AJUSTES DE BEAMER
 
 %\usefonttheme{professionalfonts}
@@ -114,6 +123,14 @@
   
 \end{frame}
 
+\begin{frame}[fragile]
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=.75\textwidth]{img/ejemplos-curvas}
+    \caption{Ejemplos de curvas elípticas sobre $\mathbb{R}$. Basado en \parencite{eichlseder_elliptic_2016}.}
+    \label{fig:curva}
+  \end{figure}
+\end{frame}
 
 
 \end{document}
