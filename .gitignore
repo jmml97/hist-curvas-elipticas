@@ -10,8 +10,11 @@
 *.fdb_latexmk
 *.fls
 *.synctex.gz
+*.synctex(busy)
 *.bcf
 *.run.xml
+*.nav
+*.snm
 .DS_Store
 __latexindent_temp.tex
 
