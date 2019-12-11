@@ -1,0 +1,120 @@
+% $> xelatex spsi.tor.presentacion.tex
+% o bien
+% $> lualatex spsi.tor.presentacion.tex
+\documentclass[spanish]{beamer}
+
+\usepackage{babel}
+
+\usepackage{graphics,tikz}
+\usetikzlibrary{automata, positioning, arrows}
+
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=1.16}
+
+\usepackage{adjustbox}
+
+\usepackage{enumitem}
+
+%%% FUENTES
+
+\usepackage[no-math]{fontspec}
+\setmainfont{Libertinus Serif}
+\setsansfont{Libertinus Sans}
+\setmonofont{Libertinus Mono}
+
+\usepackage[math-style=TeX]{unicode-math}
+\setmathfont{Libertinus Math}
+
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+%%% COLORES
+
+\definecolor{background}{HTML}{F5F5F4}
+\definecolor{foreground}{HTML}{3F3F3F}
+\definecolor{strings}{HTML}{ED982C}
+\definecolor{operators}{HTML}{CF4818}
+\definecolor{identifiers}{HTML}{9A71BA}
+\definecolor{keywords}{HTML}{5486C8}
+\definecolor{numbers}{HTML}{80951D}
+\definecolor{comments}{HTML}{AFAFAF}
+
+%%% LISTINGS
+
+\usepackage{listings}
+
+\lstset{
+  numbers=left,
+  belowcaptionskip=1\baselineskip,
+  basicstyle=\scriptsize\ttfamily\color{foreground},
+  keywordstyle=\color{keywords},
+  commentstyle=\color{comments},
+  stringstyle=\color{strings},
+  identifierstyle=\color{identifiers},
+  numberstyle=\color{foreground},
+  xleftmargin=2em,
+  framexleftmargin=1.5em,
+  breaklines=true,
+  showstringspaces=false,
+  tabsize=2
+}
+
+%%% AJUSTES DE BEAMER
+
+%\usefonttheme{professionalfonts}
+
+\setbeamertemplate{navigation symbols}{}
+
+\setbeamerfont{title}{series=\bfseries}
+
+%\setbeamertemplate{frametitle}{\color{foreground}\vspace*{1cm}\bfseries\insertframetitle\par\vskip-6pt}
+\setbeamerfont{frametitle}{series=\bfseries}
+\setbeamercolor{frametitle}{fg=foreground}
+\setbeamerfont{framesubtitle}{size=\normalfont\small}
+\setbeamercolor{framesubtitle}{fg=foreground}
+
+\setbeamercolor{background canvas}{bg=background}
+
+\setbeamercolor{normal text}{fg=foreground}
+\setbeamercolor{alerted text}{fg=foreground}
+\setbeamercolor{block title}{fg=foreground}
+\setbeamercolor{alerted text}{fg=foreground}
+
+\setbeamercolor{itemize item}{fg=foreground}
+\setbeamercolor{enumerate item}{fg=foreground}
+
+\setbeamertemplate{itemize items}[circle]
+\setitemize{
+  label=\usebeamerfont*{itemize item}
+  \usebeamercolor[fg]{itemize item}
+  \usebeamertemplate{itemize item}
+}
+
+\setbeamercolor*{title}{fg=foreground}
+\setbeamercolor{qed symbol}{fg=foreground}
+
+\usebeamercolor[fg]{normal text}
+
+%%% INFORMACIÓN DEL DOCUMENTO
+
+\title{Curvas elípticas en la criptografía}
+\subtitle{Historia de las Matemáticas}
+\author{
+  Sofía Almeida Bruno \texorpdfstring{\\}{} 
+  Antonio Coín Castro \texorpdfstring{\\}{} 
+  José María Martín Luque
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Introducción}
+  
+\end{frame}
+
+
+
+\end{document}
+
