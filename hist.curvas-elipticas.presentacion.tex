@@ -12,7 +12,7 @@
 \pgfplotsset{compat=1.16}
 
 \usepackage{adjustbox}
-
+\usepackage{booktabs}
 \usepackage{enumitem}
 
 %%% FUENTES
@@ -37,6 +37,7 @@
 \definecolor{operators}{HTML}{CF4818}
 \definecolor{identifiers}{HTML}{9A71BA}
 \definecolor{keywords}{HTML}{5486C8}
+%\definecolor{keywords}{HTML}{54BFC7}
 \definecolor{numbers}{HTML}{80951D}
 \definecolor{comments}{HTML}{AFAFAF}
 
@@ -193,6 +194,92 @@
 \end{frame}
 
 % TODO: Insertar figuras operaciones
+% Decir que en cuerpos finitos que son los que se usan en criptografía se pone mod y aunque todo funcione igual es un poco más feo de ver
+
+\begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 70}
+  \begin{itemize}
+  \item En 1973 la NBS organizó un concurso público para el diseño de un algoritmo de cifrado que el Gobierno pudiera adoptar como estándar.
+  \item En 1975 un grupo de investigación de IBM publicó el primer borrador del DES.
+  \item Es modificado por la NSA y en 1976 la NBS lo apruebó y publicó. %contar que esto generó sospechas etc
+  \item Este algoritmo fue reemplazado por AES en 2002.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 70}
+  \begin{itemize}
+  \item En 1976 se publicó el artículo \textit{New Directions in Cryptography} donde Diffie y Hellman proponen por primera vez la idea de cifrado de clave pública. % Explicar en una frase cifrado de clave pública y comentar que hasta el momento la seguridad de los algoritmos dependía solo de que solo los interesados conocieran la clave
+   \item Explicar Diffie-Hellman...según vayamos de tiempo...si tenemos tiempo estaría bien porque simplificaría la explicación posterior del de curvas elípticas
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 80}
+\begin{itemize}
+\item En 1984 H. Lenstra propone el primer algoritmo que utiliza las curvas elípticas, era un algoritmo de factorización.
+\item En 1985 N. Koblitz y V. Miller proponen un criptosistema que usaba curvas elípticas basado en el problema del logaritmo discreto:
+\begin{quote}
+  Sea $E(\mathbb{F}_p)$ verificando $y^2 =x^3 + Ax + B$. Consideramos $\langle G \rangle$ un subgrupo cíclico de orden $n$ de los puntos de $E$. Dados $P,Q \in \langle G \rangle$ encuentra $x \bmod{n}$ tal que $Q=xP$.
+  \end{quote}
+\item Algoritmo ECDH. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 80}
+\begin{itemize}
+\item Se comienza a considerar este tipo de criptografía porque no se puede adaptar el \textit{index calculus} para calcular el logaritmo discreto en el grupo de una curva elíptica.
+\item ¿Comentar lo de las curvas supersingulares?
+\item Se adaptan los algoritmos existentes a este grupo.
+\item En 1987 Koblitz adapta el algoritmo ElGamal.
+\item ECDSA ¿año?, adaptación de DSA, algoritmo de firma.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 80}
+\begin{itemize}
+\item Se desarrollan también algoritmos para resolver el problema del logaritmo discreto. % Aclarar que si se consiguiera el cifrado que lo usa no serviría
+  % Los primeros adaptaban los algoritmos que existían en cuerpos finitos al grupo de la curva elíptica
+\item Algoritmo de Pohlig y Hellman.
+\item Algoritmo \textit{Baby-step/giant-step} de Shanks, \textit{rho} de Pollard. % Tiempo raíz de n
+\item Ataque por emparejamiento de Weil. % SI se dice lo de las curvas supersingulares decir que este algoritmo es especialmente efectivo en ellas
+\end{itemize}
+
+% Durante los años siguientes a la aparición de la criptografía de la curva elíptica la actitud general de los criptógrafos fue de aceptación y curiosidad, nadie la consideró una amenaza comercial.
+% A finales de los años 80, un grupo amplio de matemáticos empezó a trabajar en el tema ...
+\end{frame}
+
+\begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 90 - Enfrentamiento con RSA - Apoyo de la NSA}
+\begin{itemize}
+\item RSA es un sistema de clave pública que apareció en 1977 y cuya seguridad radica en el problema de factorización. En este periodo ya comenzaba a tener éxito comercial. % estaba teniendo buena aceptación
+\item Los partidarios de la ECC comienzan a luchar por la inclusión de los protocolos basados en curvas elípticas en los estándares criptográficos. (ECDSA no fue incluido hasta 1999 y 2000).
+\item A principios de los 90 el NIST propuso un protocolo de firma desarrollado por la NSA donde la seguridad se basaba en el problema del logaritmo discreto.% Aunque este algoritmo, que se comercializó en 1994, no estaba basado en curvas elípticas, mostró el descontento con RSA que existía por parte de la NSA.
+\item En 1997 RSA Data Security puso una sección en su página web advirtiendo del riesgo que suponía usar la criptografía basada en curvas elípticas. % Defensa de ECC , pero tenía el problema de que necesitaban claves cada vez más largas (algoritmo criba general del cuerpo de números)
+  % ¿poner citas?
+\item El mismo año  un miembro de la NSA publica
+el primer artículo en un congreso sobre criptografía que trataba sobre la ECC.
+\item Nuevo ataque para el problema del logaritmo discreto \textit{xedni} (1998). % ¿Esto tiene relevancia? No tengo claro si dice algo más allá de que es un algoritmo que serviría para romper los dos...
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 90 - Enfrentamiento con RSA - Apoyo de la NSA}
+\begin{table}[h]
+  \centering
+  \sffamily
+  \begin{tabular}{lccc}
+    \toprule
+     & \multicolumn{3}{c}{Tamaño en bits} \\
+    Periodo & nivel de seguridad & RSA & ECC \\
+    \midrule
+    Pasado & 80 & 1024 & 160\\
+    \multirow[t]{4}{*}{2016-2030} & 112 & 2048 & 224\\
+     & 128 & 3072 & 256\\
+     & 192 & 7680 & 384\\
+     & 256 & 15360 & 512\\
+    \bottomrule
+  \end{tabular}
+  \caption{Recomendaciones del NIST para el tamaño de las claves de RSA y ECC. Un nivel de seguridad de \(S\) bits indica que se necesitan aproximadamente \(2^S\) operaciones para romper el cifrado.}
+  \label{tab:rsa-ecc-nist}
+\end{table} %Arreglar
+\end{frame}
+
 
 \begin{frame}
   \printbibliography
