@@ -299,6 +299,26 @@
 \end{table} %Arreglar
 \end{frame}
 
+\begin{frame}[fragile]{Futuro de las curvas elípticas}
+  \begin{itemize}
+    \item El poder de computación de los ordenadores cuánticos supondrá el fin de la criptografía tal y como la conocemos.
+    \item Están en desarrollo nuevos sistemas \parencite{computer_security_division_call_2017} y uno de ellos utiliza curvas elípticas, SIDH \parencite{yang_towards_2011}.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Futuro de las curvas elípticas}{SIDH}
+  \begin{itemize}
+    \item El problema no es encontrar la relación entre dos puntos de una curva, sino la relación entre dos curvas dentro de un gran conjunto de ellas.
+    \begin{enumerate}
+      \item Emisor y receptor tienen en común una curva de partida y 4 puntos.
+      \item Ambos generan una función que lleva curvas en curvas, que será la clave privada.
+      \item Utilizándola sobre la curva de partida, obtienen otra curva, que será la clave pública.
+      \item Intercambian las claves y al aplicar la clave privada ahora a la curva recibida ambas partes llegan a sendas curvas que tienen el mismo \(j\)-invariante, un valor que se puede calcular para cada curva a partir de sus parámetros.
+      \item Este valor es la clave que utilizan para la comunicación con cifrado simétrico.
+    \end{enumerate}
+  \end{itemize}
+\end{frame}
+
 
 \begin{frame}
   \printbibliography
