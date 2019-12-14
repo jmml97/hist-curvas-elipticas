@@ -110,6 +110,22 @@
 \setbeamertemplate{footline}[frame number]
 \setbeamerfont{page number in head/foot}{size=\small}
 
+\setbeamercolor{section in toc}{fg=foreground}
+\setbeamerfont{section in toc}{series=\bfseries}
+
+\setbeamercolor{caption name}{fg=foreground}
+\setbeamerfont{caption name}{series=\bfseries}
+
+\setbeamercolor{bibliography entry note}{fg=foreground}
+\setbeamercolor{bibliography entry author}{fg=foreground!40!black}
+
+\hypersetup{
+  colorlinks=true,
+  citecolor=numbers,
+  urlcolor=operators,
+  linkcolor=foreground
+}
+
 %%% INFORMACIÓN DEL DOCUMENTO
 
 \title{Curvas elípticas en la criptografía}
@@ -320,8 +336,8 @@
 \end{frame}
 
 
-\begin{frame}
-  \printbibliography
+\begin{frame}[t,allowframebreaks]{Referencias}
+  \printbibliography[heading=none]
 \end{frame}
 
 \end{document}
