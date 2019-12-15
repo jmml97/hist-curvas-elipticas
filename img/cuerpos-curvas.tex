@@ -17,11 +17,12 @@
 
 \begin{document}
   \sffamily
-  \begin{tikzpicture}[thick,>=latex]
+  \begin{tikzpicture}[thick,>=latex,scale=.75]
     % Curve over R
 
     % Requires GNUplot installation (part of TeXLive)
     \begin{scope}[scale=.75]
+      \draw[gray] (-3,-3) rectangle (3,3);
       \draw[<->,gray] (-3,0) -- (3,0) node[right] {$x \in \mathbb{R}$};
       \draw[<->,gray] (0,-3) -- (0,3) node[above] {$y \in \mathbb{R}$};
       \draw[thick, name path=curve, every plot/.style={smooth}] plot[id=curve-21, raw gnuplot] function {
@@ -46,6 +47,7 @@
     % E.order()
     % print [(P[0],P[1]) for P in E]
     \begin{scope}[xshift=5cm, scale=.045]
+      %\draw[gray] (0,-44) rectangle (89,44);
       \draw[|<->|,gray] (0,-44) -- (0,44) node[above] {$y \in \mathbb{Z}_{89}$};
       \draw[->|,gray] (0,0) -- (89,0) node[right] {$x \in \mathbb{Z}_{89}$};
       \foreach \point in {
