@@ -76,7 +76,7 @@
 %\usefonttheme{professionalfonts}
 
 \setlength{\leftmargini}{0cm}
-\setlength{\leftmarginii}{0.5cm}
+\setlength{\leftmarginii}{2em}
 
 \setbeamertemplate{navigation symbols}{}
 
@@ -160,6 +160,7 @@
   \end{itemize}
 \end{frame}
 
+% Comentar el origen del nombre
 \section{Curvas elípticas}
 \begin{frame}{Curvas elípticas}{Definición (I)}
   \begin{itemize}
@@ -251,7 +252,7 @@
 
 % TODO: Insertar figura elemento neutro
 
-\begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 70}
+\begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 70 - Interés creciente en la criptografía}
   \begin{itemize}
     \item En 1973 la NBS organizó un concurso público para el diseño de un algoritmo de cifrado que el Gobierno pudiera adoptar como estándar.
     \item En 1975 un grupo de investigación de IBM publicó el primer borrador del DES.
@@ -260,19 +261,19 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 70}
+\begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 70 - Criptografía de clave pública}
   \begin{itemize}
   \item En 1976 se publicó el artículo \textit{New Directions in Cryptography} donde W. Diffie y M. Hellman proponen por primera vez la idea de cifrado de clave pública. % Explicar en una frase cifrado de clave pública y comentar que hasta el momento la seguridad de los algoritmos dependía solo de que solo los interesados conocieran la clave 
   \item Surge el protocolo de intercambio de claves de Diffie y Hellman, que basa su seguridad en la dificultad de resolver el \textit{problema del logaritmo discreto}:
   
   \begin{quote}
     \vspace{1em} 
-    Sea \(G\) un grupo y $g \in G$. Dado \(a \in \langle g \rangle\), encuentra \(x\) tal que \(g^x = a\).
+    Sea \(G\) un grupo y $g \in G$. Dado \(a \in \langle g \rangle\), encuentra \(x\) tal que \(g^x = a\). % Se usa en criptografía con G = grupo multiplicativo de F_p, p primo.
 \end{quote}
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 80}
+\begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 80 - Aparición de las curvas elípticas}
   \begin{itemize}
     \item En 1984 H. Lenstra propone el primer algoritmo que utiliza las curvas elípticas, era un algoritmo de factorización.
     \item En 1985 N. Koblitz y V. Miller proponen un criptosistema basado en el \textit{problema del logaritmo discreto en curvas elípticas}:
@@ -286,22 +287,27 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 80}
+\begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 80 - Adaptaciones de algoritmos conocidos (I)}
   \begin{itemize}
-    \item Se comienza a considerar este tipo de criptografía porque no se puede adaptar el \textit{index calculus} para calcular el logaritmo discreto en el grupo de una curva elíptica.
-    \item ¿Comentar lo de las curvas supersingulares?
-    \item Se adaptan los algoritmos existentes a este grupo.
-    \item En 1987 Koblitz adapta el algoritmo ElGamal.
-    \item ECDSA ¿año?, adaptación de DSA, algoritmo de firma.
+    \item No parecía que se pudiese adaptar el algoritmo de \textit{index calculus} para computar logaritmos discretos en curvas elípticas.
+    \item Había ciertas curvas donde los cálculos eran especialmente eficientes.
+    \item Se comienzan a adaptar los algoritmos criptográficos existentes a los grupos de curvas elípticas:
+    \begin{itemize}
+	    \item ElGamal (1987). % Cifrado de clave pública - Koblitz
+	    \item ECDSA (1992).   % Firma
+    \end{itemize}
+    \item Proporcionaban una seguridad similar con claves de menor tamaño.
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 80}
+\begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 80 - Adaptación de algoritmos conocidos (II)}
   \begin{itemize}
-    \item Se desarrollan también algoritmos para resolver el problema del logaritmo discreto. % Aclarar que si se consiguiera el cifrado que lo usa no serviría
-      % Los primeros adaptaban los algoritmos que existían en cuerpos finitos al grupo de la curva elíptica
-    \item Algoritmo de Pohlig y Hellman.
-    \item Algoritmo \textit{Baby-step/giant-step} de Shanks, \textit{rho} de Pollard. % Tiempo raíz de n
+    \item Se adaptan también algoritmos para resolver el problema del logaritmo discreto en curvas elípticas: % Aclarar que si se consiguiera el cifrado que lo usa no serviría
+      \begin{itemize}
+	    \item Algoritmo de Pohlig y Hellman.
+        \item Algoritmo \textit{baby-step/giant-step} de Shanks, algoritmo \textit{rho} de Pollard. % Tiempo raíz de n
+    \end{itemize}
+
     \item Ataque por emparejamiento de Weil. % SI se dice lo de las curvas supersingulares decir que este algoritmo es especialmente efectivo en ellas
   \end{itemize}
 
@@ -309,20 +315,17 @@
   % A finales de los años 80, un grupo amplio de matemáticos empezó a trabajar en el tema ...
 \end{frame}
 
-\begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 90 - Enfrentamiento con RSA - Apoyo de la NSA}
+\begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 90 - Enfrentamiento con RSA - Apoyo de la NSA (I)}
   \begin{itemize}
-    \item RSA es un sistema de clave pública que apareció en 1977 y cuya seguridad radica en el problema de factorización. En este periodo ya comenzaba a tener éxito comercial. % estaba teniendo buena aceptación
-    \item Los partidarios de la ECC comienzan a luchar por la inclusión de los protocolos basados en curvas elípticas en los estándares criptográficos. (ECDSA no fue incluido hasta 1999 y 2000).
-    \item A principios de los 90 el NIST propuso un protocolo de firma desarrollado por la NSA donde la seguridad se basaba en el problema del logaritmo discreto.% Aunque este algoritmo, que se comercializó en 1994, no estaba basado en curvas elípticas, mostró el descontento con RSA que existía por parte de la NSA.
-    \item En 1997 RSA Data Security puso una sección en su página web advirtiendo del riesgo que suponía usar la criptografía basada en curvas elípticas. % Defensa de ECC , pero tenía el problema de que necesitaban claves cada vez más largas (algoritmo criba general del cuerpo de números)
-      % ¿poner citas?
-    \item El mismo año  un miembro de la NSA publica
-    el primer artículo en un congreso sobre criptografía que trataba sobre la ECC.
-    \item Nuevo ataque para el problema del logaritmo discreto \textit{xedni} (1998). % ¿Esto tiene relevancia? No tengo claro si dice algo más allá de que es un algoritmo que serviría para romper los dos...
-  \end{itemize}
-\end{frame}
+    \item RSA es un criptosistema de clave pública que surgió en 1977 y cuya seguridad radica en el problema de factorización. % éxito comercial, buena aceptación
+    \item Los partidarios de la ECC comienzan a luchar por su inclusión en los estándares criptográficos. % (ECDSA no fue incluido hasta 1999 y 2000).
+    \item El NIST propone un protocolo de firma desarrollado por la NSA donde la seguridad se basaba en el problema del logaritmo discreto.%  A principios de los 90. Aunque este algoritmo no estaba basado en curvas elípticas, mostró el descontento con RSA que existía por parte de la NSA.
+    \end{itemize}
+    \end{frame}
+\begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 90 - Enfrentamiento con RSA - Apoyo de la NSA (II)}
 
-\begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 90 - Enfrentamiento con RSA - Apoyo de la NSA}
+	\item La criba general del cuerpo de números provocaba que RSA tuviera que usar claves cada vez más largas. % algoritmo clásico de factorización. Descontento de la NSA. Capacidad de cómputo iba en aumento
+
 \begin{table}[h]
   \centering
   \sffamily
@@ -338,29 +341,42 @@
      & 256 & 15360 & 512\\
     \bottomrule
   \end{tabular}
-  \caption{Recomendaciones del NIST para el tamaño de las claves de RSA y ECC. Un nivel de seguridad de \(S\) bits indica que se necesitan aproximadamente \(2^S\) operaciones para romper el cifrado.}
+  \caption{Recomendaciones del NIST para el tamaño de las claves de RSA y ECC \parencite{barker_recommendation_2016}.}
   \label{tab:rsa-ecc-nist}
 \end{table} %Arreglar
+\end{frame}
+    
+\begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 90 - Enfrentamiento con RSA - Apoyo de la NSA (III)}
+    \begin{itemize}
+    \item En 1997 RSA Data Security puso una sección en su página web advirtiendo del riesgo que suponía usar la criptografía basada en curvas elípticas.
+    \begin{itemize}
+        \item Pocos criptógrafos comprendían realmente las curvas elípticas.
+	    \item El problema de factorización se había estudiado durante cientos de años.
+\end{itemize}
+    \item Ese mismo año un miembro de la NSA publica
+    el primer artículo en un congreso sobre criptografía que trataba sobre la ECC.
+  \end{itemize}
+\end{frame}
+
+ \begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Siglo XXI - Estandarización de la ECC}
+    \begin{itemize}
+    \item La NSA autorizó en 2003 26 patentes relacionadas
+con ECC y en 2005 publicó un artículo en su web donde fomentaba su uso.
+    \item RSA eliminó de su web la sección donde criticaba la ECC.
+    \item En 2001 surgen algoritmos basados en emparejamientos sobre curvas elípticas: % Emparejamiento: aplicación que parte del producto cartesiano de un subconjunto de la curva
+    \begin{itemize}
+	    \item Criptosistemas basados en identidad.
+	    \item Algoritmos de firma que aprovechan las propiedades de las curvas elípticas.    
+    \end{itemize}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Futuro de las curvas elípticas}
   \begin{itemize}
-    \item El poder de computación de los ordenadores cuánticos podría suponer el fin de la criptografía tal y como la conocemos, destruyendo la Tierra y erradicando a la raza humana por completo.
-    \item Están en desarrollo nuevos sistemas \parencite{computer_security_division_call_2017} y uno de ellos utiliza curvas elípticas, SIDH \parencite{yang_towards_2011}.
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Futuro de las curvas elípticas}{SIDH}
-  \begin{itemize}
-    \item El problema no es encontrar la relación entre dos puntos de una curva, sino la relación entre dos curvas dentro de un gran conjunto de ellas.
-    \begin{enumerate}
-      \item Emisor y receptor tienen en común una curva de partida y 4 puntos.
-      \item Ambos generan una función que lleva curvas en curvas, que será la clave privada.
-      \item Utilizándola sobre la curva de partida, obtienen otra curva, que será la clave pública.
-      \item Intercambian las claves y al aplicar la clave privada ahora a la curva recibida ambas partes llegan a sendas curvas que tienen el mismo \(j\)-invariante, un valor que se puede calcular para cada curva a partir de sus parámetros.
-      \item Este valor es la clave que utilizan para la comunicación con cifrado simétrico.
-    \end{enumerate}
-  \end{itemize}
+    \item El poder de computación de los ordenadores cuánticos podría suponer el fin de la criptografía tal y como la conocemos. % Algoritmo de Shor: factorización de enteros. Se puede aplicar para resolver el logaritmo discreto. 
+    \item El NIST comenzó en 2017 una recogida de propuestas para el desarrollo de nuevos criptosistemas \parencite{computer_security_division_call_2017}. % Se busca que estos basen su seguridad en problemas matemáticos difíciles, distintos del logaritmo discreto y la factorización.
+    \item El algoritmo de SIDH se basa en encontrar la relación entre dos curvas elípticas dentro de una gran familia de ellas.
+    \end{itemize}
 \end{frame}
 
 
