@@ -134,8 +134,8 @@
 \title{Curvas elípticas en la criptografía}
 \subtitle{Historia de las Matemáticas}
 \author{
-  Sofía Almeida Bruno \texorpdfstring{\\}{} 
-  Antonio Coín Castro \texorpdfstring{\\}{} 
+  Sofía Almeida Bruno \texorpdfstring{\\}{}
+  Antonio Coín Castro \texorpdfstring{\\}{}
   José María Martín Luque
 }
 \institute{\normalsize Universidad de Granada}
@@ -156,7 +156,7 @@
     \item Ya en la antigüedad se usaba en contextos bélicos o políticos. Un ejemplo es el \textit{cifrado del César}:
     \[x \mapsto x + 3 \mod 26.\]
     \item En la \textit{era de la información} experimenta una evolución sin precedentes.
-    \item Los sistemas actuales basan su seguridad en problemas matemáticos \textit{difíciles} de resolver. 
+    \item Los sistemas actuales basan su seguridad en problemas matemáticos \textit{difíciles} de resolver.
   \end{itemize}
 \end{frame}
 
@@ -171,7 +171,7 @@
     \[y^2 = x^3 + Ax + B,\]
     con \(A, B \in K\).
   \end{itemize}
-  
+
 \end{frame}
 
 \begin{frame}{Curvas elípticas}{Definición (II)}
@@ -181,7 +181,7 @@
     \item \(\mathcal O\) es el punto del infinito con coordenadas homogéneas \([0:1:0]\).
     \item La condición de no singularidad se traduce en \(4A^3 + 27B^2 \neq 0\).
   \end{itemize}
-  
+
 \end{frame}
 
 \begin{frame}[fragile]{Curvas elípticas}{Ejemplos (I)}
@@ -214,13 +214,22 @@
   \end{itemize}
 \end{frame}
 
+\begin{frame}{Suma de puntos}{Elemento neutro}
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.35\textwidth]{img/neutro-curvas}
+    \caption{Suma del punto del infinito \(\mathcal O\) a un punto en curvas elípticas. Basado en  \parencite{eichlseder_elliptic_2016}.}
+    \label{fig:duplicar-curvas}
+  \end{figure}
+\end{frame}
+
 \begin{frame}{Suma de puntos}{Caso general}
   \begin{figure}[h]
     \centering
     \includegraphics[width=0.35\textwidth]{img/suma-curvas}
     \caption{Suma de puntos en curvas elípticas. Basado en  \parencite{eichlseder_elliptic_2016}.}
     \label{fig:suma-curvas}
-  \end{figure}  
+  \end{figure}
 \end{frame}
 
 \begin{frame}{Suma de puntos}{Elemento inverso}
@@ -229,7 +238,7 @@
     \includegraphics[width=0.35\textwidth]{img/inverso-curvas}
     \caption{Elemento inverso de un punto en curvas elípticas. Basado en  \parencite{eichlseder_elliptic_2016}.}
     \label{fig:inverso-curvas}
-  \end{figure}  
+  \end{figure}
 \end{frame}
 
 \begin{frame}{Suma de puntos}{Duplicar puntos}
@@ -238,19 +247,8 @@
     \includegraphics[width=0.35\textwidth]{img/duplicar-curvas}
     \caption{Duplicación de un punto en curvas elípticas. Basado en  \parencite{eichlseder_elliptic_2016}.}
     \label{fig:duplicar-curvas}
-  \end{figure}  
+  \end{figure}
 \end{frame}
-
-\begin{frame}{Suma de puntos}{Elemento neutro}
-  \begin{figure}[h]
-    \centering
-    \includegraphics[width=0.35\textwidth]{img/neutro-curvas}
-    \caption{Suma del punto del infinito \(\mathcal O\) a un punto en curvas elípticas. Basado en  \parencite{eichlseder_elliptic_2016}.}
-    \label{fig:duplicar-curvas}
-  \end{figure}  
-\end{frame}
-
-% TODO: Insertar figura elemento neutro
 
 \begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 70 - Interés creciente en la criptografía}
   \begin{itemize}
@@ -263,11 +261,11 @@
 
 \begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 70 - Criptografía de clave pública}
   \begin{itemize}
-  \item En 1976 se publicó el artículo \textit{New Directions in Cryptography} donde W. Diffie y M. Hellman proponen por primera vez la idea de cifrado de clave pública. % Explicar en una frase cifrado de clave pública y comentar que hasta el momento la seguridad de los algoritmos dependía solo de que solo los interesados conocieran la clave 
+  \item En 1976 se publicó el artículo \textit{New Directions in Cryptography} donde W. Diffie y M. Hellman proponen por primera vez la idea de cifrado de clave pública. % Explicar en una frase cifrado de clave pública y comentar que hasta el momento la seguridad de los algoritmos dependía solo de que solo los interesados conocieran la clave
   \item Surge el protocolo de intercambio de claves de Diffie y Hellman, que basa su seguridad en la dificultad de resolver el \textit{problema del logaritmo discreto}:
-  
+
   \begin{quote}
-    \vspace{1em} 
+    \vspace{1em}
     Sea \(G\) un grupo y $g \in G$. Dado \(a \in \langle g \rangle\), encuentra \(x\) tal que \(g^x = a\). % Se usa en criptografía con G = grupo multiplicativo de F_p, p primo.
 \end{quote}
   \end{itemize}
@@ -277,13 +275,13 @@
   \begin{itemize}
     \item En 1984 H. Lenstra propone el primer algoritmo que utiliza las curvas elípticas, era un algoritmo de factorización.
     \item En 1985 N. Koblitz y V. Miller proponen un criptosistema basado en el \textit{problema del logaritmo discreto en curvas elípticas}:
-    
+
     \begin{quote}
-      \vspace{.5em} 
+      \vspace{.5em}
       Sea $E(\mathbb{F}_p)$ verificando $y^2 =x^3 + Ax + B$. Consideramos $\langle G \rangle$ un subgrupo cíclico de orden $n$ de los puntos de $E$. Dados $P,Q \in \langle G \rangle$ encuentra $x \bmod{n}$ tal que $Q=xP$.
       \vspace{.5em}
       \end{quote}
-    \item Protocolo ECDH. 
+    \item Protocolo ECDH.
   \end{itemize}
 \end{frame}
 
@@ -345,7 +343,7 @@
   \label{tab:rsa-ecc-nist}
 \end{table} %Arreglar
 \end{frame}
-    
+
 \begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 90 - Enfrentamiento con RSA - Apoyo de la NSA (III)}
     \begin{itemize}
     \item En 1997 RSA Data Security puso una sección en su página web advirtiendo del riesgo que suponía usar la criptografía basada en curvas elípticas.
@@ -366,14 +364,14 @@ con ECC y en 2005 publicó un artículo en su web donde fomentaba su uso.
     \item En 2001 surgen algoritmos basados en emparejamientos sobre curvas elípticas: % Emparejamiento: aplicación que parte del producto cartesiano de un subconjunto de la curva
     \begin{itemize}
 	    \item Criptosistemas basados en identidad.
-	    \item Algoritmos de firma que aprovechan las propiedades de las curvas elípticas.    
+	    \item Algoritmos de firma que aprovechan las propiedades de las curvas elípticas.
     \end{itemize}
   \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Futuro de las curvas elípticas}
   \begin{itemize}
-    \item El poder de computación de los ordenadores cuánticos podría suponer el fin de la criptografía tal y como la conocemos. % Algoritmo de Shor: factorización de enteros. Se puede aplicar para resolver el logaritmo discreto. 
+    \item El poder de computación de los ordenadores cuánticos podría suponer el fin de la criptografía tal y como la conocemos. % Algoritmo de Shor: factorización de enteros. Se puede aplicar para resolver el logaritmo discreto.
     \item El NIST comenzó en 2017 una recogida de propuestas para el desarrollo de nuevos criptosistemas \parencite{computer_security_division_call_2017}. % Se busca que estos basen su seguridad en problemas matemáticos difíciles, distintos del logaritmo discreto y la factorización.
     \item El algoritmo de SIDH se basa en encontrar la relación entre dos curvas elípticas dentro de una gran familia de ellas.
     \end{itemize}
@@ -385,4 +383,3 @@ con ECC y en 2005 publicó un artículo en su web donde fomentaba su uso.
 \end{frame}
 
 \end{document}
-
