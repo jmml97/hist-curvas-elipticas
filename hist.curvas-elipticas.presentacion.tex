@@ -180,37 +180,37 @@
   
 \end{frame}
 
-\begin{frame}[fragile]{Curvas elípticas}{Ejemplos}
+\begin{frame}[fragile]{Curvas elípticas}{Ejemplos (I)}
   \begin{figure}[h]
     \centering
     \includegraphics[width=.75\textwidth]{img/ejemplos-curvas}
     \caption{Ejemplos de curvas elípticas sobre $\mathbb{R}$. Basado en \parencite{eichlseder_elliptic_2016}.}
-    \label{fig:curva}
+    \label{fig:curvas}
+  \end{figure}
+\end{frame}
+
+% Decir que las curvas sobre cuerpos finitos son las que se usan en criptografía, pero son más difíciles de visualizar. Todo es mod p.
+\begin{frame}[fragile]{Curvas elípticas}{Ejemplos (II)}
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=.85\textwidth]{img/cuerpos-curvas}
+    \caption{Ejemplo de una curva elíptica sobre $\mathbb{R}$ y sobre $\mathbb{Z}_{89}$. Basado en \parencite{eichlseder_elliptic_2016}.}
+    \label{fig:curvas-finitos}
   \end{figure}
 \end{frame}
 
 \begin{frame}{Suma de puntos (I)}
   % Hablar de:
   % - método algebraico (lo que vamos a contar se hace con ecuaciones)
-  % - el método geométrico lo vemos sobre R
   % - las rectas verticales cortan a la curva al menos en el punto del infinito
   \begin{itemize}
-    \item Podemos definir una operación suma sobre los puntos de la curva para obtener un grupo abeliano.
+    \item Podemos definir una operación suma sobre los puntos de una curva elíptica para obtener un grupo abeliano.
     \item El elemento neutro será el punto \(\mathcal{O}\).
-    %\item Vamos a ver el método geométrico sobre \(\mathbb R\).
+    \item Para visualizar el método, suponemos que el cuerpo base es $\mathbb{R}$.
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Elemento inverso}
-  \begin{figure}[h]
-    \centering
-    \includegraphics[width=0.35\textwidth]{img/inverso-curvas}
-    \caption{Elemento inverso de un punto en curvas elípticas. Basado en  \parencite{eichlseder_elliptic_2016}.}
-    \label{fig:inverso-curvas}
-  \end{figure}  
-\end{frame}
-
-\begin{frame}{Suma de puntos}
+\begin{frame}{Suma de puntos (II)}{Caso general}
   \begin{figure}[h]
     \centering
     \includegraphics[width=0.35\textwidth]{img/suma-curvas}
@@ -219,7 +219,16 @@
   \end{figure}  
 \end{frame}
 
-\begin{frame}{Duplicar puntos}
+\begin{frame}{Suma de puntos (III)}{Elemento inverso}
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.35\textwidth]{img/inverso-curvas}
+    \caption{Elemento inverso de un punto en curvas elípticas. Basado en  \parencite{eichlseder_elliptic_2016}.}
+    \label{fig:inverso-curvas}
+  \end{figure}  
+\end{frame}
+
+\begin{frame}{Suma de puntos (IV)}{Duplicar puntos}
   \begin{figure}[h]
     \centering
     \includegraphics[width=0.35\textwidth]{img/duplicar-curvas}
@@ -228,8 +237,7 @@
   \end{figure}  
 \end{frame}
 
-% TODO: Insertar figuras operaciones
-% Decir que en cuerpos finitos que son los que se usan en criptografía se pone mod y aunque todo funcione igual es un poco más feo de ver
+% TODO: Insertar figura elemento neutro
 
 \begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 70}
   \begin{itemize}
@@ -242,19 +250,25 @@
 
 \begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 70}
   \begin{itemize}
-  \item En 1976 se publicó el artículo \textit{New Directions in Cryptography} donde Diffie y Hellman proponen por primera vez la idea de cifrado de clave pública. % Explicar en una frase cifrado de clave pública y comentar que hasta el momento la seguridad de los algoritmos dependía solo de que solo los interesados conocieran la clave 
-  \item Explicar Diffie-Hellman...según vayamos de tiempo...si tenemos tiempo estaría bien porque simplificaría la explicación posterior del de curvas elípticas
+  \item En 1976 se publicó el artículo \textit{New Directions in Cryptography} donde W. Diffie y M. Hellman proponen por primera vez la idea de cifrado de clave pública. % Explicar en una frase cifrado de clave pública y comentar que hasta el momento la seguridad de los algoritmos dependía solo de que solo los interesados conocieran la clave 
+  \item Surge el protocolo de intercambio de claves de Diffie y Hellman, que basa su seguridad en la dificultad de resolver el \textit{problema del logaritmo discreto}:
+  
+  \begin{quote}
+  Sea \(G\) un grupo y $g \in G$. Dado \(a \in \langle g \rangle\), encuentra \(x\) tal que \(g^x = a\).
+\end{quote}
   \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Evolución de las curvas elípticas en la criptografía}{Años 80}
   \begin{itemize}
     \item En 1984 H. Lenstra propone el primer algoritmo que utiliza las curvas elípticas, era un algoritmo de factorización.
-    \item En 1985 N. Koblitz y V. Miller proponen un criptosistema que usaba curvas elípticas basado en el problema del logaritmo discreto:
+    \item En 1985 N. Koblitz y V. Miller proponen un criptosistema basado en el \textit{problema del logaritmo discreto en curvas elípticas}:
+    
     \begin{quote}
       Sea $E(\mathbb{F}_p)$ verificando $y^2 =x^3 + Ax + B$. Consideramos $\langle G \rangle$ un subgrupo cíclico de orden $n$ de los puntos de $E$. Dados $P,Q \in \langle G \rangle$ encuentra $x \bmod{n}$ tal que $Q=xP$.
+
       \end{quote}
-    \item Algoritmo ECDH. 
+    \item Protocolo ECDH. 
   \end{itemize}
 \end{frame}
 
@@ -317,7 +331,7 @@
 
 \begin{frame}[fragile]{Futuro de las curvas elípticas}
   \begin{itemize}
-    \item El poder de computación de los ordenadores cuánticos supondrá el fin de la criptografía tal y como la conocemos.
+    \item El poder de computación de los ordenadores cuánticos podría suponer el fin de la criptografía tal y como la conocemos, destruyendo la Tierra y erradicando a la raza humana por completo.
     \item Están en desarrollo nuevos sistemas \parencite{computer_security_division_call_2017} y uno de ellos utiliza curvas elípticas, SIDH \parencite{yang_towards_2011}.
   \end{itemize}
 \end{frame}
